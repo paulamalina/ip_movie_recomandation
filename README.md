@@ -1,6 +1,6 @@
 # ip_movie_recomandation
 
-A new Flutter project.
+A new Flutter project made by Pastragus Paula Malina, Baciu Lucian, Oloeriu Delia, Ilinca Dumitrascu si Radu Homeuca
 
 ## Getting Started
 
