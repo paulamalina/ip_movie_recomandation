@@ -20,7 +20,7 @@ class WelcomeScreen extends StatelessWidget {
             child: Container(
               width: double.infinity,
               decoration: const BoxDecoration(
-                color: Colors.white,
+                color: Colors.cyan,
                 borderRadius: const BorderRadius.all(Radius.circular(40)),
               ),
               child: Column(
@@ -31,16 +31,21 @@ class WelcomeScreen extends StatelessWidget {
             ),
           ),
           Center(
-            child: TextButton(
-              // Within the `WelcomeScreen` widget
-              onPressed: () {
-                // Navigate to the second screen using a named route.
-                Navigator.pushNamed(context, '/choose');
-              },
-              child: const Text('Get Started'),
-              style: TextButton.styleFrom(
-                textStyle: const TextStyle(fontSize: 20,),
-                primary: Colors.white,
+            child: Container(
+              width: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50.0),
+                color: Colors.greenAccent,
+              ),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "/choose");
+                } ,
+                child: Text('Get Started', style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+                ),
               ),
             ),
           ),

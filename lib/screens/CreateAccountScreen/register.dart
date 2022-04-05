@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ip_movie_recomandation/widgets/MyTextField.dart';
 
-class CreateAccountScreen extends StatelessWidget {
-  const CreateAccountScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,13 +11,24 @@ class CreateAccountScreen extends StatelessWidget {
         title: const Text('Create account'),
       ),
       body: Center(
-        child: ElevatedButton(
-          // Within the `WelcomeScreen` widget
-          onPressed: () {
-            // Navigate to the second screen using a named route.
-            Navigator.pushNamed(context, '/main');
-          },
-          child: const Text('go ahead'),
+        child: Container(
+          width: 400,
+          height: 400,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              MyTextField(hintText: 'Paula Malina', text: 'Name',),
+              SizedBox(
+                height: 10,
+              ),
+              MyTextField(hintText: 'pastraguspaula@gmail.com', text: 'Email',),
+              SizedBox(
+                height: 10,
+              ),
+              MyTextField(hintText: '1234:)', text: 'Password',obsureText: true,)
+
+            ],
+          ),
         ),
       ),
     );
