@@ -22,7 +22,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
 
   Future<Object> createUser() async{
-    final Uri apiUrl=Uri.parse("http://localhost:8090/api/register");
+    print("sunt in functie");
+    final Uri apiUrl=Uri.parse("http://192.168.1.129:8090/api/register");
     final response=await http.post(apiUrl, body: jsonEncode({
       "name": "Paula",
       "email": "ex@gmail.com",
@@ -38,6 +39,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       "Content-Type":"application/json",
     });
 
+    print('aici');
     if(response.statusCode==200){
       final String responseString=response.body;
       print("ok");
@@ -66,85 +68,116 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     print(myNameController.text);
     return Scaffold(
-      backgroundColor: Color(0xFF34A0A4),
-      body: Center(
-        child: Container(
-          width: 400,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              MyTextField(hintText: 'Paula Malina', text: 'Name',controller: myNameController,),
-              SizedBox(
-                height: 10,
-              ),
-              MyTextField(hintText: 'pastraguspaula@gmail.com', text: 'Email',controller: myEmailController,),
-              SizedBox(
-                height: 10,
-              ),
-              MyTextField(hintText: '1234:)', text: 'Password',obscureText: true, controller: myPasswordController,),
-              SizedBox(
-                height: 10,
-              ),
-              MyTextField(hintText: 'M/F', text: 'Gender', controller: myGenderController,),
-              SizedBox(
-                height: 10,
-              ),
-              MyTextField(hintText: '14.02.2001', text: 'Birthdate', controller: myBirthdateController,),
-              SizedBox(
-                height: 10,
-              ),
-              MyTextField(hintText: 'Romania', text: 'Country', controller: myCountryController,),
-              SizedBox(
-                height: 10,
-              ),
-              MyTextField(hintText: '07xx xxx xxx', text: 'Phone Number', controller: myPhoneNumberController,),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50.0),
-                      color: Colors.greenAccent,
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      } ,
-                      child: Text('Back',style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50.0),
-                      color: Colors.greenAccent,
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        createUser();
-                        Navigator.pushNamed(context, "/main");
-                      } ,
-                      child: Text('Next',style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+      backgroundColor: Color(0xFF99D98C),
+      body: Stack(
+        children: [
+          Container(
+            height: 600,
+            decoration: BoxDecoration(
+                color: Color(0xFF1A759F),
+                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50), bottomRight: Radius.circular(50))
+            ),
           ),
-        ),
+          Positioned(
+              child: Center(
+                child: Container(
+                  height: 900,
+                  width: 800,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF34A0A4),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Center(
+                        //child: SvgPicture.asset('assets/images/logoClean.svg', width: 300, height: 200,),
+                        child: Image.asset('assets/images/logo.png',  width: 150, height: 100,),
+                      ),
+                      MyTextField(hintText: 'Paula Malina', text: 'Name',controller: myNameController,),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      MyTextField(hintText: 'pastraguspaula@gmail.com', text: 'Email',controller: myEmailController,),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      MyTextField(hintText: '1234:)', text: 'Password',obscureText: true, controller: myPasswordController,),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      MyTextField(hintText: 'M/F', text: 'Gender', controller: myGenderController,),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      MyTextField(hintText: '14.02.2001', text: 'Birthdate', controller: myBirthdateController,),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      MyTextField(hintText: 'Romania', text: 'Country', controller: myCountryController,),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      MyTextField(hintText: '07xx xxx xxx', text: 'Phone Number', controller: myPhoneNumberController,),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 100, right: 100),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: 120,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: Color(0xff52B69A),
+                              ),
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  print(myNameController.text);
+                                } ,
+                                child: Text('Back',style: TextStyle(
+                                  color: Color(0xFF34A0A4),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25,
+                                ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 120,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: Color(0xffB5E48C),
+                              ),
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/main');
+                                } ,
+                                child: Text('Register',style: TextStyle(
+                                  color: Color(0xFF1A759F),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25,
+                                ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ),
+        ],
       ),
     );
   }
 }
+
+

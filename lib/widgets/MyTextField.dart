@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
@@ -14,17 +15,22 @@ class MyTextField extends StatelessWidget {
       children: [
         Text(text, style: TextStyle(
           color: Color(0xFFB5E48C),
+          fontSize: 25,
         ),),
         SizedBox(
           height: 5,
         ),
         Container(
+          width: 300,
           decoration: BoxDecoration(
             color: const Color(0xFFEDF8FF),
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(25),
             border: Border.all(color: Colors.yellow),
           ),
           child: TextField(
+            textAlignVertical: TextAlignVertical.center,
+            textAlign: TextAlign.center,
+            maxLines: 1,
             controller: controller,
             obscureText: obscureText,
             cursorColor: const Color(0xFF34A0A4),
@@ -34,6 +40,7 @@ class MyTextField extends StatelessWidget {
               color: const Color(0xFF34A0A4),
             ),
             decoration: InputDecoration(
+              border: InputBorder.none,
               hintText: hintText,
               contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               hintStyle: const TextStyle(
