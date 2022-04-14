@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../widgets/MyTextField.dart';
 
@@ -16,24 +17,102 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('LOGIN SCREEN'),
-      // ),
-      backgroundColor: Color(0xFF34A0A4),
-      body: Center(
-        child: Container(
-          width: 400,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              MyTextField(hintText: 'Paula Malina', text: 'Name', controller: myNameController,),
-              SizedBox(
-                height: 10,
-              ),
-              MyTextField(hintText: '1234:)', text: 'Password',obscureText: true,controller: myPasswordController,),
-            ],
+      backgroundColor: Color(0xFF99D98C),
+      body: Stack(
+        children: [
+          Container(
+            height: 600,
+            decoration: BoxDecoration(
+                color: Color(0xFF1A759F),
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50), bottomRight: Radius.circular(50))
+            ),
           ),
-        ),
+          Positioned(child: Center(
+            child: Container(
+              height: 700,
+              width: 800,
+              decoration: BoxDecoration(
+                color: Color(0xFF34A0A4),
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: Column(
+
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 40),
+                    child: Center(
+                      //child: SvgPicture.asset('assets/images/logoClean.svg', width: 300, height: 200,),
+                      child: Image.asset('assets/images/logo.png',  width: 250, height: 150,),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 85,
+                  ),
+                  Container(
+                    width: 300,
+                      child: MyTextField(hintText: 'Paula Malina', text: 'Name', controller: myNameController),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Container(
+                    width: 300,
+                      child: MyTextField(hintText: '1234567890', text: 'Password', controller: myPasswordController, obscureText: true),
+                  ),
+                  SizedBox(
+                    height: 100,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 70, right: 70),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: 100,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Color(0xff52B69A),
+                          ),
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            } ,
+                            child: Text('Back',style: TextStyle(
+                              color: Color(0xFF34A0A4),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25,
+                            ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 100,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Color(0xffB5E48C),
+                          ),
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/main');
+                            } ,
+                            child: Text('Login',style: TextStyle(
+                              color: Color(0xFF1A759F),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25,
+                            ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),),
+        ],
       ),
     );
   }
