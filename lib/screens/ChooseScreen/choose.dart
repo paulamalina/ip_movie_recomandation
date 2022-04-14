@@ -6,7 +6,7 @@ class ChooseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal,
+      backgroundColor: Colors.black, //
       body: Center(
         child: Container(
           width: 400,
@@ -27,11 +27,13 @@ class ChooseScreen extends StatelessWidget {
                 child: TextButton(
                   onPressed: () {
                     Navigator.pushNamed(context, "/login");
-                  } ,
-                  child: Text('Log in', style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  },
+                  child: Text(
+                    'Log in',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -47,11 +49,13 @@ class ChooseScreen extends StatelessWidget {
                 child: TextButton(
                   onPressed: () {
                     Navigator.pushNamed(context, "/register");
-                  } ,
-                  child: Text('Register',style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  },
+                  child: Text(
+                    'Register',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -67,11 +71,13 @@ class ChooseScreen extends StatelessWidget {
                 child: TextButton(
                   onPressed: () {
                     Navigator.pop(context);
-                  } ,
-                  child: Text('Back',style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  },
+                  child: Text(
+                    'Back',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -82,4 +88,3 @@ class ChooseScreen extends StatelessWidget {
     );
   }
 }
-
