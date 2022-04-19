@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ip_movie_recomandation/screens/ChooseScreen/choose.dart';
 import 'package:ip_movie_recomandation/screens/CreateAccountScreen/register.dart';
+import 'package:ip_movie_recomandation/screens/GenreScreen/genre.dart';
 import 'package:ip_movie_recomandation/screens/LoginScreen/login.dart';
 import 'package:ip_movie_recomandation/screens/MainScreen/main.dart';
 import 'package:ip_movie_recomandation/screens/WelcomeScreen/welcome.dart';
+import 'package:ip_movie_recomandation/screens/RatingScreen/rating.dart';
 
 void main() {
   runApp(
@@ -19,7 +21,9 @@ void main() {
         '/choose': (context) => const ChooseScreen(),
         '/login' : (context) => const LoginScreen(),
         '/register' : (context) => const RegisterScreen(),
+        '/rating' : (context) => const RatingScreen(),
         '/main' : (context) => const MainScreen(),
+        '/genre' : (context) => const GenreScreen(),
       },
     ),
   );

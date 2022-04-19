@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
 
- 
 @override
 Widget build(BuildContext context) {
   return Scaffold(
@@ -16,7 +16,7 @@ Widget build(BuildContext context) {
             height: 58,
             decoration: BoxDecoration(
                  color: Colors(76C893),
-              )
+              ),
           
           Row(
             crossAxisAlignemt: CrossAxisAlignement.start,
@@ -26,7 +26,7 @@ Widget build(BuildContext context) {
           ),
         ),
 
-          child: Container(
+        Container(
             decoration: const BoxDecoration(
               width: 347,
               height: 58,
@@ -64,7 +64,8 @@ Widget build(BuildContext context) {
               color: Colors(1A759F),
               borderRadius: const BorderRadius.all(Radius.circular(40)),            
             ),
-          child: TextButton(
+          children: [
+            TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, "/choose");
                 } ,
@@ -74,9 +75,10 @@ Widget build(BuildContext context) {
                 ),
                 ),
               ),
-        )
+          ]
+        ),
         ]
       )
     )
-  )
+  );
 }
