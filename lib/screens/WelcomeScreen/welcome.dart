@@ -25,7 +25,7 @@ class WelcomeScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Center(child: SvgPicture.asset('images/welcome.svg')),
+                  Center(child: SvgPicture.asset('assets/images/welcome.svg')),
                 ],
               ),
             ),
@@ -55,6 +55,7 @@ class WelcomeScreen extends StatelessWidget {
   }
 }
 
+<<<<<<< Updated upstream
 // import 'package:flutter/material.dart';
 // import 'package:flutter_svg/svg.dart';
 // class WelcomeScreen extends StatelessWidget {
@@ -111,3 +112,5 @@ class WelcomeScreen extends StatelessWidget {
 //     );
 //   }
 // }
+=======
+>>>>>>> Stashed changes

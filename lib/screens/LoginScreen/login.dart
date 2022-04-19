@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:http/http.dart' as http;
 
 import '../../widgets/MyTextField.dart';
 
@@ -12,6 +13,22 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  void logUser() async{
+    final Uri apiUrl=Uri.parse("http://157.230.114.95:8090/login");
+    final response=await http.post(apiUrl, body: jsonEncode({
+      "username": "radustefan1302@gmail.com",
+      "password": "nu fura parola"
+    }),
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+          "Content-Type":"application/json",
+        });
+
+
+  }
+
   final myNameController = TextEditingController();
   final myPasswordController= TextEditingController();
   @override
