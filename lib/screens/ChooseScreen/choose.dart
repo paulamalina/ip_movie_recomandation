@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+
 import 'package:flutter/material.dart';
 
 class ChooseScreen extends StatelessWidget {
@@ -27,7 +27,7 @@ class ChooseScreen extends StatelessWidget {
                 ),
                 child: TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, "/login");
+                    Navigator.pushNamed(context, "/genre");
                   },
                   child: Text(
                     'Log in',
@@ -89,7 +89,6 @@ class ChooseScreen extends StatelessWidget {
     );
   }
 }
-=======
 // import 'package:flutter/material.dart';
 //
 // class ChooseScreen extends StatelessWidget {
@@ -175,4 +174,4 @@ class ChooseScreen extends StatelessWidget {
 //   }
 // }
 //
->>>>>>> Stashed changes
+

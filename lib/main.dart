@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ip_movie_recomandation/screens/ChooseScreen/choose.dart';
 import 'package:ip_movie_recomandation/screens/CreateAccountScreen/register.dart';
+import 'package:ip_movie_recomandation/screens/GenreScreen/genre.dart';
 import 'package:ip_movie_recomandation/screens/LoginScreen/login.dart';
 import 'package:ip_movie_recomandation/screens/MainScreen/main.dart';
 import 'package:ip_movie_recomandation/screens/WelcomeScreen/welcome.dart';
@@ -20,6 +21,7 @@ void main() {
         '/login' : (context) => const LoginScreen(),
         '/register' : (context) => const RegisterScreen(),
         '/main' : (context) => const MainScreen(),
+        '/genre' : (context) => const GenreScreen(),
       },
     ),
   );
