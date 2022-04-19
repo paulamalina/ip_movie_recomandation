@@ -89,6 +89,10 @@ class ChooseScreen extends StatelessWidget {
     );
   }
 }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 // import 'package:flutter/material.dart';
 //
 // class ChooseScreen extends StatelessWidget {
