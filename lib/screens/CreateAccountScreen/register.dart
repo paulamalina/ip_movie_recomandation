@@ -156,7 +156,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               child: TextButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context, '/main');
+                                  Navigator.pushNamed(context, '/genre');
                                 } ,
                                 child: Text('Register',style: TextStyle(
                                   color: Color(0xFF1A759F),
