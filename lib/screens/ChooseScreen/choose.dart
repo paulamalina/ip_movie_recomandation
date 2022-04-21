@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ChooseScreen extends StatelessWidget {
   const ChooseScreen({Key? key}) : super(key: key);
@@ -6,172 +7,85 @@ class ChooseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black, //
+      backgroundColor: Color(0xFF34A0A4), //
       body: Center(
-        child: Container(
-          width: 400,
-          height: 400,
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50.0),
-                  color: Colors.greenAccent,
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/genre");
-                  },
-                  child: Text(
-                    'Log in',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/logo.png',
+              height: 100,
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Container(
+              width: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50.0),
+                color: Color(0xFFCAEEE4),
+              ),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "/login");
+                },
+                child: Text(
+                  'Log in',
+                  style: TextStyle(
+                    color: Color(0xFF1A759F),
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              SizedBox(
-                height: 25.0,
+            ),
+            SizedBox(
+              height: 25.0,
+            ),
+            Container(
+              width: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50.0),
+                color: Color(0xFFCAEEE4),
               ),
-              Container(
-                width: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50.0),
-                  color: Colors.greenAccent,
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/register");
-                  },
-                  child: Text(
-                    'Register',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "/register");
+                },
+                child: Text(
+                  'Register',
+                  style: TextStyle(
+                    color: Color(0xFF1A759F),
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              SizedBox(
-                height: 25,
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Container(
+              width: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50.0),
+                color: Color(0xFFCAEEE4),
               ),
-              Container(
-                width: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50.0),
-                  color: Colors.greenAccent,
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    'Back',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Back',
+                  style: TextStyle(
+                    color: Color(0xFF1A759F),
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
-
 }
 
-// import 'package:flutter/material.dart';
-//
-// class ChooseScreen extends StatelessWidget {
-//   const ChooseScreen({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.teal,
-//       body: Center(
-//         child: Container(
-//           width: 400,
-//           height: 400,
-//           decoration: BoxDecoration(
-//             color: Colors.blue,
-//             borderRadius: BorderRadius.circular(30.0),
-//           ),
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               Container(
-//                 width: 100,
-//                 decoration: BoxDecoration(
-//                   borderRadius: BorderRadius.circular(50.0),
-//                   color: Colors.greenAccent,
-//                 ),
-//                 child: TextButton(
-//                   onPressed: () {
-//                     Navigator.pushNamed(context, "/login");
-//                   } ,
-//                   child: Text('Log in', style: TextStyle(
-//                     color: Colors.black,
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                   ),
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 25.0,
-//               ),
-//               Container(
-//                 width: 100,
-//                 decoration: BoxDecoration(
-//                   borderRadius: BorderRadius.circular(50.0),
-//                   color: Colors.greenAccent,
-//                 ),
-//                 child: TextButton(
-//                   onPressed: () {
-//                     Navigator.pushNamed(context, "/register");
-//                   } ,
-//                   child: Text('Register',style: TextStyle(
-//                     color: Colors.black,
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                   ),
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 25,
-//               ),
-//               Container(
-//                 width: 100,
-//                 decoration: BoxDecoration(
-//                   borderRadius: BorderRadius.circular(50.0),
-//                   color: Colors.greenAccent,
-//                 ),
-//                 child: TextButton(
-//                   onPressed: () {
-//                     Navigator.pop(context);
-//                   } ,
-//                   child: Text('Back',style: TextStyle(
-//                     color: Colors.black,
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
