@@ -8,23 +8,23 @@ class RatingScreen extends StatelessWidget {
   // State<RatingScreen> createState() => RatingScreen();
   void function(){
     if(globals.Index==0){
-      globals.image='images/image1.png';
+      globals.image='assets/images/image1.png';
       globals.Index++;
     }else
     if(globals.Index==1){
-      globals.image='images/image2.png';
+      globals.image='assets/images/image2.png';
       globals.Index++;
     }else
     if(globals.Index==2){
-      globals.image='images/image3.png';
+      globals.image='assets/images/image3.png';
       globals.Index++;
     }else
     if(globals.Index==3){
-      globals.image='images/image4.png';
+      globals.image='assets/images/image4.png';
       globals.Index++;
     }else
     if(globals.Index==4){
-      globals.image='images/image5.png';
+      globals.image='assets/images/image5.png';
       globals.redirect="/main";
       globals.Index++;
     }
@@ -44,7 +44,7 @@ class RatingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                   Image.asset(
-                 'images/logo.png',
+                 'assets/images/logo.png',
                   fit: BoxFit.contain,
                   height: 54,
               ),

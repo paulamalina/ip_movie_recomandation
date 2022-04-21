@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,8 +19,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void logUser() async{
     final Uri apiUrl=Uri.parse("http://157.230.114.95:8090/login");
     final response=await http.post(apiUrl, body: jsonEncode({
-      "username": "radustefan1302@gmail.com",
-      "password": "nu fura parola"
+      "username": "Malina",
+      "password": "1234xyz",
     }),
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -26,7 +28,11 @@ class _LoginScreenState extends State<LoginScreen> {
           "Content-Type":"application/json",
         });
 
-
+    if(response.statusCode==200){
+      print("ok, am fost logat cu succes");
+    }else{
+      print("not ok, nu am fost logat cu succes");
+    }
   }
 
   final myNameController = TextEditingController();
@@ -67,14 +73,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Container(
                     width: 300,
-                      child: MyTextField(hintText: 'Paula Malina', text: 'Name', controller: myNameController),
+                      child: MyTextField(hintText: 'Popescu Maria', text: 'Name', controller: myNameController),
                   ),
                   SizedBox(
                     height: 50,
                   ),
                   Container(
                     width: 300,
-                      child: MyTextField(hintText: '1234567890', text: 'Password', controller: myPasswordController, obscureText: true),
+                      child: MyTextField(hintText: 'password', text: 'Password', controller: myPasswordController, obscureText: true),
                   ),
                   SizedBox(
                     height: 100,
@@ -112,6 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           child: TextButton(
                             onPressed: () {
+                              logUser();
                               Navigator.pushNamed(context, '/main');
                             } ,
                             child: Text('Login',style: TextStyle(
