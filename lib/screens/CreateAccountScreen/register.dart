@@ -25,13 +25,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     print("sunt in functie");
     final Uri apiUrl=Uri.parse("http://157.230.114.95:8090/api/user/register");
     final response=await http.post(apiUrl, body: jsonEncode({
-      "name": "Malina",
-      "email": "ex@gmail.com",
-      "password": "1234",
+      "name": "Paula",
+      "email": "pastraguspaula@gmail.com",
+      "password": "anaaremere",
       "gender": "F",
       "birthdate": "2001-02-14",
       "country": "Romania",
-      "phoneNumber": "0758000010",
+      "phoneNumber": "0758000000",
     }),
     headers: {
       "Access-Control-Allow-Origin": "*",
@@ -66,13 +66,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    print(myNameController.text);
+    //print(myNameController.text);
     return Scaffold(
       backgroundColor: Color(0xFF99D98C),
       body: ListView(
         children: [
           Container(
-            height: 60,
+            height: 30,
             color: Color(0xFF1A759F),
           ),
           Stack(
@@ -100,15 +100,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             //child: SvgPicture.asset('assets/images/logoClean.svg', width: 300, height: 200,),
                             child: Image.asset('assets/images/logo.png',  width: 150, height: 100,),
                           ),
-                          MyTextField(hintText: 'Paula Malina', text: 'Name',controller: myNameController,),
+                          MyTextField(hintText: 'Popescu Maria', text: 'Name',controller: myNameController,),
                           SizedBox(
                             height: 10,
                           ),
-                          MyTextField(hintText: 'pastraguspaula@gmail.com', text: 'Email',controller: myEmailController,),
+                          MyTextField(hintText: 'name@gmail.com', text: 'Email',controller: myEmailController,),
                           SizedBox(
                             height: 10,
                           ),
-                          MyTextField(hintText: '1234:)', text: 'Password',obscureText: true, controller: myPasswordController,),
+                          MyTextField(hintText: 'password', text: 'Password',obscureText: true, controller: myPasswordController,),
                           SizedBox(
                             height: 10,
                           ),
@@ -116,7 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           SizedBox(
                             height: 10,
                           ),
-                          MyTextField(hintText: '14.02.2001', text: 'Birthdate', controller: myBirthdateController,),
+                          MyTextField(hintText: 'Year.Month.Day', text: 'Birthdate', controller: myBirthdateController,),
                           SizedBox(
                             height: 10,
                           ),
@@ -162,7 +162,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                   child: TextButton(
                                     onPressed: () async{
-                                      createUser();
+                                      //createUser();
+                                      print("sunt in functie");
+                                      try{
+                                        final Uri apiUrl=Uri.parse("http://157.230.114.95:53426/api/user/register");
+                                        final response=await http.post(apiUrl, body: jsonEncode({
+                                          "name": "Ina",
+                                          "email": "ina@gmail.com",
+                                          "password": "anaaremere",
+                                          "gender": "F",
+                                          "birthdate": "2001-02-14",
+                                          "country": "Romania",
+                                          "phoneNumber": "0758000000",
+                                        }),
+                                            headers: {
+                                              "Access-Control-Allow-Origin": "*",
+                                              "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+                                              "Content-Type":"application/json",
+                                            });
+
+                                        print(response.request);
+                                      }catch(e){
+                                        print(e);
+                                      }
+
+                                      Navigator.pushNamed(context, '/genre');
                                     } ,
                                     child: Text('Register',style: TextStyle(
                                       color: Color(0xFF1A759F),
@@ -174,32 +198,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ],
                             ),
-<<<<<<< Updated upstream
-                            Container(
-                              width: 120,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Color(0xffB5E48C),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/genre');
-                                } ,
-                                child: Text('Register',style: TextStyle(
-                                  color: Color(0xFF1A759F),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 25,
-                                ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-=======
+
                           ),
                         ],
->>>>>>> Stashed changes
                       ),
                     ),
                   ),

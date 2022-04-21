@@ -1,17 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:ip_movie_recomandation/request/model.dart';
-import 'package:ip_movie_recomandation/widgets/MyTextField.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 
 import '../../widgets/MyBox.dart';
-import '../../widgets/MyTextField.dart';
 
- import 'package:flutter/material.dart';
 
 class GenreScreen extends StatefulWidget {
   const GenreScreen({Key? key}) : super(key: key);
@@ -137,7 +129,7 @@ class _GenreScreenState extends State<GenreScreen>{
               ),
               child: TextButton( 
                 onPressed: () {
-                  Navigator.pushNamed(context, "/main");
+                  Navigator.pushNamed(context, "/rating");
                 },
                 child: Text(
                   'Get Started',

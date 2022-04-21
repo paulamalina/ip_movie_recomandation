@@ -54,8 +54,6 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 }
-
-<<<<<<< Updated upstream
 // import 'package:flutter/material.dart';
 // import 'package:flutter_svg/svg.dart';
 // class WelcomeScreen extends StatelessWidget {
@@ -112,5 +110,3 @@ class WelcomeScreen extends StatelessWidget {
 //     );
 //   }
 // }
-=======
->>>>>>> Stashed changes
