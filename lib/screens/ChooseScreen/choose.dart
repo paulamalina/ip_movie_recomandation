@@ -49,7 +49,7 @@ class ChooseScreen extends StatelessWidget {
               ),
               child: TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, "/register");
+                  Navigator.pushNamed(context, "/changeProfile");
                 },
                 child: Text(
                   'Register',
@@ -88,4 +88,3 @@ class ChooseScreen extends StatelessWidget {
     );
   }
 }
-

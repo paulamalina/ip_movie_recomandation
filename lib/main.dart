@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ip_movie_recomandation/screens/ChangeProfileScreen/changeProfile.dart';
 import 'package:ip_movie_recomandation/screens/ChooseScreen/choose.dart';
 import 'package:ip_movie_recomandation/screens/CreateAccountScreen/register.dart';
 import 'package:ip_movie_recomandation/screens/GenreScreen/genre.dart';
@@ -19,13 +20,13 @@ void main() {
         '/': (context) => const WelcomeScreen(),
         // When navigating to the "/choose" route, build the ChooseScreen widget.
         '/choose': (context) => const ChooseScreen(),
-        '/login' : (context) => const LoginScreen(),
-        '/register' : (context) => const RegisterScreen(),
-        '/rating' : (context) => const RatingScreen(),
-        '/main' : (context) => const MainScreen(),
-        '/genre' : (context) => const GenreScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
+        '/rating': (context) => const RatingScreen(),
+        '/main': (context) => const MainScreen(),
+        '/genre': (context) => const GenreScreen(),
+        '/changeProfile': (context) => const ChangeProfieScreen(),
       },
     ),
   );
 }
-
