@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../widgets/MyTextField.dart';
+import '../../widgets/ResponsiveTextField.dart';
+import '../../widgets/BioTextField.dart';
 
 class ChangeProfieScreen extends StatefulWidget {
   const ChangeProfieScreen({Key? key}) : super(key: key);
@@ -18,20 +20,32 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
       body: Center(
         child: Column(
           children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
+            ),
             Container(
                 child: Image.asset(
               "/images/logo.png",
-              height: 100,
-              width: 100,
+              height: MediaQuery.of(context).size.height * 0.15,
             )),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
+            ),
             Container(
-                child: Text(
-              "Change your profile",
-              style: TextStyle(
-                color: Color(0xFF1A759F),
-                fontWeight: FontWeight.bold,
-              ),
-            )),
+              decoration: BoxDecoration(),
+              child: FittedBox(
+                  child: Text(
+                "Change your profile",
+                style: TextStyle(
+                  color: Color(0xFFB5E48C),
+                ),
+              )),
+              width: MediaQuery.of(context).size.width * 0.15,
+              height: MediaQuery.of(context).size.height * 0.05,
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
+            ),
             Container(
                 child: Center(
                     child: Row(
@@ -41,29 +55,50 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                 Column(
                   children: [
                     Container(
-                      width: 300,
-                      child: MyTextField(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      height: MediaQuery.of(context).size.height * 0.11,
+                      child: ResponsiveTextField(
+                          height: MediaQuery.of(context).size.height * 0.11,
+                          width: MediaQuery.of(context).size.width * 0.2,
                           hintText: 'Popescu Maria',
                           text: 'Name',
                           controller: TextEditingController()),
                     ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
                     Container(
-                      width: 300,
-                      child: MyTextField(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      height: MediaQuery.of(context).size.height * 0.11,
+                      child: ResponsiveTextField(
+                          height: MediaQuery.of(context).size.height * 0.11,
+                          width: MediaQuery.of(context).size.width * 0.2,
                           hintText: 'popescu.maria@gmail.com',
                           text: 'Email',
                           controller: TextEditingController()),
                     ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
                     Container(
-                      width: 300,
-                      child: MyTextField(
-                          hintText: 'gotta-Hide-It',
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      height: MediaQuery.of(context).size.height * 0.11,
+                      child: ResponsiveTextField(
+                          height: MediaQuery.of(context).size.height * 0.11,
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          hintText: 'strongpassword225200',
                           text: 'Password',
                           controller: TextEditingController()),
                     ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
                     Container(
-                      width: 300,
-                      child: MyTextField(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      height: MediaQuery.of(context).size.height * 0.11,
+                      child: ResponsiveTextField(
+                          height: MediaQuery.of(context).size.height * 0.11,
+                          width: MediaQuery.of(context).size.width * 0.2,
                           hintText: '21',
                           text: 'Age',
                           controller: TextEditingController()),
@@ -71,27 +106,43 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                   ],
                 ),
                 SizedBox(
-                  width: 150,
+                  width: MediaQuery.of(context).size.width * 0.15,
                 ),
                 Column(
                   children: [
                     Container(
-                      width: 300,
-                      child: MyTextField(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      height: MediaQuery.of(context).size.height * 0.11,
+                      child: ResponsiveTextField(
+                          height: MediaQuery.of(context).size.height * 0.11,
+                          width: MediaQuery.of(context).size.width * 0.2,
                           hintText: '12-02-1999',
                           text: 'Birthday',
                           controller: TextEditingController()),
                     ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
                     Container(
-                      width: 300,
-                      child: MyTextField(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      height: MediaQuery.of(context).size.height * 0.11,
+                      child: ResponsiveTextField(
+                          height: MediaQuery.of(context).size.height * 0.11,
+                          width: MediaQuery.of(context).size.width * 0.2,
                           hintText: 'Romania',
                           text: 'Country',
                           controller: TextEditingController()),
                     ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
                     Container(
-                      width: 300,
-                      child: MyTextField(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      child: BioTextField(
+                          height: MediaQuery.of(context).size.height * 0.37,
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          textHeight:
+                              MediaQuery.of(context).size.height * 0.031,
                           hintText: 'I love movies!',
                           text: 'Bio',
                           controller: TextEditingController()),
@@ -100,12 +151,12 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                 )
               ],
             ))),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
+            ),
             Container(
-                child: SizedBox(
-              height: 50,
-            )),
-            Container(
-                width: 100,
+                width: MediaQuery.of(context).size.width * 0.15,
+                height: MediaQuery.of(context).size.height * 0.04,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50.0),
                   color: Color(0xFFCAEEE4),
@@ -123,19 +174,19 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                     ),
                   ),
                 )),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
             Container(
-                child: SizedBox(
-              height: 50,
-            )),
-            Container(
-                width: 100,
+                width: MediaQuery.of(context).size.width * 0.15,
+                height: MediaQuery.of(context).size.height * 0.04,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50.0),
                   color: Color(0xFFCAEEE4),
                 ),
                 child: TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/main');
+                    Navigator.pushNamed(context, '/register');
                   },
                   child: const Text(
                     "Back",
