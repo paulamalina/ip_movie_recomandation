@@ -186,7 +186,7 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                 ),
                 child: TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/register');
+                    Navigator.pushNamed(context, '/main');
                   },
                   child: const Text(
                     "Back",

@@ -59,7 +59,12 @@ class MainScreen extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Icon(Icons.person),
+            child: IconButton(
+              icon: const Icon(Icons.person),
+              onPressed: () {
+                Navigator.pushNamed(context, '/changeProfile');
+              },
+            ),
           ),
           Container(
             width: 130,

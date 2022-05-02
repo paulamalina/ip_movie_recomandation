@@ -49,7 +49,7 @@ class ChooseScreen extends StatelessWidget {
               ),
               child: TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, "/changeProfile");
+                  Navigator.pushNamed(context, "/register");
                 },
                 child: Text(
                   'Register',
