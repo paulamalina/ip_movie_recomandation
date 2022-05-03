@@ -4,6 +4,7 @@ import 'package:ip_movie_recomandation/screens/CreateAccountScreen/register.dart
 import 'package:ip_movie_recomandation/screens/GenreScreen/genre.dart';
 import 'package:ip_movie_recomandation/screens/LoginScreen/login.dart';
 import 'package:ip_movie_recomandation/screens/MainScreen/main.dart';
+import 'package:ip_movie_recomandation/screens/MovieDetailsScreen/details.dart';
 import 'package:ip_movie_recomandation/screens/WelcomeScreen/welcome.dart';
 import 'package:ip_movie_recomandation/screens/RatingScreen/rating.dart';
 
@@ -24,6 +25,7 @@ void main() {
         '/rating' : (context) => const RatingScreen(),
         '/main' : (context) => const MainScreen(),
         '/genre' : (context) => const GenreScreen(),
+        '/details' : (context) => const MovieDetailsScreen(),
       },
     ),
   );
