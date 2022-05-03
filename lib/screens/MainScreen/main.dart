@@ -76,7 +76,7 @@ class MainScreen extends StatelessWidget {
             ),
             child: TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pushNamed(context, '/choose');
               },
               child: Text(
                 'Log out',
