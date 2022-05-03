@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ip_movie_recomandation/screens/ChangeProfileScreen/changeProfile.dart';
 import 'package:ip_movie_recomandation/screens/ChooseScreen/choose.dart';
 import 'package:ip_movie_recomandation/screens/CreateAccountScreen/register.dart';
 import 'package:ip_movie_recomandation/screens/GenreScreen/genre.dart';
@@ -30,4 +31,3 @@ void main() {
     ),
   );
 }
-

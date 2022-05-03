@@ -1,27 +1,3 @@
-// import 'package:flutter/material.dart';
-//
-// class MainScreen extends StatelessWidget {
-//   const MainScreen({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Main Screen'),
-//       ),
-//       body: Center(
-//         child: ElevatedButton(
-//           // Within the `WelcomeScreen` widget
-//           onPressed: () {
-//             // Navigate to the second screen using a named route.
-//             Navigator.pop(context);
-//           },
-//           child: const Text('go back'),
-//         ),
-//       ),
-//     );
-//   }
-// }
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ip_movie_recomandation/widgets/Toggle.dart';
@@ -83,7 +59,12 @@ class MainScreen extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Icon(Icons.person),
+            child: IconButton(
+              icon: const Icon(Icons.person),
+              onPressed: () {
+                Navigator.pushNamed(context, '/changeProfile');
+              },
+            ),
           ),
           Container(
             width: 130,
