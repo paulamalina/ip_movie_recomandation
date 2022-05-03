@@ -71,7 +71,7 @@ class ChooseScreen extends StatelessWidget {
               ),
               child: TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/');
                 },
                 child: Text(
                   'Back',
@@ -88,4 +88,3 @@ class ChooseScreen extends StatelessWidget {
     );
   }
 }
-

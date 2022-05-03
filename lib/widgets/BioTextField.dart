@@ -1,41 +1,52 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bordered_text/bordered_text.dart';
 
-class MyTextField extends StatelessWidget {
+class BioTextField extends StatelessWidget {
   final String hintText;
   final String text;
   final bool obscureText;
+  final double height;
+  final double width;
+  final double textHeight;
   final TextEditingController controller;
-  const MyTextField({Key? key, required this.hintText, required this.text, this.obscureText=false, required this.controller}) : super(key: key);
+  const BioTextField(
+      {Key? key,
+      required this.height,
+      required this.width,
+      required this.hintText,
+      required this.text,
+      required this.textHeight,
+      this.obscureText = false,
+      required this.controller})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        BorderedText(
-          strokeWidth: 4.0,
-          strokeColor: Color(0xFF2B6086),
-          child: Text(text, style: TextStyle(
+        Text(
+          text,
+          style: TextStyle(
             color: Color(0xFFB5E48C),
-            fontSize: 25,
-          ),),
+            fontSize: textHeight,
+          ),
         ),
         SizedBox(
-          height: 5,
+          height: height * 0.05,
         ),
         Container(
-          width: 300,
+          width: width,
+          height: height * 0.5,
           decoration: BoxDecoration(
-            color: const Color(0xFFEDF8FF),
+            color: Color.fromARGB(255, 214, 254, 255),
             borderRadius: BorderRadius.circular(25),
-            border: Border.all(color: Color(0xFF2B6086), width: 2),
+            border: Border.all(color: Color(0xFFB5E48C)),
           ),
           child: TextField(
             textAlignVertical: TextAlignVertical.center,
             textAlign: TextAlign.center,
-            maxLines: 1,
+            maxLines: 4,
             controller: controller,
             obscureText: obscureText,
             cursorColor: const Color(0xFF34A0A4),
@@ -47,7 +58,6 @@ class MyTextField extends StatelessWidget {
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: hintText,
-              contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               hintStyle: const TextStyle(
                 color: Color(0xFFBBBFC2),
               ),
