@@ -27,6 +27,7 @@ void main() {
         '/main' : (context) => const MainScreen(),
         '/genre' : (context) => const GenreScreen(),
         '/details' : (context) => const MovieDetailsScreen(),
+        '/changeProfile' : (context) => const ChangeProfieScreen(),
       },
     ),
   );
