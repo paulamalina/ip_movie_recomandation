@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:bordered_text/bordered_text.dart';
 
 class MyTextField extends StatelessWidget {
   final String hintText;
@@ -13,10 +14,14 @@ class MyTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(text, style: TextStyle(
-          color: Color(0xFFB5E48C),
-          fontSize: 25,
-        ),),
+        BorderedText(
+          strokeWidth: 4.0,
+          strokeColor: Color(0xFF2B6086),
+          child: Text(text, style: TextStyle(
+            color: Color(0xFFB5E48C),
+            fontSize: 25,
+          ),),
+        ),
         SizedBox(
           height: 5,
         ),
@@ -25,7 +30,7 @@ class MyTextField extends StatelessWidget {
           decoration: BoxDecoration(
             color: const Color(0xFFEDF8FF),
             borderRadius: BorderRadius.circular(25),
-            border: Border.all(color: Colors.yellow),
+            border: Border.all(color: Color(0xFF2B6086), width: 2),
           ),
           child: TextField(
             textAlignVertical: TextAlignVertical.center,
