@@ -11,9 +11,9 @@ class ImageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, '');
+    return InkWell(
+      onLongPress: ( ) {
+        Navigator.pushNamed(context, '/details');
       },
       child: Container(
         decoration: BoxDecoration(
