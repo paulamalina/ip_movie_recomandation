@@ -11,21 +11,24 @@ class ImageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onLongPress: ( ) {
-        Navigator.pushNamed(context, '/details');
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            color: Color(0xffB5E48C), borderRadius: BorderRadius.circular(30)),
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            image,
-            Text(text),
-          ],
-        ),
-      ),
-    );
+    return Padding(
+        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+        child: InkWell(
+          onLongPress: () {
+            Navigator.pushNamed(context, '/details');
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                color: Color(0xffB5E48C),
+                borderRadius: BorderRadius.circular(30)),
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                image,
+                Text(text),
+              ],
+            ),
+          ),
+        ));
   }
 }

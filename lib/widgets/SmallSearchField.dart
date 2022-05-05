@@ -9,7 +9,7 @@ class SmallSearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50.0),
         color: Color(0xffB5E48C),

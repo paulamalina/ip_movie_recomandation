@@ -18,6 +18,8 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   bool isLargeScreen = true;
+  double imgWidth = 300;
+  double imgHeight = 250;
 
   void setDimentions() {
     if (MediaQuery.of(context).size.width <= 700) {
@@ -33,8 +35,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double imgWidth = MediaQuery.of(context).size.width * 0.15;
-    double imgHeight = MediaQuery.of(context).size.height * 0.15;
     setDimentions();
 
     return Scaffold(
@@ -54,26 +54,23 @@ class _MainScreenState extends State<MainScreen> {
         ),
         actions: [
           isLargeScreen ? BigSearchField() : SmallSearchField(),
+          SizedBox(width: 20),
           Container(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             child: Icon(Icons.notifications),
           ),
+          SizedBox(width: 20),
           Container(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
             child: IconButton(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               icon: const Icon(Icons.person),
               onPressed: () {
                 Navigator.pushNamed(context, '/changeProfile');
               },
             ),
           ),
-          Container(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50.0),
-                color: Color(0xffB5E48C),
-              ),
-              child: isLargeScreen ? BigLogoutButton() : SmallLogoutButton()),
+          SizedBox(width: 20),
+          isLargeScreen ? BigLogoutButton() : SmallLogoutButton(),
           Container(
             width: 40,
             height: 40,
@@ -196,8 +193,8 @@ class _MainScreenState extends State<MainScreen> {
                         borderRadius: BorderRadius.circular(60.0),
                       ),
                       child: Wrap(
-                          alignment: WrapAlignment.spaceBetween,
-                          spacing: 20,
+                          alignment: WrapAlignment.center,
+                          spacing: 40,
                           children: [
                             ImageButton(
                               text: "film1",
