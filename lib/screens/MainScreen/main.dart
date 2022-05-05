@@ -98,84 +98,84 @@ class MainScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Row(
-        children: [
-          Drawer(
-            backgroundColor: Color(0xffB5E48C),
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: [
-                  ListTile(
-                    title: Center(
-                        child: const Text(
+      drawer: Drawer(
+        backgroundColor: Color(0xffB5E48C),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              ListTile(
+                title: Center(
+                    child: const Text(
                       "Saved movies",
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
                     )),
-                    textColor: Colors.white,
-                    //onTap: () {
-                    //},
-                  ),
-                  ListTile(
-                    title: Center(
-                        child: const Text(
+                textColor: Colors.white,
+                //onTap: () {
+                //},
+              ),
+              ListTile(
+                title: Center(
+                    child: const Text(
                       "For you",
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
                     )),
-                    textColor: Color(0xFF1A759F),
-                  ),
-                  ListTile(
-                    title: Center(
-                        child: const Text(
+                textColor: Color(0xFF1A759F),
+              ),
+              ListTile(
+                title: Center(
+                    child: const Text(
                       "Top rated",
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
                     )),
-                    textColor: Colors.white,
-                  ),
-                  ListTile(
-                    title: Center(
-                        child: const Text(
+                textColor: Colors.white,
+              ),
+              ListTile(
+                title: Center(
+                    child: const Text(
                       "Hidden gems",
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
                     )),
-                    textColor: Colors.white,
-                  ),
-                  ListTile(
-                    title: Center(
-                        child: const Text(
+                textColor: Colors.white,
+              ),
+              ListTile(
+                title: Center(
+                    child: const Text(
                       "Trending",
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
                     )),
-                    textColor: Colors.white,
-                  ),
-                  ListTile(
-                    title: Center(
-                        child: const Text(
+                textColor: Colors.white,
+              ),
+              ListTile(
+                title: Center(
+                    child: const Text(
                       "Classics",
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
                     )),
-                    textColor: Colors.white,
-                  ),
-                  ListTile(
-                    title: Center(
-                        child: const Text(
+                textColor: Colors.white,
+              ),
+              ListTile(
+                title: Center(
+                    child: const Text(
                       "~other options",
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
                     )),
-                    textColor: Colors.white,
-                  ),
-                ],
+                textColor: Colors.white,
               ),
-            ),
+            ],
           ),
+        ),
+      ),
+      body: Row(
+        children: [
           SingleChildScrollView(
             controller: ScrollController(),
             child: Row(
