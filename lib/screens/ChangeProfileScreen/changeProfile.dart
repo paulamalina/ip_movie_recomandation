@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ip_movie_recomandation/widgets/MyButton.dart';
 
+import 'package:ip_movie_recomandation/widgets/MyButton.dart';
 import '../../widgets/MyTextField.dart';
 import '../../widgets/ResponsiveTextField.dart';
 import '../../widgets/BioTextField.dart';
