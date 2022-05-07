@@ -13,6 +13,7 @@ class SmallSearchField extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50.0),
         color: Color(0xffB5E48C),
+        border: Border.all(color: Color(0xFF2B6086), width: 2),
       ),
       child: Center(
           child: IconButton(
