@@ -11,14 +11,32 @@ class MyBox extends StatefulWidget {
 
 class _MyBoxState extends State<MyBox> {
   Color boxColor = Color(0xffC5EAA4);
+  Color boxColorPressed = Color(0xffCAEEE4);
+  Color currentBoxCol = Color(0xffC5EAA4);
   bool ispressed = false;
+
+  void updateValue() {
+    if (ispressed) {
+      setState(() {
+        currentBoxCol = Color(0xffCAEEE4);
+      });
+    } else {
+      setState(() {
+        currentBoxCol = Color(0xffC5EAA4);
+      });
+    }
+  }
 
  @override
   Widget build(BuildContext context) { 
-    return Container(
+    updateValue();
+    return 
+    InkWell(
+      child:
+      Container(
         width: 300,
         height: 92,
-        padding: EdgeInsets.only(left: 40, right: 60),
+        padding: EdgeInsets.only(left: 30, right: 30),
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             border: Border.all(color: Colors.black),
@@ -27,35 +45,30 @@ class _MyBoxState extends State<MyBox> {
                 color: Colors.black.withOpacity(0.5),
                 spreadRadius: 3,
                 blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
+                offset: Offset(0, 3), 
               ),
             ],
             borderRadius: BorderRadius.circular(10.0),
-            color: ispressed ? Color(0xffCAEEE4) : boxColor,
+            color: currentBoxCol,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              width: 20,
-              height: 20,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-              )
-            ),
-            TextButton( 
-              onPressed: () => setState(() => ispressed = !ispressed),
-              child: Text(
+        child: Center(
+          child: Text(
                 widget.text,
                 style: TextStyle(
                   fontSize: 23,
                   color: Color(0xff168AAD),
                   fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-          ],
         ),
+    
+    onTap:(){
+      setState(() {
+        ispressed = !ispressed;
+      });
+    },
     );
+    
   }
 }
