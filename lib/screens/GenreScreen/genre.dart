@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-
+import 'package:ip_movie_recomandation/widgets/MyButton.dart';
 
 import '../../widgets/MyBox.dart';
 
@@ -37,6 +37,14 @@ class _GenreScreenState extends State<GenreScreen>{
     }
   }
 
+  void navigateToRegister() {
+    Navigator.pushNamed(context, '/register');
+  }
+
+  void applyAndNavigateToRating() {
+    Navigator.pushNamed(context, '/rating');
+  }
+
    @override
   Widget build(BuildContext context) {
     setValue();
@@ -69,7 +77,9 @@ class _GenreScreenState extends State<GenreScreen>{
               borderRadius: isLargeScreen ? BorderRadius.circular(50.0) : null,
               color: Colors.teal,
             ),
-            child: Column(
+            child:ListView(
+              children: [
+                  Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
@@ -90,101 +100,69 @@ class _GenreScreenState extends State<GenreScreen>{
                   height: 50,
                 ),
 
-              Row(
+              Container(
+                child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    children: [
-                      MyBox(text: 'Action'),
-                      MyBox(text: 'Animation'),
-                      MyBox(text: 'Comedy'),
-                      MyBox(text: 'Crime'),
-                    ],
-                  ),
-                  SizedBox(
-                    width: 50,
-                   ),
-                  Column(
-                    children: [
-                      MyBox(text: 'Drama'),
-                      MyBox(text: 'Family'),
-                      MyBox(text: 'Horror'),
-                      MyBox(text: 'Sci-Fi'),
-                    ],
+                  Wrap(
+                    spacing: 50,
+                    alignment: WrapAlignment.spaceBetween,
+                    children:[
+                      Container(
+                        child: Column(
+                          children: [
+                            MyBox(text: 'Action'),
+                            MyBox(text: 'Animation'),
+                            MyBox(text: 'Comedy'),
+                            MyBox(text: 'Crime'),
+
+                            SizedBox(
+                              width: 30,
+                            )
+                          ],
+                        ),
+                       ),
+                    Container(
+                        child: Column(
+                          children: [
+                            MyBox(text: 'Drama'),
+                            MyBox(text: 'Family'),
+                            MyBox(text: 'Horror'),
+                            MyBox(text: 'Sci-Fi'),
+
+                            SizedBox(
+                              width: 30,
+                            )
+                          ],
+                        ),
+                       ),
+                  ],
+                    
                   ),
                   SizedBox(
                     height: 30,
                    ),
                 ],
               ),
+              ),
+              ],
+                  
+            ),
+            
               Padding(
-                padding: const EdgeInsets.only(left: 30, right: 30),
+                padding: const EdgeInsets.fromLTRB(50, 0, 50, 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  Container(
-                      width: 150,
-                      height: 60,
-                      margin: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.5),
-                              spreadRadius: 2,
-                              blurRadius: 7,
-                              offset: Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Color(0xff168AAD),
+                      MyButton(
+                        text: "Back",
+                        buttonMethod: navigateToRegister,
                       ),
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          'Exit',
-                          style: TextStyle(
-                            fontSize: 17,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                  ),
-                  Container(
-                      width: 150,
-                      height: 60,
-                      margin: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.5),
-                              spreadRadius: 2,
-                              blurRadius: 7,
-                              offset: Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Color(0xff168AAD),
-                      ),
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, "/rating");
-                        },
-                        child: Text(
-                          'Get Started',
-                          style: TextStyle(
-                            fontSize: 17,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                  ),
-                ],),
+                      MyButton(
+                        text: "Next",
+                        buttonMethod: applyAndNavigateToRating,
+                      )
+                    ],),
               )
 
             ]),
