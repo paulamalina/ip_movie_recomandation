@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ip_movie_recomandation/widgets/MyButton.dart';
 import 'globals.dart' as globals;
 
 class RatingScreen extends StatefulWidget {
@@ -33,6 +34,32 @@ class _RatingScreenState extends State<RatingScreen> {
       globals.Index++;
     }
   }
+  void newMovie() {
+    //createUser();
+    Navigator.pushNamed(context, globals.redirect);
+    if(globals.Index==0){
+      globals.image='assets/images/image1.png';
+      globals.Index++;
+    }else
+    if(globals.Index==1){
+      globals.image='assets/images/image2.png';
+      globals.Index++;
+    }else
+    if(globals.Index==2){
+      globals.image='assets/images/image3.png';
+      globals.Index++;
+    }else
+    if(globals.Index==3){
+      globals.image='assets/images/image4.png';
+      globals.Index++;
+    }else
+    if(globals.Index==4){
+      globals.image='assets/images/image5.png';
+      globals.redirect="/main";
+      globals.Index++;
+    }
+  }
+    
 
   void reduceIndex(){ globals.Index--;}
 
@@ -60,7 +87,7 @@ class _RatingScreenState extends State<RatingScreen> {
   }
 @override
   Widget build(BuildContext context) {
-    function();
+    //function();
     setValue();
     return Container(
       decoration: BoxDecoration(
@@ -111,6 +138,16 @@ class _RatingScreenState extends State<RatingScreen> {
                       ),
                     ],
                   ),
+              //     decoration: BoxDecoration(
+              //   boxShadow: isLargeScreen ? [
+              //     BoxShadow(
+              //       blurRadius: 7,
+              //       spreadRadius: 2,
+              //     )
+              //   ] : null,
+              //   borderRadius: isLargeScreen ? BorderRadius.circular(50.0) : null,
+              //   color: Colors.teal,
+              // ),
                 ),
               ),
 
@@ -118,26 +155,30 @@ class _RatingScreenState extends State<RatingScreen> {
                 child: Align(
                     alignment: FractionalOffset(0.2, 0.8),
                 child: Container(
-                  width: 300,
-                  height: 100,
+                  width: 125,
+                  height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30.0),
                     color: Color(0xff76C893),
                   ),
 
 
-                  child: TextButton(
-                    onPressed: () {
-                      //function();
-                      Navigator.pushNamed(context, globals.redirect);
-                    } ,
-                    child: Text('Awful', style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    ),
-                  ),
+                  child: MyButton(
+                        text: "Awful",
+                        buttonMethod: newMovie,
+                      ),
+                  // TextButton(
+                  //   onPressed: () {
+                  //     //function();
+                  //     Navigator.pushNamed(context, globals.redirect);
+                  //   } ,
+                  //   child: Text('Awful', style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 30,
+                  //     fontWeight: FontWeight.bold,
+                  //   ),
+                  //   ),
+                  // ),
 
                 ),
                 ),
@@ -145,26 +186,29 @@ class _RatingScreenState extends State<RatingScreen> {
               Center(child: Align(
                     alignment: FractionalOffset(0.4, 0.8),
                 child: Container(
-                  width: 300,
-                  height: 100,
+                  width: 125,
+                  height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30.0),
                     color: Color(0xff99D98C),
                   ),
 
-
-                  child: TextButton(
-                    onPressed: () {
-                      //function();
-                      Navigator.pushNamed(context, globals.redirect);
-                    } ,
-                    child: Text('Average', style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    ),
-                  ),
+                      child: MyButton(
+                        text: "Average",
+                        buttonMethod: newMovie,
+                      ),
+                  // child: TextButton(
+                  //   onPressed: () {
+                  //     //function();
+                  //     Navigator.pushNamed(context, globals.redirect);
+                  //   } ,
+                  //   child: Text('Average', style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 30,
+                  //     fontWeight: FontWeight.bold,
+                  //   ),
+                  //   ),
+                  // ),
 
                 ),
                 ),
@@ -172,26 +216,29 @@ class _RatingScreenState extends State<RatingScreen> {
                 Center(child: Align(
                     alignment: FractionalOffset(0.6, 0.8),
                 child: Container(
-                  width: 300,
-                  height: 100,
+                  width: 125,
+                  height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30.0),
                     color: Color(0xffB5E48C),
                   ),
 
-
-                  child: TextButton(
-                    onPressed: () {
-                      //function();
-                      Navigator.pushNamed(context, globals.redirect);
-                    } ,
-                    child: Text('Good', style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    ),
-                  ),
+                      child: MyButton(
+                        text: "Good",
+                        buttonMethod: newMovie,
+                      ),
+                  // child: TextButton(
+                  //   onPressed: () {
+                  //     //function();
+                  //     Navigator.pushNamed(context, globals.redirect);
+                  //   } ,
+                  //   child: Text('Good', style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 30,
+                  //     fontWeight: FontWeight.bold,
+                  //   ),
+                  //   ),
+                  // ),
 
                 ),
                 ),
@@ -199,26 +246,30 @@ class _RatingScreenState extends State<RatingScreen> {
                 Center(child: Align(
                     alignment: FractionalOffset(0.8, 0.8),
                 child: Container(
-                  width: 300,
-                  height: 100,
+                  width: 125,
+                  height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30.0),
                     color: Color(0xffD9ED92),
                   ),
 
 
-                  child: TextButton(
-                    onPressed: () {
-                      //function();
-                      Navigator.pushNamed(context, globals.redirect);
-                    } ,
-                    child: Text('Amazing', style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    ),
-                  ),
+                      child: MyButton(
+                        text: "Amazing",
+                        buttonMethod: newMovie,
+                      ),
+                  // child: TextButton(
+                  //   onPressed: () {
+                  //     //function();
+                  //     Navigator.pushNamed(context, globals.redirect);
+                  //   } ,
+                    // child: Text('Amazing', style: TextStyle(
+                    //   color: Colors.black,
+                    //   fontSize: 30,
+                    //   fontWeight: FontWeight.bold,
+                    // ),
+                    //),
+                  //),
 
                 ),
                 ),
@@ -227,26 +278,29 @@ class _RatingScreenState extends State<RatingScreen> {
                 Center(child: Align(
                     alignment: FractionalOffset(0.5, 0.95),
                 child: Container(
-                  width: 300,
+                  width: 250,
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30.0),
                     color: Color(0xff1A759F),
                   ),
 
-
-                  child: TextButton(
-                    onPressed: () {
-                      //function();
-                      Navigator.pushNamed(context, globals.redirect);
-                    } ,
-                    child: Text('Have not seen yet...', style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    ),
-                  ),
+                      child: MyButton(
+                        text: "Have not seen yet...",
+                        buttonMethod: newMovie,
+                      ),
+                  // child: TextButton(
+                  //   onPressed: () {
+                  //     //function();
+                  //     Navigator.pushNamed(context, globals.redirect);
+                  //   } ,
+                  //   child: Text('Have not seen yet...', style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 25,
+                  //     fontWeight: FontWeight.bold,
+                  //   ),
+                  //   ),
+                  // ),
 
                 ),
                 ),
