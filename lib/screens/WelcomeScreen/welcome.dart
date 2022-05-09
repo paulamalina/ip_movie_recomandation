@@ -1,3 +1,4 @@
+import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 class WelcomeScreen extends StatefulWidget {
@@ -54,6 +55,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             width: containerWidth,
             height:containerHeight,
             decoration: BoxDecoration(
+              color: Color(0xFF34A0A4),
               boxShadow: isLargeScreen ? [
                 BoxShadow(
                   blurRadius: 7,
@@ -61,7 +63,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 )
               ] : null,
               borderRadius: isLargeScreen ? BorderRadius.circular(50.0) : null,
-              color: Colors.teal,
+              
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -72,16 +74,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 Container(
                   width: 400,
                   height: 50,
-                  decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(50.0),
-                   color: Color.fromRGBO(26, 117, 159, 1),
-                    ),
-                  child: Center(
-                    child: Text('Let\'s find a movie', style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 36,
+                  
+                  child: Container(
+                    child: BorderedText(
+                      strokeWidth: 4.0,
+                    strokeColor: Color(0xFF2B6086),
+                      child: Text('Let\'s find a movie', style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 36,
 
-                    ),),
+                      ),),
+                    ),
                   ),
                 ),
                 Center(
@@ -90,11 +93,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                 ),
                   SizedBox(
-                    width: 200,
+                    width: 160,
                     height: 50,
                     child: TextButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(26, 117, 159, 1)),
+                        backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 202, 238, 228)),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50.0),
@@ -106,8 +109,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       Navigator.pushNamed(context, "/choose");
                       },
                       child: Text('Get started', style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 28,
+                        color: Color(0xFF1A759F),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
                       ),),
                     ),
                   ),
