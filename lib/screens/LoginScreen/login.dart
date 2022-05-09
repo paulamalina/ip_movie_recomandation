@@ -65,11 +65,9 @@ class _LoginScreenState extends State<LoginScreen> {
     setValue();
     return Container(
       decoration: BoxDecoration(
-        color: Color(0xFF99D98C),
         gradient: LinearGradient(
           colors: [
-            Colors.white,
-            Color(0xFF99D98C),
+            Colors.white, Color.fromRGBO(52, 160, 164, 1)
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -82,14 +80,12 @@ class _LoginScreenState extends State<LoginScreen> {
             height: containerHeight,
             width: containerWidth,
             decoration: BoxDecoration(
-              color: Color(0xFF34A0A4),
+              color: Colors.teal,
               borderRadius: isLargeScreen ? BorderRadius.circular(50) : null,
               boxShadow: isLargeScreen ? [
                 BoxShadow(
-                  color: Colors.teal.shade700,
-                  spreadRadius: 3,
-                  blurRadius: 2,
-                  offset: Offset(1, 0),
+                   blurRadius: 7,
+                  spreadRadius: 2,
                 ),
               ] : null,
             ),
@@ -129,19 +125,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: 100,
                         height: 50,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: Color(0xff52B69A),
-                            border: Border.all(color: Color(0xffB5E48C), width: 1),
+                          borderRadius: BorderRadius.circular(50.0),
+                          color: Color(0xFFCAEEE4),
+                           
                         ),
                         child: TextButton(
                           onPressed: () {
                             Navigator.pop(context);
                           } ,
                           child: Text('Back',style: TextStyle(
-                            color: Color(0xFF34A0A4),
+                            color: Color(0xFF1A759F),
                             fontWeight: FontWeight.bold,
                             fontSize: 25,
-                          ),
+                            ),
                           ),
                         ),
                       ),
@@ -149,9 +145,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: 100,
                         height: 50,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: Color(0xffB5E48C),
-                            border: Border.all(color: Color(0xFF2B6086), width: 2),
+                          borderRadius: BorderRadius.circular(50.0),
+                          color: Color(0xFFCAEEE4),
+                          
                         ),
                         child: TextButton(
                           onPressed: () {

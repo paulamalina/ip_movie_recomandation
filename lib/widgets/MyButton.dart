@@ -13,11 +13,11 @@ class MyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 100,
+        width: 125,
         height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color: Color(0xffB5E48C),
+          color: Color.fromARGB(255, 0, 0, 0),
           border: Border.all(color: Color(0xFF2B6086), width: 2),
         ),
         child: TextButton(
