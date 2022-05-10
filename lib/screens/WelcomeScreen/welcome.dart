@@ -1,6 +1,8 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:ip_movie_recomandation/widgets/MyButton.dart';
+
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
 
@@ -32,6 +34,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       });
     }
   }
+  void navigateToChoose() {
+    Navigator.pushNamed(context, "/choose");
+  }
   @override
   Widget build(BuildContext context) {
     setValue();
@@ -55,7 +60,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             width: containerWidth,
             height:containerHeight,
             decoration: BoxDecoration(
-              color: Color(0xFF34A0A4),
+              color: Colors.teal,
               boxShadow: isLargeScreen ? [
                 BoxShadow(
                   blurRadius: 7,
@@ -78,7 +83,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   child: Container(
                     child: BorderedText(
                       strokeWidth: 4.0,
-                    strokeColor: Color(0xFF2B6086),
+                      strokeColor: Color(0xFF2B6086),
                       child: Text('Let\'s find a movie', style: TextStyle(
                         color: Colors.white,
                         fontSize: 36,
@@ -95,25 +100,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   SizedBox(
                     width: 160,
                     height: 50,
-                    child: TextButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 202, 238, 228)),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.0),
-                            ),
-                        )
-
+                    child: MyButton(
+                        text: 'Get started',
+                        buttonMethod: navigateToChoose,
                       ),
-                      onPressed: (){
-                      Navigator.pushNamed(context, "/choose");
-                      },
-                      child: Text('Get started', style: TextStyle(
-                        color: Color(0xFF1A759F),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                      ),),
-                    ),
                   ),
               ],
             ),

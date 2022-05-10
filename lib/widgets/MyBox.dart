@@ -10,19 +10,19 @@ class MyBox extends StatefulWidget {
 }
 
 class _MyBoxState extends State<MyBox> {
-  Color boxColor = Color(0xffC5EAA4);
-  Color boxColorPressed = Color(0xffCAEEE4);
+  Color boxColor = Color.fromRGBO(202, 238, 228, 1);
+  Color boxColorPressed = Color(0xffC5EAA4);
   Color currentBoxCol = Color(0xffC5EAA4);
   bool ispressed = false;
 
   void updateValue() {
     if (ispressed) {
       setState(() {
-        currentBoxCol = Color(0xffCAEEE4);
+        currentBoxCol = Color.fromARGB(255, 121, 234, 202);
       });
     } else {
       setState(() {
-        currentBoxCol = Color(0xffC5EAA4);
+        currentBoxCol = Color(0xffCAEEE4);
       });
     }
   }
@@ -48,7 +48,7 @@ class _MyBoxState extends State<MyBox> {
                 offset: Offset(0, 3), 
               ),
             ],
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(30.0),
             color: currentBoxCol,
         ),
         child: Center(

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:bordered_text/bordered_text.dart';
+import 'package:ip_movie_recomandation/widgets/MyButton.dart';
 
 import '../../widgets/MyTextField.dart';
 
@@ -57,6 +58,13 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     }
   }
+   void navigateToChoose() {
+    Navigator.pushNamed(context, "/choose");
+  }
+   void navigateToDetails() {
+    Navigator.pushNamed(context, "/details");
+  }
+
 
   final myNameController = TextEditingController();
   final myPasswordController= TextEditingController();
@@ -121,47 +129,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        width: 100,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50.0),
-                          color: Color(0xFFCAEEE4),
-                           
-                        ),
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          } ,
-                          child: Text('Back',style: TextStyle(
-                            color: Color(0xFF1A759F),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25,
-                            ),
-                          ),
+                      Container(                        
+                        child: MyButton(
+                          text: 'Back',
+                        buttonMethod: navigateToChoose,
                         ),
                       ),
                       Container(
-                        width: 100,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50.0),
-                          color: Color(0xFFCAEEE4),
-                          
-                        ),
-                        child: TextButton(
-                          onPressed: () {
-                            logUser();
-                            Navigator.pushNamed(context, '/details');
-                          } ,
-                          child: Text('Login',style: TextStyle(
-                            color: Color(0xFF1A759F),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25,
+                        child: MyButton(
+                          text: 'Login',
+                        buttonMethod: navigateToDetails,
                           ),
                           ),
-                        ),
-                      ),
                     ],
                   ),
                 ),
