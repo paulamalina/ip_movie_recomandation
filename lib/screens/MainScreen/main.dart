@@ -57,9 +57,9 @@ class _MainScreenState extends State<MainScreen> {
           backgroundColor: Colors.teal,
           title: Container(
             width: 60,
-            child: Image.asset(
-              "assets/images/logo.png",
-            ),
+            child:  SvgPicture.asset(
+                  "assets/images/LogoSvg2.svg", height: 100,
+                ),
             /*
             child: SvgPicture.asset(
               "assets/images/logoClean.svg",

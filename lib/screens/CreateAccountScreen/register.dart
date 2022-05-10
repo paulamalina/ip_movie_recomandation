@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:ip_movie_recomandation/request/model.dart';
 import 'package:ip_movie_recomandation/widgets/MyTextField.dart';
 import 'package:ip_movie_recomandation/widgets/MyButton.dart';
@@ -137,10 +138,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               children: [
                 Center(
                   //child: SvgPicture.asset('assets/images/logoClean.svg', width: 300, height: 200,),
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    height: 100,
-                  ),
+                  child:  SvgPicture.asset(
+                  "assets/images/LogoSvg2.svg", height: 100,
+                ),
                 ),
                 Center(
                     child: MyTextField(

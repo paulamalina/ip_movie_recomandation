@@ -73,8 +73,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  "assets/images/logo.png", width: 100, height: 100,
+                SvgPicture.asset(
+                  "assets/images/LogoSvg2.svg", height: 100,
                 ),
                 Container(
                   width: 400,
