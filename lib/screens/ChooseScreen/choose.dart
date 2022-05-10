@@ -84,10 +84,9 @@ class _ChooseScreenState extends State<ChooseScreen> {
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.all(25.0),
-                      child: Image.asset(
-                        'assets/images/logo.png',
-                        height: 100,
-                      ),
+                      child:  SvgPicture.asset(
+                  "assets/images/LogoSvg2.svg", height: 100,
+                ),
                     ),
                   ),
                   Center(

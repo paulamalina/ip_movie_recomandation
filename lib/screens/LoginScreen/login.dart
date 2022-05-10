@@ -104,7 +104,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.only(top: 40),
                   child: Center(
                     //child: SvgPicture.asset('assets/images/logoClean.svg', width: 300, height: 200,),
-                    child: Image.asset('assets/images/logo.png', height: 100,),
+                    child:  SvgPicture.asset(
+                  "assets/images/LogoSvg2.svg", height: 100,
+                ),
                   ),
                 ),
                 SizedBox(

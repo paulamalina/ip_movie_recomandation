@@ -64,7 +64,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             ),
             Center(
               child: Container(
-                height: 1200,
+                height: 1100,
                 width: 700,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
@@ -99,7 +99,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             children: [
                               //SvgPicture.asset('assets/images/logo.svg'),
           
-                               Center(child: Image.asset('assets/images/logo.png', height: 100,)),
+                               Center(child:  SvgPicture.asset(
+                  "assets/images/LogoSvg2.svg", height: 100,
+                ),),
                               
                                  SizedBox(
                             width: 50,
@@ -139,7 +141,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           
                             ],
                           ),
-
                         ],
                       ),
                       Padding(
