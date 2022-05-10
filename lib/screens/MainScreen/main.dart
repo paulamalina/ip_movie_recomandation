@@ -73,7 +73,7 @@ class _MainScreenState extends State<MainScreen> {
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: Icon(
                 Icons.notifications,
-                color: Color(0xFF99D98C),
+                color: Color(0xFFCAEEE4),
               ),
             ),
             SizedBox(width: 20),
@@ -82,7 +82,7 @@ class _MainScreenState extends State<MainScreen> {
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 icon: const Icon(
                   Icons.person,
-                  color: Color(0xFF99D98C),
+                 color: Color(0xFFCAEEE4),
                 ),
                 onPressed: () {
                   Navigator.pushNamed(context, '/changeProfile');
@@ -110,7 +110,7 @@ class _MainScreenState extends State<MainScreen> {
                     "Saved",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
                   )),
-                  textColor: Color(0xffB5E48C),
+                  textColor: Color(0xFFCAEEE4),
                   //onTap: () {
                   //},
                 ),
@@ -120,8 +120,8 @@ class _MainScreenState extends State<MainScreen> {
                     width: 200,
                     height: 50,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Color(0xffB5E48C),
+                      borderRadius: BorderRadius.circular(50.0),
+                      color: Color(0xFFCAEEE4),
                       border: Border.all(color: Color(0xFF2B6086), width: 2),
                     ),
                     child: Center(
@@ -135,7 +135,7 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                   )),
-                  textColor: Color(0xffB5E48C),
+                  textColor: Color(0xFFCAEEE4),
                 ),
                 ListTile(
                   title: Center(
@@ -143,7 +143,7 @@ class _MainScreenState extends State<MainScreen> {
                     "Top rated",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
                   )),
-                  textColor: Color(0xffB5E48C),
+                  textColor: Color(0xFFCAEEE4),
                 ),
                 ListTile(
                   title: Center(
@@ -151,7 +151,7 @@ class _MainScreenState extends State<MainScreen> {
                     "Hidden gems",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
                   )),
-                  textColor: Color(0xffB5E48C),
+                  textColor: Color(0xFFCAEEE4),
                 ),
                 ListTile(
                   title: Center(
@@ -159,7 +159,7 @@ class _MainScreenState extends State<MainScreen> {
                     "Trending",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
                   )),
-                  textColor: Color(0xffB5E48C),
+                  textColor: Color(0xFFCAEEE4),
                 ),
                 ListTile(
                   title: Center(
@@ -167,7 +167,7 @@ class _MainScreenState extends State<MainScreen> {
                     "Classics",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
                   )),
-                  textColor: Color(0xffB5E48C),
+                  textColor: Color(0xFFCAEEE4),
                 ),
                 ListTile(
                   title: Center(
@@ -175,14 +175,13 @@ class _MainScreenState extends State<MainScreen> {
                     "~other options",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
                   )),
-                  textColor: Color(0xffB5E48C),
+                  textColor: Color(0xFFCAEEE4),
                 ),
               ],
             ),
           ),
         ),
-        body: Row(
-          children: [
+        body: 
             SingleChildScrollView(
               controller: ScrollController(),
               child: Row(
@@ -201,7 +200,13 @@ class _MainScreenState extends State<MainScreen> {
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           color: Colors.teal,
-                          borderRadius: BorderRadius.circular(60.0),
+                          borderRadius: BorderRadius.circular(50.0),
+                          boxShadow: [
+                         BoxShadow(
+                          blurRadius: 7,
+                           spreadRadius: 2,
+                        )
+                      ],
                         ),
                         child: Row(
                           children: [
@@ -212,7 +217,7 @@ class _MainScreenState extends State<MainScreen> {
                                 strokeColor: Color(0xFF2B6086),
                                 child: Text("For you",
                                     style: TextStyle(
-                                        color: Color(0xFFB5E48C),
+                                        color: Color(0xFFCAEEE4),
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold)),
                               ),
@@ -228,8 +233,14 @@ class _MainScreenState extends State<MainScreen> {
                         height: MediaQuery.of(context).size.height * 1.5,
                         width: MediaQuery.of(context).size.width * 0.95,
                         decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 7,
+                           spreadRadius: 2,
+                        )
+                      ],
                           color: Colors.teal,
-                          borderRadius: BorderRadius.circular(60.0),
+                          borderRadius: BorderRadius.circular(50.0),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(30.0),
@@ -317,9 +328,8 @@ class _MainScreenState extends State<MainScreen> {
                 ],
               ),
             ),
-          ],
         ),
-      ),
+      
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ip_movie_recomandation/widgets/MyButton.dart';
 import 'globals.dart' as globals;
 
 class RatingScreen extends StatefulWidget {
@@ -32,6 +33,9 @@ class _RatingScreenState extends State<RatingScreen> {
       globals.redirect="/main";
       globals.Index++;
     }
+  }
+  void navigateToRating() {
+    Navigator.pushNamed(context, globals.redirect);
   }
 
   void reduceIndex(){ globals.Index--;}
@@ -131,7 +135,7 @@ class _RatingScreenState extends State<RatingScreen> {
                           height: 80,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30.0),
-                            color: Color(0xff76C893),
+                            color: Color.fromARGB(255, 202, 238, 228),
                           ),
                           child: TextButton(
                             onPressed: () {
@@ -152,7 +156,7 @@ class _RatingScreenState extends State<RatingScreen> {
                           height: 80,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30.0),
-                            color: Color(0xff99D98C),
+                            color: Color.fromARGB(255, 181, 238, 228),
                           ),
                           child: TextButton(
                             onPressed: () {
@@ -180,7 +184,7 @@ class _RatingScreenState extends State<RatingScreen> {
                         height: 80,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30.0),
-                          color: Color(0xffB5E48C),
+                          color: Color.fromARGB(255, 128, 239, 216),
                         ),
                         child: TextButton(
                           onPressed: () {
@@ -201,7 +205,7 @@ class _RatingScreenState extends State<RatingScreen> {
                         height: 80,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30.0),
-                          color: Color(0xffD9ED92),
+                          color: Color.fromARGB(255, 51, 233, 196),
                         ),
                         child: TextButton(
                           onPressed: () {
@@ -226,31 +230,15 @@ class _RatingScreenState extends State<RatingScreen> {
                 ),
 
                 Container(
-                  width: 150,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30.0),
-                    color: Color(0xff1A759F),
+                  child: MyButton(
+                    text: 'Skip',
+                    buttonMethod: navigateToRating,
                   ),
-                  child: TextButton(
-                    onPressed: () {
-                      //function();
-                      Navigator.pushNamed(context, globals.redirect);
-                    } ,
-                  child: Text('Skip', style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-
                 ),
                   ],
                 ),
                 
-              ),
-              
+              ),              
               ],
               ),
             ),

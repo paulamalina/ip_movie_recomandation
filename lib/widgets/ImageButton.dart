@@ -18,8 +18,8 @@ class ImageButton extends StatelessWidget {
             Navigator.pushNamed(context, '/details');
           },
           child: Container(
-            decoration: BoxDecoration(
-              color: Color(0xffB5E48C),
+            decoration: BoxDecoration(      
+              color: Color(0xFFCAEEE4),
               borderRadius: BorderRadius.circular(30),
               border: Border.all(color: Color(0xFF2B6086), width: 2),
             ),

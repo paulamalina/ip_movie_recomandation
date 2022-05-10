@@ -11,13 +11,13 @@ class _ToggleButtonState extends State<ToggleButton> {
   @override
   Widget build(BuildContext context) => Container(
         child: ToggleButtons(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(50.0),
           isSelected: isSelected,
-          fillColor: Color(0xffB5E48C),
+          fillColor: Color(0xFFCAEEE4),
           borderWidth: 2,
           borderColor: Color(0xFF2B6086),
           selectedBorderColor: Color(0xFF2B6086),
-          color: Color(0xffB5E48C),
+          color: Color(0xFFCAEEE4),
           selectedColor: Color(0xFF1A759F),
           renderBorder: true,
           highlightColor: Colors.white,

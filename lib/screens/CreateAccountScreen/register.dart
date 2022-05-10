@@ -42,7 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               "POST, GET, OPTIONS, PUT, DELETE, HEAD",
           "Content-Type": "application/json",
         });
-
+        
     print(response.request);
     if (response.statusCode == 200) {
       final String responseString = response.body;
@@ -53,7 +53,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return 1;
     }
   }
-
   double containerWidth = 700;
   double containerHeight = 850;
   bool isSmallScreen = false;
@@ -75,7 +74,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       });
     }
   }
-
   @override
   void dispose() {
     // TODO: implement dispose
@@ -88,7 +86,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     myGenderController.dispose();
     myEmailController.dispose();
   }
-
   void goBack() {
     Navigator.pop(context);
   }
@@ -102,6 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     setValue();
     return Container(
+
       decoration: BoxDecoration(
         color: Color(0xFF99D98C),
         gradient: LinearGradient(
@@ -118,118 +116,117 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Center(
-          child: Container(
-            height: containerHeight,
-            width: containerWidth,
-            decoration: BoxDecoration(
-              //color: Color(0xFF34A0A4),
-              color: Colors.teal,
-              borderRadius: isLargeScreen ? BorderRadius.circular(50) : null,
-              boxShadow: isLargeScreen
-                  ? [
-                      BoxShadow(
-                        //color: Colors.teal.shade700,
-                        color: Colors.teal,
-                        spreadRadius: 3,
-                        blurRadius: 2,
-                        offset: Offset(1, 0),
-                      ),
-                    ]
-                  : null,
-            ),
-            child: ListView(
-              //mainAxisAlignment: MainAxisAlignment.center,
-
-              children: [
-                Center(
-                  //child: SvgPicture.asset('assets/images/logoClean.svg', width: 300, height: 200,),
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    height: 100,
+        body: SingleChildScrollView(
+          child: Center(
+            child: Container(
+              height: containerHeight,
+              width: containerWidth,
+              decoration: BoxDecoration(
+                //color: Color(0xFF34A0A4),
+                color: Colors.teal,
+                borderRadius: isLargeScreen ? BorderRadius.circular(50) : null,
+                boxShadow: isLargeScreen
+                    ? [
+                        BoxShadow(           
+                          spreadRadius: 2,
+                          blurRadius: 7,
+                        ),
+                      ]
+                    : null,
+              ),
+              child: ListView(
+                //mainAxisAlignment: MainAxisAlignment.center,
+        
+                children: [
+                  Center(
+                    //child: SvgPicture.asset('assets/images/logoClean.svg', width: 300, height: 200,),
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      height: 100,
+                    ),
                   ),
-                ),
-                Center(
-                    child: MyTextField(
-                  hintText: 'Popescu Maria',
-                  text: 'Name',
-                  controller: myNameController,
-                )),
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                    child: MyTextField(
-                  hintText: 'name@gmail.com',
-                  text: 'Email',
-                  controller: myEmailController,
-                )),
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                    child: MyTextField(
-                  hintText: 'password',
-                  text: 'Password',
-                  obscureText: true,
-                  controller: myPasswordController,
-                )),
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                    child: MyTextField(
-                  hintText: 'M/F',
-                  text: 'Gender',
-                  controller: myGenderController,
-                )),
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                    child: MyTextField(
-                  hintText: 'Year.Month.Day',
-                  text: 'Birthdate',
-                  controller: myBirthdateController,
-                )),
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                    child: MyTextField(
-                  hintText: 'Romania',
-                  text: 'Country',
-                  controller: myCountryController,
-                )),
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                    child: MyTextField(
-                  hintText: '07xx xxx xxx',
-                  text: 'Phone Number',
-                  controller: myPhoneNumberController,
-                )),
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 40, right: 40),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      MyButton(
-                        text: "Back",
-                        buttonMethod: goBack,
-                      ),
-                      MyButton(
-                        text: 'Register',
-                        buttonMethod: register,
-                      ),
-                    ],
+                  Center(
+                      child: MyTextField(
+                    hintText: 'Popescu Maria',
+                    text: 'Name',
+                    controller: myNameController,
+                  )),
+                  SizedBox(
+                    height: 10,
                   ),
-                ),
-              ],
+                  Center(
+                      child: MyTextField(
+                    hintText: 'name@gmail.com',
+                    text: 'Email',
+                    controller: myEmailController,
+                  )),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                      child: MyTextField(
+                    hintText: 'password',
+                    text: 'Password',
+                    obscureText: true,
+                    controller: myPasswordController,
+                  )),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                      child: MyTextField(
+                    hintText: 'M/F',
+                    text: 'Gender',
+                    controller: myGenderController,
+                  )),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                      child: MyTextField(
+                    hintText: 'Year.Month.Day',
+                    text: 'Birthdate',
+                    controller: myBirthdateController,
+                  )),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                      child: MyTextField(
+                    hintText: 'Romania',
+                    text: 'Country',
+                    controller: myCountryController,
+                  )),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                      child: MyTextField(
+                    hintText: '07xx xxx xxx',
+                    text: 'Phone Number',
+                    controller: myPhoneNumberController,
+                  )),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 40, right: 40),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        MyButton(
+                          text: "Back",
+                          buttonMethod: goBack,
+                        ),
+                        MyButton(
+                          text: 'Register',
+                          buttonMethod: register,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
