@@ -124,6 +124,7 @@ class _RatingScreenState extends State<RatingScreen> {
                   children: [
                     Wrap(
                     spacing: 20,
+                    runSpacing: 20,
                     alignment: WrapAlignment.spaceBetween,
                     children:[ 
                       Wrap(

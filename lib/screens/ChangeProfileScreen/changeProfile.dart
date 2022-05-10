@@ -210,13 +210,13 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             MyButton(
-                              text: "Apply",
+                              text: "Back",
                               buttonMethod: navigateToMain,
                             ),
                             MyButton(
-                              text: "Back",
+                              text: "Apply",
                               buttonMethod: navigateToMain,
-                            )
+                            ),
                           ]))
                 ],
               ),

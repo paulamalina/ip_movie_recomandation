@@ -78,8 +78,8 @@ class _ChooseScreenState extends State<ChooseScreen> {
               color: Colors.teal,
             ),
             child: Center(
-              child: ListView(
-                //mainAxisAlignment: MainAxisAlignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Center(
                     child: Padding(

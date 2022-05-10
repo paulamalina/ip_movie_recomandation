@@ -64,7 +64,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             ),
             Center(
               child: Container(
-                height: 1100,
+                height: 1200,
                 width: 700,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
