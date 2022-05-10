@@ -230,7 +230,7 @@ class _MainScreenState extends State<MainScreen> {
                         height: 30,
                       ),
                       Container(
-                        height: MediaQuery.of(context).size.height * 1.5,
+                        //height: MediaQuery.of(context).size.height * 1.5,
                         width: MediaQuery.of(context).size.width * 0.95,
                         decoration: BoxDecoration(
                       boxShadow: [
@@ -242,86 +242,83 @@ class _MainScreenState extends State<MainScreen> {
                           color: Colors.teal,
                           borderRadius: BorderRadius.circular(50.0),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(30.0),
-                          child: Wrap(
-                              alignment: WrapAlignment.center,
-                              spacing: 40,
-                              children: [
-                                ImageButton(
-                                  text: "film1",
-                                  image: Image.asset(
-                                    "assets/images/image1.png",
-                                    width: imgWidth,
-                                    height: imgHeight,
-                                  ),
+                        child: Wrap(
+                            alignment: WrapAlignment.center,
+                            spacing: 40,
+                            children: [
+                              ImageButton(
+                                text: "film1",
+                                image: Image.asset(
+                                  "assets/images/image1.png",
+                                  width: imgWidth,
+                                  height: imgHeight,
                                 ),
-                                ImageButton(
-                                  text: "film2",
-                                  image: Image.asset(
-                                    "assets/images/image1.png",
-                                    width: imgWidth,
-                                    height: imgHeight,
-                                  ),
+                              ),
+                              ImageButton(
+                                text: "film2",
+                                image: Image.asset(
+                                  "assets/images/image1.png",
+                                  width: imgWidth,
+                                  height: imgHeight,
                                 ),
-                                ImageButton(
-                                  text: "film3",
-                                  image: Image.asset(
-                                    "assets/images/image1.png",
-                                    width: imgWidth,
-                                    height: imgHeight,
-                                  ),
+                              ),
+                              ImageButton(
+                                text: "film3",
+                                image: Image.asset(
+                                  "assets/images/image1.png",
+                                  width: imgWidth,
+                                  height: imgHeight,
                                 ),
-                                ImageButton(
-                                  text: "film4",
-                                  image: Image.asset(
-                                    "assets/images/image1.png",
-                                    width: imgWidth,
-                                    height: imgHeight,
-                                  ),
+                              ),
+                              ImageButton(
+                                text: "film4",
+                                image: Image.asset(
+                                  "assets/images/image1.png",
+                                  width: imgWidth,
+                                  height: imgHeight,
                                 ),
-                                ImageButton(
-                                  text: "film5",
-                                  image: Image.asset(
-                                    "assets/images/image1.png",
-                                    width: imgWidth,
-                                    height: imgHeight,
-                                  ),
+                              ),
+                              ImageButton(
+                                text: "film5",
+                                image: Image.asset(
+                                  "assets/images/image1.png",
+                                  width: imgWidth,
+                                  height: imgHeight,
                                 ),
-                                ImageButton(
-                                  text: "film6",
-                                  image: Image.asset(
-                                    "assets/images/image1.png",
-                                    width: imgWidth,
-                                    height: imgHeight,
-                                  ),
+                              ),
+                              ImageButton(
+                                text: "film6",
+                                image: Image.asset(
+                                  "assets/images/image1.png",
+                                  width: imgWidth,
+                                  height: imgHeight,
                                 ),
-                                ImageButton(
-                                  text: "film7",
-                                  image: Image.asset(
-                                    "assets/images/image1.png",
-                                    width: imgWidth,
-                                    height: imgHeight,
-                                  ),
+                              ),
+                              ImageButton(
+                                text: "film7",
+                                image: Image.asset(
+                                  "assets/images/image1.png",
+                                  width: imgWidth,
+                                  height: imgHeight,
                                 ),
-                                ImageButton(
-                                  text: "film8",
-                                  image: Image.asset(
-                                    "assets/images/image1.png",
-                                    width: imgWidth,
-                                    height: imgHeight,
-                                  ),
+                              ),
+                              ImageButton(
+                                text: "film8",
+                                image: Image.asset(
+                                  "assets/images/image1.png",
+                                  width: imgWidth,
+                                  height: imgHeight,
                                 ),
-                                ImageButton(
-                                  text: "film9",
-                                  image: Image.asset(
-                                    "assets/images/image1.png",
-                                    width: imgWidth,
-                                    height: imgHeight,
-                                  ),
+                              ),
+                              ImageButton(
+                                text: "film9",
+                                image: Image.asset(
+                                  "assets/images/image1.png",
+                                  width: imgWidth,
+                                  height: imgHeight,
                                 ),
-                              ]),
-                        ),
+                              ),
+                            ]),
                       ),
                     ],
                   ),
