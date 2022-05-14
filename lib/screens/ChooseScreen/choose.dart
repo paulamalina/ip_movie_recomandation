@@ -78,16 +78,15 @@ class _ChooseScreenState extends State<ChooseScreen> {
               color: Colors.teal,
             ),
             child: Center(
-              child: ListView(
-                //mainAxisAlignment: MainAxisAlignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.all(25.0),
-                      child: Image.asset(
-                        'assets/images/logo.png',
-                        height: 100,
-                      ),
+                      child:  SvgPicture.asset(
+                  "assets/images/LogoSvg2.svg", height: 100,
+                ),
                     ),
                   ),
                   Center(

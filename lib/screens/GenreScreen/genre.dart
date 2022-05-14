@@ -151,18 +151,21 @@ class _GenreScreenState extends State<GenreScreen>{
             
               Padding(
                 padding: const EdgeInsets.fromLTRB(50, 0, 50, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                      MyButton(
-                        text: "Back",
-                        buttonMethod: navigateToRegister,
-                      ),
-                      MyButton(
-                        text: "Next",
-                        buttonMethod: applyAndNavigateToRating,
-                      )
-                    ],),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 60.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                        MyButton(
+                          text: "Back",
+                          buttonMethod: navigateToRegister,
+                        ),
+                        MyButton(
+                          text: "Next",
+                          buttonMethod: applyAndNavigateToRating,
+                        )
+                      ],),
+                ),
               )
 
             ]),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:ip_movie_recomandation/widgets/MyButton.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -22,6 +23,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       ..addListener(() => setState(() {}))
       ..setLooping(true)
       ..initialize().then((_) => _controller.play());
+  }
+
+   void navigateToChoose() {
+    Navigator.pushNamed(context, "/choose");
   }
 
   @override
@@ -64,7 +69,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                   // color: Color(0xFFB9D0B3),
-                  color: Color(0xFF34A0A4),
+                  color: Colors.teal,
                   boxShadow: [
                     BoxShadow(
                        blurRadius: 7,
@@ -94,7 +99,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             children: [
                               //SvgPicture.asset('assets/images/logo.svg'),
           
-                               Center(child: Image.asset('assets/images/logo.png', width: 100, height: 100,)),
+                               Center(child:  SvgPicture.asset(
+                  "assets/images/LogoSvg2.svg", height: 100,
+                ),),
                               
                                  SizedBox(
                             width: 50,
@@ -134,7 +141,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           
                             ],
                           ),
-
                         ],
                       ),
                       Padding(
@@ -142,6 +148,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         child: Text(
                             'Avatar derives from a Sanskrit word meaning "descent," and when it first appeared in English in the late 18th century, it referred to the descent of a deity to the earth—typically, the incarnation in earthly form of Vishnu or another Hindu deity. It later came to refer to any incarnation in human form, and then to any embodiment (such as that of a concept or philosophy), whether or not in the form of a person. In the age of technology, avatar has developed another sense—it can now be used for the image that a person chooses as his or her "embodiment" in an electronic medium.',
                           style: TextStyle(
+                            color: Color(0xFFCAEEE4),
                             fontSize: 20,
                           ),
                         ),
@@ -151,29 +158,13 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                          child: SizedBox(
                     width: 160,
                     height: 50,
-                    child: TextButton(
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 202, 238, 228)),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50.0),
-                              ),
-                          )
-
-                      ),
-                      onPressed: (){
-                      Navigator.pushNamed(context, "/choose");
-                      },
-                      child: Center(
-                          child: Text('Back', style: TextStyle(
-                            color: Color(0xFF1A759F),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25,
-                          ),),
+                    child: MyButton(
+                       text: 'Back',
+                       buttonMethod: navigateToChoose,
                       ),
                     ),
                   ),
-                       ),
+                       
                     ],
                   ),
                 ),

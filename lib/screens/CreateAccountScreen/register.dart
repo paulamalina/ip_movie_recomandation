@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:ip_movie_recomandation/request/model.dart';
 import 'package:ip_movie_recomandation/widgets/MyTextField.dart';
 import 'package:ip_movie_recomandation/widgets/MyButton.dart';
@@ -42,7 +43,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               "POST, GET, OPTIONS, PUT, DELETE, HEAD",
           "Content-Type": "application/json",
         });
-
+        
     print(response.request);
     if (response.statusCode == 200) {
       final String responseString = response.body;
@@ -53,7 +54,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return 1;
     }
   }
-
   double containerWidth = 700;
   double containerHeight = 850;
   bool isSmallScreen = false;
@@ -75,7 +75,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       });
     }
   }
-
   @override
   void dispose() {
     // TODO: implement dispose
@@ -88,7 +87,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     myGenderController.dispose();
     myEmailController.dispose();
   }
-
   void goBack() {
     Navigator.pop(context);
   }
@@ -102,6 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     setValue();
     return Container(
+
       decoration: BoxDecoration(
         color: Color(0xFF99D98C),
         gradient: LinearGradient(
@@ -129,25 +128,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
               boxShadow: isLargeScreen
                   ? [
                       BoxShadow(
-                        //color: Colors.teal.shade700,
-                        color: Colors.teal,
-                        spreadRadius: 3,
-                        blurRadius: 2,
-                        offset: Offset(1, 0),
+                        spreadRadius: 2,
+                        blurRadius: 7,
                       ),
                     ]
                   : null,
             ),
             child: ListView(
-              //mainAxisAlignment: MainAxisAlignment.center,
-
               children: [
                 Center(
                   //child: SvgPicture.asset('assets/images/logoClean.svg', width: 300, height: 200,),
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    height: 100,
-                  ),
+                  child:  SvgPicture.asset(
+                  "assets/images/LogoSvg2.svg", height: 100,
+                ),
                 ),
                 Center(
                     child: MyTextField(

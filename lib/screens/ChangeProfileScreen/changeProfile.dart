@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:ip_movie_recomandation/widgets/MyButton.dart';
 import '../../widgets/MyTextField.dart';
@@ -80,10 +81,9 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                     height: 20,
                   ),
                   Container(
-                      child: Image.asset(
-                    "/images/logo.png",
-                    height: 100,
-                  )),
+                      child:  SvgPicture.asset(
+                  "assets/images/LogoSvg2.svg", height: 100,
+                ),),
                   SizedBox(
                     height: 20,
                   ),
@@ -210,13 +210,13 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             MyButton(
-                              text: "Apply",
+                              text: "Back",
                               buttonMethod: navigateToMain,
                             ),
                             MyButton(
-                              text: "Back",
+                              text: "Apply",
                               buttonMethod: navigateToMain,
-                            )
+                            ),
                           ]))
                 ],
               ),

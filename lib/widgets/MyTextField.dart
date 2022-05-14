@@ -18,7 +18,7 @@ class MyTextField extends StatelessWidget {
           strokeWidth: 4.0,
           strokeColor: Color(0xFF2B6086),
           child: Text(text, style: TextStyle(
-            color: Color(0xFFB5E48C),
+          color: Color(0xFFCAEEE4),
             fontSize: 25,
           ),),
         ),
