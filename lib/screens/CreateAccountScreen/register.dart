@@ -26,16 +26,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future<Object> createUser() async {
     print("sunt in functie");
     final Uri apiUrl =
-        Uri.parse("http://157.230.114.95:8090/api/user/register");
+        Uri.parse("http://157.230.114.95:8090/api/v1/user/register");
     final response = await http.post(apiUrl,
         body: jsonEncode({
+          "email": "paula@gmail.com",
           "name": "Paula",
-          "email": "pastraguspaula@gmail.com",
-          "password": "anaaremere",
-          "gender": "F",
-          "birthdate": "2001-02-14",
-          "country": "Romania",
-          "phoneNumber": "0758000000",
+          "password": "1234567890",
+          "gender": "F20",
+          "birthdate": "2002-06-11",
+          "country": "ro",
+          "phoneNumber": "0748104800",
+          "age": 19
         }),
         headers: {
           "Access-Control-Allow-Origin": "*",
