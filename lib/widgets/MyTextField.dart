@@ -6,8 +6,16 @@ class MyTextField extends StatelessWidget {
   final String hintText;
   final String text;
   final bool obscureText;
+  final FormFieldValidator formFieldValidator;
   final TextEditingController controller;
-  const MyTextField({Key? key, required this.hintText, required this.text, this.obscureText=false, required this.controller}) : super(key: key);
+  const MyTextField(
+      {Key? key,
+      required this.formFieldValidator,
+      required this.hintText,
+      required this.text,
+      this.obscureText = false,
+      required this.controller})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +25,13 @@ class MyTextField extends StatelessWidget {
         BorderedText(
           strokeWidth: 4.0,
           strokeColor: Color(0xFF2B6086),
-          child: Text(text, style: TextStyle(
-          color: Color(0xFFCAEEE4),
-            fontSize: 25,
-          ),),
+          child: Text(
+            text,
+            style: TextStyle(
+              color: Color(0xFFCAEEE4),
+              fontSize: 25,
+            ),
+          ),
         ),
         SizedBox(
           height: 5,
@@ -32,7 +43,9 @@ class MyTextField extends StatelessWidget {
             borderRadius: BorderRadius.circular(25),
             border: Border.all(color: Color(0xFF2B6086), width: 2),
           ),
-          child: TextField(
+          child: TextFormField(
+            validator: formFieldValidator,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             textAlignVertical: TextAlignVertical.center,
             textAlign: TextAlign.center,
             maxLines: 1,
@@ -47,7 +60,8 @@ class MyTextField extends StatelessWidget {
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: hintText,
-              contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               hintStyle: const TextStyle(
                 color: Color(0xFFBBBFC2),
               ),
