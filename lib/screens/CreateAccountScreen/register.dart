@@ -27,7 +27,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Future<Object> createUser() async {
     print("sunt in functie");
-    print(name + " " + password);
     final Uri apiUrl =
         Uri.parse("http://157.230.114.95:8090/api/user/register");
     final response = await http.post(apiUrl,
@@ -60,18 +59,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   double containerWidth = 700;
   double containerHeight = 850;
-  String name = "Paula";
-  String email = "pastraguspaula@gmail.com";
-  String password = "anaaremere";
-  String gender = "F";
-  String birthday = "2001-02-14";
-  String country = "Romania";
-  String phoneNumber = "0758000000";
+  double padding = 20.0;
+  String name = "";
+  String email = "";
+  String password = "";
+  String gender = "";
+  String birthday = "";
+  String country = "";
+  String phoneNumber = "";
   bool isSmallScreen = false;
   bool isLargeScreen = true;
   void setValue() {
     if (MediaQuery.of(context).size.width >= 700) {
       setState(() {
+        padding = 20.0;
         containerWidth = 700;
         containerHeight = 850;
         isSmallScreen = false;
@@ -79,6 +80,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       });
     } else {
       setState(() {
+        padding = 0;
         containerWidth = double.infinity;
         containerHeight = double.infinity;
         isSmallScreen = true;
@@ -128,9 +130,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         body: SingleChildScrollView(
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(padding),
               child: Container(
-                //height: containerHeight,
                 width: containerWidth,
                 decoration: BoxDecoration(
                   color: Colors.teal,
@@ -167,6 +168,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   .hasMatch(text)) {
                             return "Invalid name";
                           }
+                          name = myNameController.text;
                           return null;
                         },
                         hintText: 'Popescu Maria',
@@ -185,6 +187,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   .hasMatch(text)) {
                             return "Invalid email address";
                           }
+                          email = myEmailController.text;
                           return null;
                         },
                         hintText: 'name@gmail.com',
@@ -204,6 +207,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   .hasMatch(text)) {
                             return "Invalid password";
                           }
+                          password = myPasswordController.text;
                           return null;
                         },
                         hintText: 'password',
@@ -222,6 +226,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               !RegExp(r"(M|F)").hasMatch(text)) {
                             return "Invalid gender";
                           }
+                          gender = myGenderController.text;
                           return null;
                         },
                         hintText: 'M/F',
@@ -241,6 +246,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   .hasMatch(text)) {
                             return "Invalid date";
                           }
+                          birthday = myBirthdateController.text;
                           return null;
                         },
                         hintText: 'Year.Month.Day',
@@ -259,6 +265,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   .hasMatch(text)) {
                             return "Invalid country";
                           }
+                          country = myCountryController.text;
                           return null;
                         },
                         hintText: 'Romania',
@@ -276,6 +283,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               !RegExp(r"^07[0-9]{8}$").hasMatch(text)) {
                             return "Invalid phone number";
                           }
+                          phoneNumber = myPhoneNumberController.text;
                           return null;
                         },
                         hintText: '07xxxxxxxx',
