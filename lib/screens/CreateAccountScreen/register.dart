@@ -29,7 +29,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     print("sunt in functie");
     print(name + " " + password);
     final Uri apiUrl =
-        Uri.parse("http://157.230.114.95:8090/api/user/register");
+        Uri.parse("http://157.230.114.95:8090/api/v1/user/register");
     final response = await http.post(apiUrl,
         body: jsonEncode({
           "name": name,
