@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ToggleButton extends StatefulWidget {
+
   @override
   _ToggleButtonState createState() => _ToggleButtonState();
 }
@@ -29,7 +30,7 @@ class _ToggleButtonState extends State<ToggleButton> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text('TV shows',
+              child: Text('Watch List',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
           ],
