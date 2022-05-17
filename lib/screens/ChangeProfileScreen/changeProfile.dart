@@ -15,6 +15,7 @@ class ChangeProfieScreen extends StatefulWidget {
 }
 
 class _ChangeProfieScreen extends State<ChangeProfieScreen> {
+  final _formKey = GlobalKey<FormState>();
   double containerWidth = 1000;
   double containerHeight = 900;
   bool isSmallScreen = false;
@@ -38,9 +39,12 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
   }
 
   void navigateToMain() {
-    Navigator.pushNamed(context, '/main');
+    if (_formKey.currentState!.validate()) {
+      Navigator.pushNamed(context, '/main');
+    }
   }
 
+  final myPasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     setValue();
@@ -74,151 +78,232 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
               borderRadius: isLargeScreen ? BorderRadius.circular(50.0) : null,
               color: Colors.teal,
             ),
-            child: Center(
-              child: ListView(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                      child:  SvgPicture.asset(
-                  "assets/images/LogoSvg2.svg", height: 100,
-                ),),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(),
-                    child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Change your profile",
-                          style: TextStyle(
-                            color: Color(0xFFB5E48C),
-                            fontSize: 25,
-                          ),
-                        )),
-                    width: 50,
-                    height: 50,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                      child: Center(
-                          child: Padding(
-                              padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
-                              child: Wrap(
-                                spacing: 50,
-                                alignment: WrapAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          child: MyTextField(
-                                              hintText: 'Popescu Maria',
-                                              text: 'Name',
-                                              controller:
-                                                  TextEditingController()),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          child: MyTextField(
-                                              hintText:
-                                                  'popescu.maria@gmail.com',
-                                              text: 'Email',
-                                              controller:
-                                                  TextEditingController()),
-                                        ),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        Container(
-                                          child: MyTextField(
-                                              hintText: 'strongpassword225200',
-                                              text: 'Password',
-                                              controller:
-                                                  TextEditingController()),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          child: MyTextField(
-                                              hintText: 'strongpassword225200',
-                                              text: 'Confirm Password',
-                                              controller:
-                                                  TextEditingController()),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          child: MyTextField(
-                                              hintText: '21',
-                                              text: 'Age',
-                                              controller:
-                                                  TextEditingController()),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          child: MyTextField(
-                                              hintText: '12-02-1999',
-                                              text: 'Birthday',
-                                              controller:
-                                                  TextEditingController()),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          child: MyTextField(
-                                              hintText: 'Romania',
-                                              text: 'Country',
-                                              controller:
-                                                  TextEditingController()),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          child: MyTextField(
-                                              hintText: 'I love movies!',
-                                              text: 'Bio',
-                                              controller:
-                                                  TextEditingController()),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              )))),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.only(left: 70, right: 70),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            MyButton(
-                              text: "Back",
-                              buttonMethod: navigateToMain,
+            child: Form(
+              key: _formKey,
+              child: Center(
+                child: ListView(
+                  children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      child: SvgPicture.asset(
+                        "assets/images/LogoSvg2.svg",
+                        height: 100,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(),
+                      child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Change your profile",
+                            style: TextStyle(
+                              color: Color(0xFFB5E48C),
+                              fontSize: 25,
                             ),
-                            MyButton(
-                              text: "Apply",
-                              buttonMethod: navigateToMain,
-                            ),
-                          ]))
-                ],
+                          )),
+                      width: 50,
+                      height: 50,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                        child: Center(
+                            child: Padding(
+                                padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
+                                child: Wrap(
+                                  spacing: 50,
+                                  alignment: WrapAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            child: MyTextField(
+                                                formFieldValidator: (text) {
+                                                  if (text == null ||
+                                                      text.isEmpty ||
+                                                      !RegExp(r"^[A-Z][a-z]*((-|\s)[A-Z][a-z]*)+$")
+                                                          .hasMatch(text)) {
+                                                    return "Invalid name";
+                                                  }
+                                                  return null;
+                                                },
+                                                hintText: 'Popescu Maria',
+                                                text: 'Name',
+                                                controller:
+                                                    TextEditingController()),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Container(
+                                            child: MyTextField(
+                                                formFieldValidator: (text) {
+                                                  if (text == null ||
+                                                      text.isEmpty ||
+                                                      !RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
+                                                          .hasMatch(text)) {
+                                                    return "Invalid email address";
+                                                  }
+                                                  return null;
+                                                },
+                                                hintText:
+                                                    'popescu.maria@gmail.com',
+                                                text: 'Email',
+                                                controller:
+                                                    TextEditingController()),
+                                          ),
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          Container(
+                                            child: MyTextField(
+                                                formFieldValidator: (text) {
+                                                  if (text == null ||
+                                                      text.isEmpty ||
+                                                      !RegExp(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&_]{12,}$")
+                                                          .hasMatch(text)) {
+                                                    return "Invalid password";
+                                                  }
+                                                  return null;
+                                                },
+                                                obscureText: true,
+                                                hintText:
+                                                    'strongpassword225200',
+                                                text: 'Password',
+                                                controller:
+                                                    myPasswordController),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Container(
+                                            child: MyTextField(
+                                                formFieldValidator: (text) {
+                                                  if (text == null ||
+                                                      text.isEmpty ||
+                                                      text !=
+                                                          myPasswordController
+                                                              .text ||
+                                                      !RegExp(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&_]{12,}$")
+                                                          .hasMatch(text)) {
+                                                    return "Invalid password";
+                                                  }
+                                                  return null;
+                                                },
+                                                obscureText: true,
+                                                hintText:
+                                                    'strongpassword225200',
+                                                text: 'Confirm Password',
+                                                controller:
+                                                    TextEditingController()),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            child: MyTextField(
+                                                formFieldValidator: (text) {
+                                                  if (text == null ||
+                                                      text.isEmpty ||
+                                                      !RegExp(r"^[1-9][0-9]$")
+                                                          .hasMatch(text)) {
+                                                    return "Invalid age";
+                                                  }
+                                                  return null;
+                                                },
+                                                hintText: '21',
+                                                text: 'Age',
+                                                controller:
+                                                    TextEditingController()),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Container(
+                                            child: MyTextField(
+                                                formFieldValidator: (text) {
+                                                  if (text == null ||
+                                                      text.isEmpty ||
+                                                      !RegExp(r"^(19[0-9][0-9]|20[0-1][0-9]).(((0[1,3,5,7,8]|1[0,2]).([0-2][0-9]|3[0-1]))|((0[4,5,9]|11).([0-2][0-9]|30))|(02.[0-2][0-9]))$")
+                                                          .hasMatch(text)) {
+                                                    return "Invalid date";
+                                                  }
+                                                  return null;
+                                                },
+                                                hintText: 'Year.Month.Day',
+                                                text: 'Birthdate',
+                                                controller:
+                                                    TextEditingController()),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Container(
+                                            child: MyTextField(
+                                                formFieldValidator: (text) {
+                                                  if (text == null ||
+                                                      text.isEmpty ||
+                                                      !RegExp(r"^[A-Z][a-z]*((-|\s)[A-Z][a-z]*)*$")
+                                                          .hasMatch(text)) {
+                                                    return "Invalid country";
+                                                  }
+                                                  return null;
+                                                },
+                                                hintText: 'Romania',
+                                                text: 'Country',
+                                                controller:
+                                                    TextEditingController()),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Container(
+                                            child: MyTextField(
+                                                formFieldValidator: (text) {
+                                                  if (text == null ||
+                                                      text.isEmpty) {
+                                                    return 'Invalid bio';
+                                                  }
+                                                },
+                                                hintText: 'I love movies!',
+                                                text: 'Bio',
+                                                controller:
+                                                    TextEditingController()),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )))),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 70, right: 70),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              MyButton(
+                                text: "Back",
+                                buttonMethod: navigateToMain,
+                              ),
+                              MyButton(
+                                text: "Apply",
+                                buttonMethod: navigateToMain,
+                              ),
+                            ]))
+                  ],
+                ),
               ),
             ),
           ),
