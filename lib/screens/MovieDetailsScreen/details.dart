@@ -3,6 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:ip_movie_recomandation/widgets/MyButton.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:comment_box/comment/comment.dart' as comm;
+
+
 
 class MovieDetailsScreen extends StatefulWidget {
   const MovieDetailsScreen({Key? key}) : super(key: key);
@@ -28,7 +31,68 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
    void navigateToChoose() {
     Navigator.pushNamed(context, "/choose");
   }
-
+  void navigateToComment() {
+    Navigator.pushNamed(context, "/commentBox");
+  }
+  final formKey = GlobalKey<FormState>();
+  final TextEditingController commentController = TextEditingController();
+   List filedata = [
+    {
+      'name': 'Adeleye Ayodeji',
+      'pic': 'https://picsum.photos/300/30',
+      'message': 'I love to code'
+    },
+    {
+      'name': 'Biggi Man',
+      'pic': 'https://picsum.photos/300/30',
+      'message': 'Very cool'
+    },
+    {
+      'name': 'Biggi Man',
+      'pic': 'https://picsum.photos/300/30',
+      'message': 'Very cool'
+    },
+    {
+      'name': 'Biggi Man',
+      'pic': 'https://picsum.photos/300/30',
+      'message': 'Very cool'
+    },
+  ];
+// Widget commentChild(data) {
+//     return ListView(
+//       children: [
+//         for (var i = 0; i < data.length; i++)
+//           Padding(
+//             padding: const EdgeInsets.fromLTRB(2.0, 8.0, 2.0, 0.0),
+//             child: ListTile(
+//               leading: GestureDetector(
+//                 onTap: () async {
+//                   // Display the image in large form.
+//                   print("Comment Clicked");
+//                 },
+//                 child: Container(
+//                   height: 50.0,
+//                   width: 50.0,
+//                   decoration: new BoxDecoration(
+//                       color: Colors.blue,
+//                       borderRadius: new BorderRadius.all(Radius.circular(50))),
+//                   child: CircleAvatar(
+//                       radius: 50,
+//                       backgroundImage: NetworkImage(data[i]['pic'] + "$i")),
+//                 ),
+//               ),
+//               title: Text(
+//                 data[i]['name'],
+//                 style: TextStyle(fontWeight: FontWeight.bold),
+//               ),
+//               subtitle: Text(data[i]['message']),
+//             ),
+//           )
+//       ],
+//     );
+//   }
+ 
+  
   @override
   void dispose() {
     super.dispose();
@@ -44,6 +108,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -55,13 +120,17 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
        
       ),
       child: Scaffold(
+        
         backgroundColor: Colors.transparent,
         body: ListView(
+          
           children: [
+            
             SizedBox(
               height: 100,
               width: 400,
             ),
+            
             Center(
               child: Container(
                 height: 1100,
@@ -88,7 +157,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
                 
                 child: Container(
+                  
+                  
                   child: Column(
+                    
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Row(
@@ -102,6 +174,35 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                Center(child:  SvgPicture.asset(
                   "assets/images/LogoSvg2.svg", height: 100,
                 ),),
+          //       Center(child: comm.CommentBox( userImage:
+          //     "https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400",
+          // child: commentChild(filedata),
+          // labelText: 'Write a comment...',
+          // withBorder: false,
+          // errorText: 'Comment cannot be blank',
+          // sendButtonMethod: () {
+          //   if (formKey.currentState!.validate()) {
+          //     print(commentController.text);
+          //     setState(() {
+          //       var value = {
+          //         'name': 'New User',
+          //         'pic':
+          //             'https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400',
+          //         'message': commentController.text
+          //       };
+          //       filedata.insert(0, value);
+          //     });
+          //     commentController.clear();
+          //     FocusScope.of(context).unfocus();
+          //   } else {
+          //     print("Not validated");
+          //   }
+          // },
+          // formKey: formKey,
+          // commentController: commentController,
+          // backgroundColor: Colors.black,
+          // textColor: Colors.white,
+          // sendWidget: Icon(Icons.send_sharp, size: 30, color: Colors.white) ,),),
                               
                                  SizedBox(
                             width: 50,
@@ -145,6 +246,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 50,right: 50),
+                        
                         child: Text(
                             'Avatar derives from a Sanskrit word meaning "descent," and when it first appeared in English in the late 18th century, it referred to the descent of a deity to the earth—typically, the incarnation in earthly form of Vishnu or another Hindu deity. It later came to refer to any incarnation in human form, and then to any embodiment (such as that of a concept or philosophy), whether or not in the form of a person. In the age of technology, avatar has developed another sense—it can now be used for the image that a person chooses as his or her "embodiment" in an electronic medium.',
                           style: TextStyle(
@@ -164,17 +266,30 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       ),
                     ),
                   ),
+                  Padding(
+                         padding: const EdgeInsets.only(top: 10.0),
+                         child: SizedBox(
+                    width: 160,
+                    height: 50,
+                    child: MyButton(
+                       text: 'Comment',
+                       buttonMethod: navigateToComment,
+                      ),
+                    ),
+                  ),
                        
                     ],
                   ),
                 ),
               ),
             ),
+            
 
             SizedBox(
               height: 100,
             ),
             Padding(
+              
               padding: const EdgeInsets.only(left: 50, right: 50, bottom: 20),
               child: Center(
                 child: _controller.value.isInitialized ? AspectRatio(
@@ -199,5 +314,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
         ),
       ),
     );
+    
   }
 }
