@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,13 +17,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
   void logUser() async {
     final Uri apiUrl = Uri.parse("http://157.230.114.95:8090/login");
     final response = await http.post(apiUrl,
         body: jsonEncode({
-          "username": name,
-          "password": password,
+          "username": "Malina",
+          "password": "1234xyz",
         }),
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -40,8 +38,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  String name = "";
-  String password = "";
   double containerWidth = 600;
   double containerHeight = 600;
   bool isSmallScreen = false;
@@ -69,10 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void navigateToDetails() {
-    if (_formKey.currentState!.validate()) {
-      logUser();
-      Navigator.pushNamed(context, "/details");
-    }
+    Navigator.pushNamed(context, "/details");
   }
 
   final myNameController = TextEditingController();
@@ -91,90 +84,81 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Center(
-          child: Form(
-            key: _formKey,
-            child: Container(
-              height: containerHeight,
-              width: containerWidth,
-              decoration: BoxDecoration(
-                color: Colors.teal,
-                borderRadius: isLargeScreen ? BorderRadius.circular(50) : null,
-                boxShadow: isLargeScreen
-                    ? [
-                        BoxShadow(
-                          blurRadius: 7,
-                          spreadRadius: 2,
-                        ),
-                      ]
-                    : null,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 40),
-                    child: Center(
-                      //child: SvgPicture.asset('assets/images/logoClean.svg', width: 300, height: 200,),
-                      child: SvgPicture.asset(
-                        "assets/images/LogoSvg2.svg",
-                        height: 100,
+          child: Container(
+            height: containerHeight,
+            width: containerWidth,
+            decoration: BoxDecoration(
+              color: Colors.teal,
+              borderRadius: isLargeScreen ? BorderRadius.circular(50) : null,
+              boxShadow: isLargeScreen
+                  ? [
+                      BoxShadow(
+                        blurRadius: 7,
+                        spreadRadius: 2,
                       ),
+                    ]
+                  : null,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 40),
+                  child: Center(
+                    //child: SvgPicture.asset('assets/images/logoClean.svg', width: 300, height: 200,),
+                    child: SvgPicture.asset(
+                      "assets/images/LogoSvg2.svg",
+                      height: 100,
                     ),
                   ),
-                  SizedBox(
-                    height: 85,
-                  ),
-                  Container(
-                    width: 300,
-                    child: MyTextField(
-                        formFieldValidator: (text) {
-                          name = myNameController.text;
-                          return null;
-                        },
-                        hintText: 'Popescu Maria',
-                        text: 'Name',
-                        controller: myNameController),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Container(
-                    width: 300,
-                    child: MyTextField(
-                        formFieldValidator: (text) {
-                          password = myPasswordController.text;
-                          return null;
-                        },
-                        hintText: 'password',
-                        text: 'Password',
-                        controller: myPasswordController,
-                        obscureText: true),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 70, right: 70),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: MyButton(
-                            text: 'Back',
-                            buttonMethod: navigateToChoose,
-                          ),
+                ),
+                SizedBox(
+                  height: 85,
+                ),
+                Container(
+                  width: 300,
+                  child: MyTextField(
+                      formFieldValidator: (text) {},
+                      hintText: 'Popescu Maria',
+                      text: 'Name',
+                      controller: myNameController),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                Container(
+                  width: 300,
+                  child: MyTextField(
+                      formFieldValidator: (text) {},
+                      hintText: 'password',
+                      text: 'Password',
+                      controller: myPasswordController,
+                      obscureText: true),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 70, right: 70),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        child: MyButton(
+                          text: 'Back',
+                          buttonMethod: navigateToChoose,
                         ),
-                        Container(
-                          child: MyButton(
-                            text: 'Login',
-                            buttonMethod: navigateToDetails,
-                          ),
+                      ),
+                      Container(
+                        child: MyButton(
+                          text: 'Login',
+                          buttonMethod: navigateToDetails,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
