@@ -40,6 +40,8 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
+  String authToken="";
+
   showLoaderDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
       content: new Row(
@@ -224,6 +226,9 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     setDimentions();
+    authToken=ModalRoute.of(context)!.settings.arguments as String;
+
+    print("Main: $authToken");
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
