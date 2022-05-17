@@ -1,3 +1,5 @@
+
+import 'dart:html';
 import 'package:http/http.dart' as http;
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:ip_movie_recomandation/widgets/BigLogoutButton.dart';
 import 'package:ip_movie_recomandation/widgets/BigSearchField.dart';
 import 'package:ip_movie_recomandation/widgets/ImageButton.dart';
+import 'package:ip_movie_recomandation/widgets/MyBox.dart';
 import 'package:ip_movie_recomandation/widgets/Toggle.dart';
 import 'package:ip_movie_recomandation/widgets/SmallLogoutButton.dart';
 import 'package:ip_movie_recomandation/widgets/SmallSearchField.dart';
@@ -369,13 +372,73 @@ class _MainScreenState extends State<MainScreen> {
                   Container(
                     height: 30,
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.95,
-                    height: 125,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.teal,
-                      borderRadius: BorderRadius.circular(50.0),
+                  Column(
+                    children: [
+                      Container(
+                        height: 30,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.95,
+                        height: 125,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.teal,
+                          borderRadius: BorderRadius.circular(50.0),
+                          boxShadow: [
+                         BoxShadow(
+                          blurRadius: 7,
+                           spreadRadius: 2,
+                        )
+                      ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(30.0),
+                              child: BorderedText(
+                                strokeWidth: 4.0,
+                                strokeColor: Color(0xFF2B6086),
+                                child: Text("For you",
+                                    style: TextStyle(
+                                        color: Color(0xFFCAEEE4),
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                            ),
+                            //ToggleButton(),
+                            Container(
+                              width: 120,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50.0),
+                                color: Color(0xFFCAEEE4),
+                                border: Border.all(color: Color(0xFF2B6086), width: 2),
+                              ),
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, "/login");
+                                },
+                                child: Text(
+                                  "Watchlist",
+                                  style: const TextStyle(
+                                    color: Color(0xFF1A759F),
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              )
+                              )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 30,
+                      ),
+                      Container(
+                        //height: MediaQuery.of(context).size.height * 1.5,
+                        width: MediaQuery.of(context).size.width * 0.95,
+                        decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
                           blurRadius: 7,
