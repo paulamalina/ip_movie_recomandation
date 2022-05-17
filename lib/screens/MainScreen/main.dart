@@ -40,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-  String authToken="";
+  String authToken = "";
 
   showLoaderDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
@@ -80,7 +80,8 @@ class _MainScreenState extends State<MainScreen> {
 
   void fetchMovie(String name) async {
     final response = await http.get(
-        Uri.parse('http://157.230.114.95:8090/api/v1/movie/search/' + name));
+        Uri.parse('http://157.230.114.95:8090/api/v1/movie/search/' + name),
+        headers: {"Authorization": authToken});
 
     print(response.statusCode);
     if (response.statusCode == 404) {
@@ -88,7 +89,9 @@ class _MainScreenState extends State<MainScreen> {
     } else if (response.statusCode == 200) {
       test = 1;
       foundMovies = searchedMovieFromJson(response.body);
+      if (foundMovies.length <= 0) test = 2;
     } else {
+      test = 2;
       throw Exception("Error at fetching data!");
     }
   }
@@ -110,6 +113,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Container displayMovieReturned() {
+    populateList();
     return Container(
       child: Wrap(
         alignment: WrapAlignment.center,
@@ -226,7 +230,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     setDimentions();
-    authToken=ModalRoute.of(context)!.settings.arguments as String;
+    authToken = ModalRoute.of(context)!.settings.arguments as String;
 
     print("Main: $authToken");
     return Container(
