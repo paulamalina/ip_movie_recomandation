@@ -8,6 +8,7 @@ import 'package:ip_movie_recomandation/screens/LoginScreen/login.dart';
 import 'package:ip_movie_recomandation/screens/MainScreen/main.dart';
 import 'package:ip_movie_recomandation/screens/MovieDetailsScreen/commentBox.dart';
 import 'package:ip_movie_recomandation/screens/MovieDetailsScreen/details.dart';
+import 'package:ip_movie_recomandation/screens/WatchListScreen/watchList.dart';
 import 'package:ip_movie_recomandation/screens/WelcomeScreen/welcome.dart';
 import 'package:ip_movie_recomandation/screens/RatingScreen/rating.dart';
 
@@ -31,6 +32,7 @@ void main() {
         '/details' : (context) => const MovieDetailsScreen(),
         '/changeProfile' : (context) => const ChangeProfieScreen(),
         '/commentBox' : (context) => TestMe(),
+        '/watchList' : (context) => const WatchList(),
       },
     ),
   );

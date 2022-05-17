@@ -27,24 +27,24 @@ class UserModel {
     required this.phoneNumber,
   });
 
-
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    name: json["name"],
-    email: json["email"],
-    password: json["password"],
-    gender: json["gender"],
-    birthdate: DateTime.parse(json["birthdate"]),
-    country: json["country"],
-    phoneNumber: json["phoneNumber"],
-  );
+        name: json["name"],
+        email: json["email"],
+        password: json["password"],
+        gender: json["gender"],
+        birthdate: DateTime.parse(json["birthdate"]),
+        country: json["country"],
+        phoneNumber: json["phoneNumber"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "name": name,
-    "email": email,
-    "password": password,
-    "gender": gender,
-    "birthdate": "${birthdate.year.toString().padLeft(4, '0')}-${birthdate.month.toString().padLeft(2, '0')}-${birthdate.day.toString().padLeft(2, '0')}",
-    "country": country,
-    "phoneNumber": phoneNumber,
-  };
+        "name": name,
+        "email": email,
+        "password": password,
+        "gender": gender,
+        "birthdate":
+            "${birthdate.year.toString().padLeft(4, '0')}-${birthdate.month.toString().padLeft(2, '0')}-${birthdate.day.toString().padLeft(2, '0')}",
+        "country": country,
+        "phoneNumber": phoneNumber,
+      };
 }
