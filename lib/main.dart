@@ -1,4 +1,3 @@
-import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/material.dart';
 import 'package:ip_movie_recomandation/screens/ChangeProfileScreen/changeProfile.dart';
 import 'package:ip_movie_recomandation/screens/ChooseScreen/choose.dart';
@@ -6,7 +5,6 @@ import 'package:ip_movie_recomandation/screens/CreateAccountScreen/register.dart
 import 'package:ip_movie_recomandation/screens/GenreScreen/genre.dart';
 import 'package:ip_movie_recomandation/screens/LoginScreen/login.dart';
 import 'package:ip_movie_recomandation/screens/MainScreen/main.dart';
-import 'package:ip_movie_recomandation/screens/MovieDetailsScreen/commentBox.dart';
 import 'package:ip_movie_recomandation/screens/MovieDetailsScreen/details.dart';
 import 'package:ip_movie_recomandation/screens/WatchListScreen/watchList.dart';
 import 'package:ip_movie_recomandation/screens/WelcomeScreen/welcome.dart';
@@ -31,7 +29,6 @@ void main() {
         '/genre' : (context) => const GenreScreen(),
         '/details' : (context) => const MovieDetailsScreen(),
         '/changeProfile' : (context) => const ChangeProfieScreen(),
-        '/commentBox' : (context) => TestMe(),
         '/watchList' : (context) => const WatchList(),
       },
     ),
