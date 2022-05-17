@@ -112,9 +112,9 @@ class _GenreScreenState extends State<GenreScreen>{
                         child: Column(
                           children: [
                             MyBox(text: 'Action'),
-                            MyBox(text: 'Animation'),
                             MyBox(text: 'Comedy'),
-                            MyBox(text: 'Crime'),
+                            MyBox(text: 'Drama'),
+                            MyBox(text: 'Fantasy'),
 
                             SizedBox(
                               width: 30,
@@ -125,9 +125,8 @@ class _GenreScreenState extends State<GenreScreen>{
                     Container(
                         child: Column(
                           children: [
-                            MyBox(text: 'Drama'),
-                            MyBox(text: 'Family'),
-                            MyBox(text: 'Horror'),
+                            MyBox(text: 'Romantic'),
+                            MyBox(text: 'Scary'),
                             MyBox(text: 'Sci-Fi'),
 
                             SizedBox(

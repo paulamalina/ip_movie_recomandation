@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:ip_movie_recomandation/widgets/BigLogoutButton.dart';
 import 'package:ip_movie_recomandation/widgets/BigSearchField.dart';
 import 'package:ip_movie_recomandation/widgets/ImageButton.dart';
+import 'package:ip_movie_recomandation/widgets/MyBox.dart';
 import 'package:ip_movie_recomandation/widgets/Toggle.dart';
 import 'package:ip_movie_recomandation/widgets/SmallLogoutButton.dart';
 import 'package:ip_movie_recomandation/widgets/SmallSearchField.dart';
@@ -209,6 +212,7 @@ class _MainScreenState extends State<MainScreen> {
                       ],
                         ),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Padding(
                               padding: EdgeInsets.all(30.0),
@@ -222,7 +226,29 @@ class _MainScreenState extends State<MainScreen> {
                                         fontWeight: FontWeight.bold)),
                               ),
                             ),
-                            ToggleButton(),
+                            //ToggleButton(),
+                            Container(
+                              width: 120,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50.0),
+                                color: Color(0xFFCAEEE4),
+                                border: Border.all(color: Color(0xFF2B6086), width: 2),
+                              ),
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, "/login");
+                                },
+                                child: Text(
+                                  "Watchlist",
+                                  style: const TextStyle(
+                                    color: Color(0xFF1A759F),
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              )
+                              )
                           ],
                         ),
                       ),
