@@ -33,9 +33,13 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
+  String authToken="";
   @override
   Widget build(BuildContext context) {
     setDimentions();
+    authToken=ModalRoute.of(context)!.settings.arguments as String;
+
+    print("Main: $authToken");
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
