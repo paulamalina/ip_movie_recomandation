@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'dart:io';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ip_movie_recomandation/screens/RatingScreen/rating.dart';
@@ -23,7 +22,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  
   final myNameController = TextEditingController();
   final myPasswordController = TextEditingController();
   final myEmailController = TextEditingController();
@@ -33,59 +31,60 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final myPhoneNumberController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  String  authorizationToken="token";
+  String authorizationToken = "token";
 
-  bool isPressed=false;
-  bool isFinish=false;
+  bool isPressed = false;
+  bool isFinish = false;
   String get AuthorizationToken => authorizationToken;
 
-  showLoaderDialog(BuildContext context){
-    AlertDialog alert=AlertDialog(
+  showLoaderDialog(BuildContext context) {
+    AlertDialog alert = AlertDialog(
       content: new Row(
         children: [
           CircularProgressIndicator(),
-          Container(margin: EdgeInsets.only(left: 7),child:Text("Loading..." )),
-        ],),
+          Container(
+              margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+        ],
+      ),
     );
     showDialog(
-      barrierDismissible: false,
-      context:context,
+        barrierDismissible: false,
+        context: context,
         builder: (context) {
           Future.delayed(Duration(seconds: 2), () {
             setState(() {
-              isFinish=true;
+              isFinish = true;
             });
             Navigator.of(context).pop(true);
           });
           return alert;
-        }
-    );
+        });
   }
 
-  bool isLoading=true;
+  bool isLoading = true;
 
-  void logUser() async{
-    final Uri apiUrl=Uri.parse("http://157.230.114.95:8090/api/v1/login");
-    final response=await http.post(apiUrl,
+  void logUser() async {
+    final Uri apiUrl = Uri.parse("http://157.230.114.95:8090/api/v1/login");
+    final response = await http.post(apiUrl,
         body: jsonEncode({
           "email": "stefanmihalache1302@gmail.com",
           "password": "123456789"
         }),
         headers: {
           "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+          "Access-Control-Allow-Methods":
+              "POST, GET, OPTIONS, PUT, DELETE, HEAD",
           "Content-Type": "application/json",
         });
 
     print("-----");
     print("${response.headers["authorization"]}");
-      authorizationToken=response.headers["authorization"] as String;
-
+    authorizationToken = response.headers["authorization"] as String;
 
     print("-----");
-    if(response.statusCode==200){
+    if (response.statusCode == 200) {
       print("ok, am fost logat cu succes");
-    }else{
+    } else {
       print("not ok, nu am fost logat cu succes");
       print(response.statusCode);
     }
@@ -112,7 +111,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     //           "POST, GET, OPTIONS, PUT, DELETE, HEAD",
     //       "Content-Type": "application/json",
     //     });
-        
+
     // print(response.request);
     // if (response.statusCode == 201) {
     //   final String responseString = response.body;
@@ -181,7 +180,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void register() {
     createUser();
 
-    showLoaderDialog(context);// if(isLoading){
+    showLoaderDialog(context); // if(isLoading){
     //   showLoaderDialog(context);
     // }else{
     // if(authorizationToken!="token"){
@@ -207,19 +206,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     setValue();
-    WidgetsBinding.instance.addPostFrameCallback((_){
-
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       // Add Your Code here.
-      if(isFinish){
-        Navigator.push(context, MaterialPageRoute(
-          builder: (context) => GenreScreen(),
-          settings: RouteSettings(
-            arguments: authorizationToken,
+      if (isFinish) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => GenreScreen(),
+            settings: RouteSettings(
+              arguments: authorizationToken,
+            ),
           ),
-        ),
         );
       }
-
     });
     // if(isFinish){
     //   Navigator.push(context, MaterialPageRoute(

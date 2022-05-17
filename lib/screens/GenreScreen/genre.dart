@@ -5,39 +5,36 @@ import 'package:ip_movie_recomandation/widgets/MyButton.dart';
 
 import '../../widgets/MyBox.dart';
 
-
 class GenreScreen extends StatefulWidget {
   const GenreScreen({Key? key}) : super(key: key);
 
   @override
   State<GenreScreen> createState() => _GenreScreenState();
 }
-class _GenreScreenState extends State<GenreScreen>{
 
-
+class _GenreScreenState extends State<GenreScreen> {
   final pressAttention = ButtonStyle;
 
-  double containerWidth=800;
-  double containerHeight=800;
-  bool isSmallScreen=false;
-  bool isLargeScreen=true;
+  double containerWidth = 800;
+  double containerHeight = 800;
+  bool isSmallScreen = false;
+  bool isLargeScreen = true;
 
-  String authToken="";
-  void setValue(){
-    if(MediaQuery.of(context).size.width >= 700){
+  String authToken = "";
+  void setValue() {
+    if (MediaQuery.of(context).size.width >= 700) {
       setState(() {
-        containerWidth=800;
-        containerHeight=800;
-        isSmallScreen=false;
-        isLargeScreen=true;
+        containerWidth = 800;
+        containerHeight = 800;
+        isSmallScreen = false;
+        isLargeScreen = true;
       });
-    }else{
+    } else {
       setState(() {
-        containerWidth=double.infinity;
-        containerHeight=double.infinity;
-        isSmallScreen=true;
-        isLargeScreen=false;
-
+        containerWidth = double.infinity;
+        containerHeight = double.infinity;
+        isSmallScreen = true;
+        isLargeScreen = false;
       });
     }
   }
@@ -49,19 +46,21 @@ class _GenreScreenState extends State<GenreScreen>{
   void applyAndNavigateToRating() {
     //Navigator.pushNamed(context, '/rating');
     print("Token ul este : $authToken");
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) => RatingScreen(),
-      settings: RouteSettings(
-        arguments: authToken,
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RatingScreen(),
+        settings: RouteSettings(
+          arguments: authToken,
+        ),
       ),
-    ),
     );
   }
 
-   @override
+  @override
   Widget build(BuildContext context) {
     setValue();
-    authToken=ModalRoute.of(context)!.settings.arguments as String;
+    authToken = ModalRoute.of(context)!.settings.arguments as String;
 
     return Container(
       decoration: BoxDecoration(
@@ -70,100 +69,97 @@ class _GenreScreenState extends State<GenreScreen>{
             blurRadius: 7,
           )
         ],
-        gradient: LinearGradient(colors: [
-          Colors.white, Color.fromRGBO(52, 160, 164, 1)
-        ],
+        gradient: LinearGradient(
+            colors: [Colors.white, Color.fromRGBO(52, 160, 164, 1)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter),
       ),
       child: Scaffold(
-        backgroundColor:Colors.transparent, //
+        backgroundColor: Colors.transparent, //
         body: Center(
           child: Container(
             width: containerWidth,
             height: containerHeight,
             decoration: BoxDecoration(
-              boxShadow: isLargeScreen ? [
-                BoxShadow(
-                  blurRadius: 7,
-                  spreadRadius: 2,
-                )
-              ] : null,
+              boxShadow: isLargeScreen
+                  ? [
+                      BoxShadow(
+                        blurRadius: 7,
+                        spreadRadius: 2,
+                      )
+                    ]
+                  : null,
               borderRadius: isLargeScreen ? BorderRadius.circular(50.0) : null,
               color: Colors.teal,
             ),
-            child:ListView(
-              children: [
-                  Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child:
-                  Text("What genre would you like to watch?", style: TextStyle(fontSize: 30, color: Colors.white),),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Center(
-                  child:
-                  Text("Please choose at least 3 genres that you are interested in", style: TextStyle(fontSize: 15, color: Colors.white),),
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-
-              Container(
-                child: Column(
+            child: ListView(children: [
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Wrap(
-                    spacing: 50,
-                    alignment: WrapAlignment.spaceBetween,
-                    children:[
-                      Container(
-                        child: Column(
-                          children: [
-                            MyBox(text: 'Action'),
-                            MyBox(text: 'Animation'),
-                            MyBox(text: 'Comedy'),
-                            MyBox(text: 'Crime'),
-
-                            SizedBox(
-                              width: 30,
-                            )
-                          ],
-                        ),
-                       ),
-                    Container(
-                        child: Column(
-                          children: [
-                            MyBox(text: 'Drama'),
-                            MyBox(text: 'Family'),
-                            MyBox(text: 'Horror'),
-                            MyBox(text: 'Sci-Fi'),
-
-                            SizedBox(
-                              width: 30,
-                            )
-                          ],
-                        ),
-                       ),
-                  ],
-                    
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: Text(
+                      "What genre would you like to watch?",
+                      style: TextStyle(fontSize: 30, color: Colors.white),
+                    ),
                   ),
                   SizedBox(
                     height: 30,
-                   ),
+                  ),
+                  Center(
+                    child: Text(
+                      "Please choose at least 3 genres that you are interested in",
+                      style: TextStyle(fontSize: 15, color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Wrap(
+                          spacing: 50,
+                          alignment: WrapAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              child: Column(
+                                children: [
+                                  MyBox(text: 'Action'),
+                                  MyBox(text: 'Comedy'),
+                                  MyBox(text: 'Drama'),
+                                  MyBox(text: 'Fantasy'),
+                                  SizedBox(
+                                    width: 30,
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              child: Column(
+                                children: [
+                                  MyBox(text: 'Romantic'),
+                                  MyBox(text: 'Scary'),
+                                  MyBox(text: 'Sci-Fi'),
+                                  SizedBox(
+                                    width: 30,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-              ),
-              ],
-                  
-            ),
-            
               Padding(
                 padding: const EdgeInsets.fromLTRB(50, 0, 50, 10),
                 child: Padding(
@@ -171,22 +167,22 @@ class _GenreScreenState extends State<GenreScreen>{
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                        MyButton(
-                          text: "Back",
-                          buttonMethod: navigateToRegister,
-                        ),
-                        MyButton(
-                          text: "Next",
-                          buttonMethod: applyAndNavigateToRating,
-                        )
-                      ],),
+                      MyButton(
+                        text: "Back",
+                        buttonMethod: navigateToRegister,
+                      ),
+                      MyButton(
+                        text: "Next",
+                        buttonMethod: applyAndNavigateToRating,
+                      )
+                    ],
+                  ),
                 ),
               )
-
             ]),
           ),
         ),
-        ),
+      ),
     );
-      }
+  }
 }

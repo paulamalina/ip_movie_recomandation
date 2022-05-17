@@ -11,6 +11,7 @@ import 'package:ip_movie_recomandation/widgets/SmallLogoutButton.dart';
 import 'package:ip_movie_recomandation/widgets/SmallSearchField.dart';
 import 'package:ip_movie_recomandation/widgets/MainGenreButton.dart';
 import 'package:ip_movie_recomandation/models/searchedMovie.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -21,6 +22,8 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int test = 0;
+  List<Widget> CarouselItems = [];
+  Widget MyCarousel = Container();
   bool isFinish = false;
   List<SearchedMovie> foundMovies = [];
   String foundMovieName = 'null';
@@ -149,9 +152,33 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Container normalPrint() {
-    return Container(
-        child: Wrap(alignment: WrapAlignment.center, spacing: 40, children: [
+  void initCarousel() {
+    MyCarousel = Padding(
+      padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+      child: CarouselSlider(
+        items: CarouselItems,
+        options: CarouselOptions(
+          onPageChanged: (index, reason) {
+            setState(() {
+              //_currentPage = index;
+              //_currentKeyword = keywords[_currentPage];
+            });
+          },
+          //autoPlay: true,
+          autoPlayInterval: Duration(seconds: 3),
+          autoPlayAnimationDuration: Duration(milliseconds: 800),
+          autoPlayCurve: Curves.fastOutSlowIn,
+          viewportFraction: 0.3,
+          height: 400,
+          scrollDirection: Axis.horizontal,
+        ),
+        carouselController: CarouselController(),
+      ),
+    );
+  }
+
+  void initImages() {
+    CarouselItems = [
       ImageButton(
         text: "film1",
         image: Image.asset(
@@ -224,13 +251,23 @@ class _MainScreenState extends State<MainScreen> {
           height: imgHeight,
         ),
       ),
-    ]));
+    ];
+  }
+
+  Container normalPrint() {
+    return Container(
+        child: Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 40,
+            children: [MyCarousel, MyCarousel, MyCarousel]));
   }
 
   @override
   Widget build(BuildContext context) {
     setDimentions();
-    authToken = ModalRoute.of(context)!.settings.arguments as String;
+    initImages();
+    initCarousel();
+    //authToken = ModalRoute.of(context)!.settings.arguments as String;
 
     print("Main: $authToken");
     return Container(
@@ -388,6 +425,7 @@ class _MainScreenState extends State<MainScreen> {
                       ],
                     ),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
                           padding: EdgeInsets.all(30.0),
@@ -401,7 +439,29 @@ class _MainScreenState extends State<MainScreen> {
                                     fontWeight: FontWeight.bold)),
                           ),
                         ),
-                        ToggleButton(),
+                        //ToggleButton(),
+                        Container(
+                            width: 120,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50.0),
+                              color: Color(0xFFCAEEE4),
+                              border: Border.all(
+                                  color: Color(0xFF2B6086), width: 2),
+                            ),
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, "/main");
+                              },
+                              child: Text(
+                                "Watchlist",
+                                style: const TextStyle(
+                                  color: Color(0xFF1A759F),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ))
                       ],
                     ),
                   ),

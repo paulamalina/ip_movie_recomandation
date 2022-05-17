@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ip_movie_recomandation/widgets/MyButton.dart';
 import '../MainScreen/main.dart';
 import 'globals.dart' as globals;
+import 'package:http/http.dart' as http;
 
 class RatingScreen extends StatefulWidget {
   const RatingScreen({Key? key}) : super(key: key);
@@ -30,6 +31,23 @@ class _RatingScreenState extends State<RatingScreen> {
       globals.redirect = "/main";
       globals.Index++;
     }
+  }
+
+  void getMovies() async {
+    print("------------");
+    print(authToken);
+    print("------------");
+
+    final Uri apiUrl =
+        Uri.parse("http://157.230.114.95:8090/api/v1/movie/profiler");
+    final response = await http.get(apiUrl, headers: {
+      "Authorization": authToken,
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+      "Content-Type": "application/json",
+    });
+
+    print(response.statusCode);
   }
 
   void navigateToRating() {
