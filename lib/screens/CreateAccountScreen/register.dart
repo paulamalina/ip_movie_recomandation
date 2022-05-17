@@ -1,12 +1,19 @@
 import 'dart:convert';
+
+import 'dart:ui';
+
 import 'dart:io';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ip_movie_recomandation/request/model.dart';
+import 'package:ip_movie_recomandation/screens/RatingScreen/rating.dart';
 import 'package:ip_movie_recomandation/widgets/MyTextField.dart';
 import 'package:ip_movie_recomandation/widgets/MyButton.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+
+import '../GenreScreen/genre.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -16,6 +23,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  
   final myNameController = TextEditingController();
   final myPasswordController = TextEditingController();
   final myEmailController = TextEditingController();
@@ -31,30 +39,67 @@ class _RegisterScreenState extends State<RegisterScreen> {
         Uri.parse("http://157.230.114.95:8090/api/user/register");
     final response = await http.post(apiUrl,
         body: jsonEncode({
-          "name": name,
-          "email": email,
-          "password": password,
-          "gender": gender,
-          "birthdate": birthday,
-          "country": country,
-          "phoneNumber": phoneNumber,
+          "email": "stefanmihalache1302@gmail.com",
+          "password": "123456789"
         }),
         headers: {
           "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods":
-              "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+          "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE, HEAD",
           "Content-Type": "application/json",
         });
 
-    print(response.request);
-    if (response.statusCode == 200) {
-      final String responseString = response.body;
-      print("ok");
-      return modelFromJson(responseString);
-    } else {
+    print("-----");
+    print("${response.headers["authorization"]}");
+      authorizationToken=response.headers["authorization"] as String;
+
+
+    print("-----");
+    if(response.statusCode==200){
+      print("ok, am fost logat cu succes");
+    }else{
+      print("not ok, nu am fost logat cu succes");
       print(response.statusCode);
-      return 1;
     }
+  }
+
+  Future<Object> createUser() async {
+    // print("sunt in functie");
+    // final Uri apiUrl =
+    //     Uri.parse("http://157.230.114.95:8090/api/v1/user/register");
+    // final response = await http.post(apiUrl,
+    //     body: jsonEncode({
+    //       "email": "maria16@gmail.com",
+    //       "name": "Maria",
+    //       "password": "1234567890",
+    //       "gender": "F",
+    //       "birthdate": "2002-06-11",
+    //       "country": "ro",
+    //       "phoneNumber": "0748104800"
+    //
+    //     }),
+    //     headers: {
+    //       "Access-Control-Allow-Origin": "*",
+    //       "Access-Control-Allow-Methods":
+    //           "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+    //       "Content-Type": "application/json",
+    //     });
+        
+    // print(response.request);
+    // if (response.statusCode == 201) {
+    //   final String responseString = response.body;
+    //   print("ok");
+    //   print(responseString);
+    //   Map<String, String> responseHearders=response.headers;
+    //   print(responseHearders.toString());
+    //   logUser();
+    //   return modelFromJson(responseString);
+    // } else {
+    //   print(response.statusCode);
+    //   return 1;
+    // }
+
+    logUser();
+    return 1;
   }
 
   double containerWidth = 700;
@@ -69,6 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String phoneNumber = "";
   bool isSmallScreen = false;
   bool isLargeScreen = true;
+
   void setValue() {
     if (MediaQuery.of(context).size.width >= 700) {
       setState(() {
@@ -107,6 +153,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void register() {
+    createUser();
+
+    showLoaderDialog(context);// if(isLoading){
+    //   showLoaderDialog(context);
+    // }else{
+    // if(authorizationToken!="token"){
+    //   Navigator.pushNamed(context, "genre");
+    // }else{
+    //   showLoaderDialog(context);
+    // }
+    // if(isFinish){
+    //   Navigator.push(context, MaterialPageRoute(
+    //     builder: (context) => GenreScreen(),
+    //     settings: RouteSettings(
+    //       arguments: authorizationToken,
+    //     ),
+    //   ),
+    //   );
+    // }
     if (_formKey.currentState!.validate()) {
       createUser();
       Navigator.pushNamed(context, '/genre');
@@ -116,6 +181,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     setValue();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+
+      // Add Your Code here.
+      if(isFinish){
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) => GenreScreen(),
+          settings: RouteSettings(
+            arguments: authorizationToken,
+          ),
+        ),
+        );
+      }
+
+    });
+    // if(isFinish){
+    //   Navigator.push(context, MaterialPageRoute(
+    //     builder: (context) => GenreScreen(),
+    //     settings: RouteSettings(
+    //       arguments: authorizationToken,
+    //     ),
+    //   ),
+    //   );
+    // }
+    // if(authorizationToken!="token"){
+    //   Navigator.push(context, MaterialPageRoute(
+    //     builder: (context) => GenreScreen(),
+    //     settings: RouteSettings(
+    //       arguments: authorizationToken,
+    //     ),
+    //   ),
+    //   );
+    // }else{
+    //   if(isPressed)
+    //   showLoaderDialog(context);
+    // }
+    //register();
     return Container(
       decoration: BoxDecoration(
         color: Color(0xFF99D98C),
