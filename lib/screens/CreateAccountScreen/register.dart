@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'dart:ui';
-
 import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ip_movie_recomandation/screens/RatingScreen/rating.dart';
@@ -11,7 +9,7 @@ import 'package:ip_movie_recomandation/widgets/MyTextField.dart';
 import 'package:ip_movie_recomandation/widgets/MyButton.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-
+import '../../models/movieListModel.dart';
 import '../GenreScreen/genre.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -91,40 +89,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<Object> createUser() async {
-    // print("sunt in functie");
-    // final Uri apiUrl =
-    //     Uri.parse("http://157.230.114.95:8090/api/v1/user/register");
-    // final response = await http.post(apiUrl,
-    //     body: jsonEncode({
-    //       "email": "maria16@gmail.com",
-    //       "name": "Maria",
-    //       "password": "1234567890",
-    //       "gender": "F",
-    //       "birthdate": "2002-06-11",
-    //       "country": "ro",
-    //       "phoneNumber": "0748104800"
-    //
-    //     }),
-    //     headers: {
-    //       "Access-Control-Allow-Origin": "*",
-    //       "Access-Control-Allow-Methods":
-    //           "POST, GET, OPTIONS, PUT, DELETE, HEAD",
-    //       "Content-Type": "application/json",
-    //     });
+    print("sunt in functie");
+    final Uri apiUrl =
+        Uri.parse("http://157.230.114.95:8090/api/v1/user/register");
+    final response = await http.post(apiUrl,
+        body: jsonEncode({
+          "email": email,
+          "name": name,
+          "password": password,
+          "gender": gender,
+          "birthdate": birthday,
+          "country": country,
+          "phoneNumber": phoneNumber
+        }),
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods":
+              "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+          "Content-Type": "application/json",
+        });
 
-    // print(response.request);
-    // if (response.statusCode == 201) {
-    //   final String responseString = response.body;
-    //   print("ok");
-    //   print(responseString);
-    //   Map<String, String> responseHearders=response.headers;
-    //   print(responseHearders.toString());
-    //   logUser();
-    //   return modelFromJson(responseString);
-    // } else {
-    //   print(response.statusCode);
-    //   return 1;
-    // }
+    print(response.request);
+    if (response.statusCode == 201) {
+      final String responseString = response.body;
+      print("ok");
+      print(responseString);
+      Map<String, String> responseHearders = response.headers;
+      print(responseHearders.toString());
+      logUser();
+      return modelFromJson(responseString);
+    } else {
+      print(response.statusCode);
+      return 1;
+    }
 
     logUser();
     return 1;
@@ -295,6 +292,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   .hasMatch(text)) {
                             return "Invalid name";
                           }
+                          name = myNameController.text;
                           return null;
                         },
                         hintText: 'Popescu Maria',
@@ -313,6 +311,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   .hasMatch(text)) {
                             return "Invalid email address";
                           }
+                          email = myEmailController.text;
                           return null;
                         },
                         hintText: 'name@gmail.com',
@@ -332,6 +331,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   .hasMatch(text)) {
                             return "Invalid password";
                           }
+                          password = myPasswordController.text;
                           return null;
                         },
                         hintText: 'password',
@@ -350,6 +350,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               !RegExp(r"(M|F)").hasMatch(text)) {
                             return "Invalid gender";
                           }
+                          gender = myGenderController.text;
                           return null;
                         },
                         hintText: 'M/F',
@@ -369,6 +370,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   .hasMatch(text)) {
                             return "Invalid date";
                           }
+                          birthday = myBirthdateController.text;
                           return null;
                         },
                         hintText: 'Year.Month.Day',
@@ -387,6 +389,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   .hasMatch(text)) {
                             return "Invalid country";
                           }
+                          country = myCountryController.text;
                           return null;
                         },
                         hintText: 'Romania',
@@ -404,6 +407,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               !RegExp(r"^07[0-9]{8}$").hasMatch(text)) {
                             return "Invalid phone number";
                           }
+                          phoneNumber = myPhoneNumberController.text;
                           return null;
                         },
                         hintText: '07xxxxxxxx',
