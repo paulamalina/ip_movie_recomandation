@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:ip_movie_recomandation/widgets/BigSearchField.dart';
 
 class SmallSearchField extends StatefulWidget {
+  final Function returnSearch;
+
   const SmallSearchField({
     Key? key,
+    required this.returnSearch,
   }) : super(key: key);
 
   @override
@@ -53,9 +56,7 @@ class _SmallSearchField extends State<SmallSearchField> {
                   value: SmallSearchIcon.itemOne,
                   child: Container(
                     color: Colors.red,
-                    child: BigSearchField(
-                      returnSearch: () {},
-                    ),
+                    child: BigSearchField(returnSearch: widget.returnSearch),
                   ))
             ]);
 

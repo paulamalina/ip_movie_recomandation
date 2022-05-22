@@ -43,7 +43,8 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-  String authToken = "";
+  String authToken =
+      "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJybWloYWxhY2hlQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJtb3ZpZXM6cmVhZCJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NTMxNDg0NTEsImV4cCI6MTY1NDMwMDgwMH0.07c60BOq7QjTZHVzuITSMSAZuoIlvOKyjVqrA-LB9PENNQnWe7ftbOc4rCMh71Hy601slCiwL4_XpOaYXOnU_w";
 
   showLoaderDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
@@ -86,13 +87,19 @@ class _MainScreenState extends State<MainScreen> {
         Uri.parse('http://157.230.114.95:8090/api/v1/movie/search/' + name),
         headers: {"Authorization": authToken});
 
-    print(response.statusCode);
+    print("Status code: ${response.statusCode}");
     if (response.statusCode == 404) {
       test = 2;
     } else if (response.statusCode == 200) {
       test = 1;
+      foundMovieList.clear();
+      foundMovies = [];
       foundMovies = searchedMovieFromJson(response.body);
-      if (foundMovies.length <= 0) test = 2;
+      if (foundMovies.length <= 0) {
+        test = 2;
+      } else {
+        populateList();
+      }
     } else {
       test = 2;
       throw Exception("Error at fetching data!");
@@ -116,7 +123,6 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Container displayMovieReturned() {
-    populateList();
     return Container(
       child: Wrap(
         alignment: WrapAlignment.center,
@@ -269,7 +275,7 @@ class _MainScreenState extends State<MainScreen> {
     initCarousel();
     //authToken = ModalRoute.of(context)!.settings.arguments as String;
 
-    print("Main: $authToken");
+    //print("Main: $authToken");
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -306,7 +312,9 @@ class _MainScreenState extends State<MainScreen> {
                 ? BigSearchField(
                     returnSearch: callMovieGetter,
                   )
-                : SmallSearchField(),
+                : SmallSearchField(
+                    returnSearch: callMovieGetter,
+                  ),
             SizedBox(width: 20),
             Container(
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
