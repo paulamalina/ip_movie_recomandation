@@ -6,6 +6,8 @@ import 'package:ip_movie_recomandation/screens/GenreScreen/genre.dart';
 import 'package:ip_movie_recomandation/screens/LoginScreen/login.dart';
 import 'package:ip_movie_recomandation/screens/MainScreen/main.dart';
 import 'package:ip_movie_recomandation/screens/MovieDetailsScreen/details.dart';
+import 'package:ip_movie_recomandation/screens/Test.dart';
+import 'package:ip_movie_recomandation/screens/WatchListScreen/watchList.dart';
 import 'package:ip_movie_recomandation/screens/WelcomeScreen/welcome.dart';
 import 'package:ip_movie_recomandation/screens/RatingScreen/rating.dart';
 
@@ -21,13 +23,15 @@ void main() {
         '/': (context) => const WelcomeScreen(),
         // When navigating to the "/choose" route, build the ChooseScreen widget.
         '/choose': (context) => const ChooseScreen(),
-        '/login' : (context) => const LoginScreen(),
-        '/register' : (context) => const RegisterScreen(),
-        '/rating' : (context) => const RatingScreen(),
-        '/main' : (context) => const MainScreen(),
-        '/genre' : (context) => const GenreScreen(),
-        '/details' : (context) => const MovieDetailsScreen(),
-        '/changeProfile' : (context) => const ChangeProfieScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
+        '/rating': (context) => const RatingScreen(),
+        '/main': (context) => const MainScreen(),
+        '/genre': (context) => const GenreScreen(),
+        '/details': (context) => const MovieDetailsScreen(),
+        '/changeProfile': (context) => const ChangeProfieScreen(),
+        '/commentBox': (context) => TestMe(),
+        '/watchList': (context) => const WatchList(),
       },
     ),
   );
