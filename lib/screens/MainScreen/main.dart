@@ -21,12 +21,15 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  List<ImageButton> searchedList = [];
+  List<ImageButton> recommendedList = [];
+  List<ImageButton> rememberRecommended = [];
+
   int test = 0;
   List<Widget> CarouselItems = [];
   Widget MyCarousel = Container();
   bool isFinish = false;
   List<SearchedMovie> foundMovies = [];
-  String foundMovieName = 'null';
   bool isLargeScreen = true;
   double imgWidth = 300;
   double imgHeight = 250;
@@ -70,16 +73,46 @@ class _MainScreenState extends State<MainScreen> {
         });
   }
 
-  void testGenre() {
+  void callRecommendGetter() {
+    fetchRecommendedMovie(10);
+    showLoaderDialog(context);
+    setState(() {});
+  }
+
+  void callGenreGetter() {
     Navigator.pushNamed(context, '/main');
   }
 
   void callMovieGetter(String name) {
     fetchMovie(name);
     showLoaderDialog(context);
-    //final searchedMovie = searchedMovieFromJson(fetchMovie(name).toString());
     setState(() {});
-    //test = 0;
+  }
+
+  Future fetchRecommendedMovie(int number) async {
+    final response = await http.get(
+        Uri.parse('http://157.230.114.95:8090/api/v1/recommendation/' +
+            number.toString()),
+        headers: {"Authorization": authToken});
+
+    if (response.statusCode == 404) {
+      test = 2;
+      throw Exception("Error at fetching data!");
+    } else if (response.statusCode == 200) {
+      searchedList.clear();
+      foundMovies = [];
+      foundMovies = searchedMovieFromJson(response.body);
+      if (foundMovies.length <= 0) {
+        test = 2;
+        throw Exception("Error at fetching data!");
+      } else {
+        populateList(recommendedList);
+        return recommendedList;
+      }
+    } else {
+      test = 2;
+      throw Exception("Error at fetching data!");
+    }
   }
 
   void fetchMovie(String name) async {
@@ -87,18 +120,18 @@ class _MainScreenState extends State<MainScreen> {
         Uri.parse('http://157.230.114.95:8090/api/v1/movie/search/' + name),
         headers: {"Authorization": authToken});
 
-    print("Status code: ${response.statusCode}");
+    //print("Status code: ${response.statusCode}");
     if (response.statusCode == 404) {
       test = 2;
     } else if (response.statusCode == 200) {
       test = 1;
-      foundMovieList.clear();
+      searchedList.clear();
       foundMovies = [];
       foundMovies = searchedMovieFromJson(response.body);
       if (foundMovies.length <= 0) {
         test = 2;
       } else {
-        populateList();
+        populateList(searchedList);
       }
     } else {
       test = 2;
@@ -107,16 +140,18 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Container manageContent() {
-    if (test == 0) return normalPrint();
-    if (test == 1) return displayMovieReturned();
+    if (test == 0) {
+      return normalPrint();
+    }
+    if (test == 1) {
+      return displayMovieReturned();
+    }
     return noMovieReturned();
   }
 
-  List<ImageButton> foundMovieList = [];
-
-  void populateList() {
+  void populateList(List<ImageButton> buttonList) {
     for (int i = 0; i < foundMovies.length; i++) {
-      foundMovieList.add(ImageButton(
+      buttonList.add(ImageButton(
           image: Image.asset("assets/images/image1.png"),
           text: foundMovies[i].name));
     }
@@ -127,7 +162,7 @@ class _MainScreenState extends State<MainScreen> {
       child: Wrap(
         alignment: WrapAlignment.center,
         spacing: 40,
-        children: foundMovieList,
+        children: searchedList,
       ),
     );
   }
@@ -164,13 +199,6 @@ class _MainScreenState extends State<MainScreen> {
       child: CarouselSlider(
         items: CarouselItems,
         options: CarouselOptions(
-          onPageChanged: (index, reason) {
-            setState(() {
-              //_currentPage = index;
-              //_currentKeyword = keywords[_currentPage];
-            });
-          },
-          //autoPlay: true,
           autoPlayInterval: Duration(seconds: 3),
           autoPlayAnimationDuration: Duration(milliseconds: 800),
           autoPlayCurve: Curves.fastOutSlowIn,
@@ -184,95 +212,45 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void initImages() {
-    CarouselItems = [
-      ImageButton(
-        text: "film1",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-      ImageButton(
-        text: "film2",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-      ImageButton(
-        text: "film3",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-      ImageButton(
-        text: "film4",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-      ImageButton(
-        text: "film5",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-      ImageButton(
-        text: "film6",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-      ImageButton(
-        text: "film7",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-      ImageButton(
-        text: "film8",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-      ImageButton(
-        text: "film9",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-    ];
+    CarouselItems = rememberRecommended;
   }
 
   Container normalPrint() {
-    return Container(
-        child: Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 40,
-            children: [MyCarousel, MyCarousel, MyCarousel]));
+    if (!recommendedList.isEmpty) {
+      return Container(
+        child: MyCarousel,
+      );
+    } else {
+      return Container(
+          child: Wrap(alignment: WrapAlignment.center, spacing: 40, children: [
+        FutureBuilder(
+          future: fetchRecommendedMovie(10),
+          builder: (context, snapshot) {
+            if (snapshot.data == null) {
+              return Container(
+                child: Text("Loading..."),
+              );
+            } else {
+              rememberRecommended = snapshot.data as List<ImageButton>;
+              initImages();
+              initCarousel();
+              return Container(
+                child: MyCarousel,
+              );
+            }
+          },
+        )
+      ]));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     setDimentions();
-    initImages();
-    initCarousel();
+    if (!recommendedList.isEmpty) {
+      initImages();
+      initCarousel();
+    }
     //authToken = ModalRoute.of(context)!.settings.arguments as String;
 
     //print("Main: $authToken");
@@ -296,17 +274,22 @@ class _MainScreenState extends State<MainScreen> {
           //backgroundColor: Color(0xFF1A759F),
           backgroundColor: Colors.teal,
           title: Container(
-            width: 60,
-            child: SvgPicture.asset(
-              "assets/images/LogoSvg2.svg",
-              height: 100,
-            ),
-            /*
+              width: 60,
+              child: IconButton(
+                icon: SvgPicture.asset(
+                  "assets/images/LogoSvg2.svg",
+                  height: 100,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, "/main");
+                },
+              )
+              /*
             child: SvgPicture.asset(
               "assets/images/logoClean.svg",
             ),
             */
-          ),
+              ),
           actions: [
             isLargeScreen
                 ? BigSearchField(
@@ -355,7 +338,7 @@ class _MainScreenState extends State<MainScreen> {
                   title: Center(
                       child: MainGenreButton(
                     text: "Action",
-                    buttonMethod: testGenre,
+                    buttonMethod: callGenreGetter,
                   )),
                   //onTap: () {
                   //},
@@ -364,42 +347,42 @@ class _MainScreenState extends State<MainScreen> {
                   title: Center(
                       child: MainGenreButton(
                     text: "Comedy",
-                    buttonMethod: testGenre,
+                    buttonMethod: callGenreGetter,
                   )),
                 ),
                 ListTile(
                   title: Center(
                       child: MainGenreButton(
                     text: "Drama",
-                    buttonMethod: testGenre,
+                    buttonMethod: callGenreGetter,
                   )),
                 ),
                 ListTile(
                   title: Center(
                       child: MainGenreButton(
                     text: "Fantasy",
-                    buttonMethod: testGenre,
+                    buttonMethod: callGenreGetter,
                   )),
                 ),
                 ListTile(
                   title: Center(
                       child: MainGenreButton(
                     text: "Romantic",
-                    buttonMethod: testGenre,
+                    buttonMethod: callGenreGetter,
                   )),
                 ),
                 ListTile(
                   title: Center(
                       child: MainGenreButton(
                     text: "Scary",
-                    buttonMethod: testGenre,
+                    buttonMethod: callGenreGetter,
                   )),
                 ),
                 ListTile(
                   title: Center(
                       child: MainGenreButton(
                     text: "Sci-Fi",
-                    buttonMethod: testGenre,
+                    buttonMethod: callGenreGetter,
                   )),
                 ),
               ],
