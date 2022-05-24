@@ -28,7 +28,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final myBirthdateController = TextEditingController();
   final myCountryController = TextEditingController();
   final myPhoneNumberController = TextEditingController();
-  final myAgeController=TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   double containerWidth = 700;
@@ -46,7 +45,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String birthday="";
   String phoneNumber="";
   String country="";
-  String age="";
 
   String errorText="Error registering user!";
 
@@ -110,13 +108,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
               "POST, GET, OPTIONS, PUT, DELETE, HEAD",
           "Content-Type": "application/json",
         });
-    token = response.headers["authorization"] as String;
-    print("token : " + token);
     if (response.statusCode == 200) {
       print("ok, am fost logat cu succes");
+      token = response.headers["authorization"] as String;
+      print("token : " + token);
     } else {
       print("not ok, nu am fost logat cu succes");
       print("Status code la login : ${response.statusCode}");
+
     }
   }
 
@@ -124,7 +123,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void createUser() async {
     print("sunt in functie");
     print(email);
-    print(age);
     print(name);
     print(password);
     print(gender);
@@ -139,7 +137,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "birthdate": birthday,
           "country": country,
           "phoneNumber": phoneNumber,
-          "age" : age
         }),
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -148,16 +145,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "Content-Type": "application/json",
         });
 
-    if (response.statusCode == 201) {
-      final String responseString = response.body;
-      print("ok");
-      logUser();
-      isCreatedUser=true;
-    } else {
-      print("not ok");
-      print(response.statusCode);
-      //showAlert(context);
-      isCreatedUser=false;
+    switch(response.statusCode){
+      case 201: {
+        isCreatedUser=true;
+        print("Ok, am fost inregistrat cu succes");
+        logUser();
+      }
+      break;
+      case 409: {
+        errorText="Email address already in use!";
+        isCreatedUser=false;
+      }
+      break;
+      default: {
+        print(" eroare la register ${response.statusCode}");
+      }
     }
   }
 
@@ -393,15 +395,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         text: 'Phone Number',
                         controller: myPhoneNumberController,
                       )),
-                      Center(
-                          child: MyTextField(
-                            hintText: '18',
-                            text: 'Age',
-                            controller: myAgeController, formFieldValidator: (value) {
-                            age = myAgeController.text ;
-                          },
-
-                          )),
                       SizedBox(
                         height: 20,
                       ),
