@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:bordered_text/bordered_text.dart';
 import 'package:ip_movie_recomandation/widgets/MyButton.dart';
 
+import '../../data/data.dart';
 import '../../widgets/MyTextField.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -35,6 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
               "POST, GET, OPTIONS, PUT, DELETE, HEAD",
           "Content-Type": "application/json",
         });
+
+    token = response.headers["authorization"] as String;
 
     print("Response: ${response.statusCode}");
     if (response.statusCode == 200) {
