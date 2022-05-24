@@ -1,5 +1,9 @@
 import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:intl/intl.dart';
+import 'package:ip_movie_recomandation/data/data.dart';
 
 class TestMe extends StatefulWidget {
   @override
@@ -31,6 +35,63 @@ class _TestMeState extends State<TestMe> {
       'message': 'Very cool'
     },
   ];
+
+  void postComment(String text) async {
+    final Uri apiUrl = Uri.parse("http://157.230.114.95:8090/api/v1/comments");
+    var now = new DateTime.now();
+    var formatter = new DateFormat('yyyy-MM-dd');
+    String formattedDate = formatter.format(now);
+    final response = await http.post(apiUrl,
+        body: jsonEncode({
+          "text" : text,
+          "commentDate": formattedDate,
+          "appuser" : {
+            "id" : "5"
+          },
+          "movie" : {
+            "id" : "3"
+          }
+        }),
+        headers: {
+          "Authorization" : token,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods":
+          "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+          "Content-Type": "application/json",
+        });
+
+    print("Response: ${response.statusCode}");
+    if (response.statusCode == 201) {
+      print("post comment ok");
+    } else {
+      print("post comment not ok");
+    }
+  }
+
+  String authToken =
+      "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJybWloYWxhY2hlQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJtb3ZpZXM6cmVhZCJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NTMxNDg0NTEsImV4cCI6MTY1NDMwMDgwMH0.07c60BOq7QjTZHVzuITSMSAZuoIlvOKyjVqrA-LB9PENNQnWe7ftbOc4rCMh71Hy601slCiwL4_XpOaYXOnU_w";
+
+
+  void fetchComments(int id_movie) async {
+    final response = await http.get(
+        Uri.parse('http://157.230.114.95:8090/api/v1/movies/comments/' + id_movie.toString()),
+        headers: {"Authorization": authToken});
+
+    print("Status code: ${response.statusCode}");
+    if (response.statusCode == 404) {
+      //afisare text "niciun comentariu"
+    } else if (response.statusCode == 200) {
+      //generare comentarii
+      //get "dupe"(sick) id user
+      //populat filedata cu nume user, imagine de profil, data comentariu, text comentariu
+      filedata=jsonDecode(response.body);
+      print(filedata);
+    }
+
+  }
+
+
+
 
   Widget commentChild(data) {
     return ListView(
@@ -75,7 +136,7 @@ class _TestMeState extends State<TestMe> {
       body: Container(
         child: CommentBox(
           userImage:
-              "https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400",
+          "https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400",
           child: commentChild(filedata),
           labelText: 'Write a comment...',
           withBorder: false,
@@ -87,10 +148,11 @@ class _TestMeState extends State<TestMe> {
                 var value = {
                   'name': 'New User',
                   'pic':
-                      'https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400',
+                  'https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400',
                   'message': commentController.text
                 };
                 filedata.insert(0, value);
+                postComment(commentController.text);
               });
               commentController.clear();
               FocusScope.of(context).unfocus();
