@@ -7,20 +7,22 @@ import 'package:comment_box/comment/comment.dart' as comm;
 
 class MovieDetailsScreen extends StatefulWidget {
   const MovieDetailsScreen({Key? key}) : super(key: key);
-
+  
   @override
   State<MovieDetailsScreen> createState() => _MovieDetailsScreenState();
 }
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   late VideoPlayerController _controller;
+
   @override
   void initState() {
     super.initState();
+    String video = 'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4';
     _ratingController = TextEditingController(text: '3.0');
     _rating = _initialRating;
     _controller = VideoPlayerController.network(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4')
+        video)
       ..addListener(() => setState(() {}))
       ..setLooping(true)
       ..initialize().then((_) => _controller.play());
@@ -67,7 +69,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   late final _ratingController;
   late double _rating;
-
+  String logo = "assets/images/LogoSvg2.svg";
   double _initialRating = 2.0;
   IconData? _selectedIcon;
 
@@ -81,6 +83,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
           end: Alignment.bottomCenter,
         ),
       ),
+
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: ListView(
@@ -89,29 +92,22 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
               height: 100,
               width: 400,
             ),
+
             Center(
               child: Container(
                 height: 1100,
                 width: 700,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
-                    // color: Color(0xFFB9D0B3),
                     color: Colors.teal,
                     boxShadow: [
                       BoxShadow(
                         blurRadius: 7,
                         spreadRadius: 2,
                       )
-                    ]
-                    // gradient: LinearGradient(
-                    //   colors: [
-                    //     Colors.white,
-                    //     Colors.teal,
-                    //     Colors.white
-                    //   ],
-                    // ),
+                    ]                    
+                  ),
 
-                    ),
                 child: Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -121,12 +117,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         children: [
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              //SvgPicture.asset('assets/images/logo.svg'),
-
+                            children: [                          
                               Center(
                                 child: SvgPicture.asset(
-                                  "assets/images/LogoSvg2.svg",
+                                  logo,
                                   height: 100,
                                 ),
                               ),
@@ -134,11 +128,13 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                               SizedBox(
                                 width: 50,
                               ),
+
                               Image.asset(
                                 'assets/images/image1.png',
                                 width: 500,
                                 height: 500,
                               ),
+
                               Text(
                                 'Avatar',
                                 style: TextStyle(
@@ -146,7 +142,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                   fontSize: 40,
                                 ),
                               ),
-                              //stars
+
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 50.0),
                                 child: RatingBar.builder(
@@ -175,6 +171,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           ),
                         ],
                       ),
+
                       Padding(
                         padding: const EdgeInsets.only(left: 50, right: 50),
                         child: Text(
@@ -185,6 +182,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           ),
                         ),
                       ),
+
                       Padding(
                         padding: const EdgeInsets.only(top: 10.0),
                         child: SizedBox(
@@ -196,6 +194,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           ),
                         ),
                       ),
+
                       Padding(
                         padding: const EdgeInsets.only(top: 25.0),
                         child: SizedBox(
@@ -212,6 +211,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 ),
               ),
             ),
+
             SizedBox(
               height: 100,
             ),
@@ -226,6 +226,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     : Container(),
               ),
             ),
+
             MaterialButton(
               onPressed: () {
                 setState(() {

@@ -1,3 +1,4 @@
+import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,7 +22,8 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
   double containerHeight = 900;
   bool isSmallScreen = false;
   bool isLargeScreen = true;
-  
+  String logo = "assets/images/LogoSvg2.svg";
+
   void setValue() {
     if (MediaQuery.of(context).size.width >= 700) {
       setState(() {
@@ -97,7 +99,7 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
 
                     Container(
                       child: SvgPicture.asset(
-                        "assets/images/LogoSvg2.svg",
+                        logo,
                         height: 100,
                       ),
                     ),
@@ -110,11 +112,18 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                       decoration: BoxDecoration(),
                       child: Align(
                           alignment: Alignment.center,
-                          child: Text(
-                            "Change your profile",
-                            style: TextStyle(
-                              color: Color(0xFFB5E48C),
-                              fontSize: 25,
+                          
+                          child: BorderedText(
+                            strokeWidth: 4.0,
+                            strokeColor: Color(0xFF2B6086),
+                            child: Text(
+                              "Change your profile",
+                              
+                              style: TextStyle(                          
+                                color: Color(0xFFCAEEE4),                              
+                                fontSize: 25,
+                                
+                              ),
                             ),
                           )),
                       width: 50,

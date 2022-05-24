@@ -16,6 +16,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   double containerHeight=600;
   bool isSmallScreen=false;
   bool isLargeScreen=true;
+
   void setValue(){
     if(MediaQuery.of(context).size.width >= 700){
       setState(() {
@@ -47,12 +48,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             blurRadius: 7,
           )
         ],
+
         gradient: LinearGradient(colors: [
           Colors.white, Color.fromRGBO(52, 160, 164, 1)
           ],
            begin: Alignment.topCenter,
            end: Alignment.bottomCenter),
       ),
+
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Center(
@@ -70,12 +73,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               borderRadius: isLargeScreen ? BorderRadius.circular(50.0) : null,
               
             ),
+
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SvgPicture.asset(
                   "assets/images/LogoSvg2.svg", height: 100,
                 ),
+
                 Container(
                   width: 400,
                   height: 50,
@@ -92,6 +97,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
                   ),
                 ),
+
                 Center(
                   child: SvgPicture.asset(
                     "assets/images/welcome.svg",

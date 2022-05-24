@@ -17,7 +17,8 @@ class RatingScreen extends StatefulWidget {
 
 class _RatingScreenState extends State<RatingScreen> {
   String token="Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYUBnbWFpbC5jb20iLCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoibW92aWVzOnJlYWQifSx7ImF1dGhvcml0eSI6IlJPTEVfVVNFUiJ9XSwiaWF0IjoxNjUzMzAwMjg0LCJleHAiOjE2NTQ0NzM2MDB9.cqT8YRb-M6qkUO57oI0WjbW_30zY-iFUg-7jm6F-wZ5c8EfjX-_2lF1NZojzfkD_D5VJHWnfQpM_14DCwMY6pA";
-  // @override
+  String urlMovie = "http://157.230.114.95:8090/api/v1/movies";
+
   void function() {
     if (globals.Index == 0) {
       globals.image = 'assets/images/image1.png';
@@ -41,7 +42,6 @@ class _RatingScreenState extends State<RatingScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getMovies();
   }
@@ -51,7 +51,8 @@ class _RatingScreenState extends State<RatingScreen> {
     print("------------");
 
     final Uri apiUrl =
-        Uri.parse("http://157.230.114.95:8090/api/v1/movies");
+        Uri.parse(urlMovie);
+
     final response = await http.get(apiUrl, headers: {
       "Authorization": token,
       "Access-Control-Allow-Origin": "*",
@@ -143,6 +144,7 @@ class _RatingScreenState extends State<RatingScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter),
       ),
+
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Center(
@@ -161,6 +163,7 @@ class _RatingScreenState extends State<RatingScreen> {
               borderRadius: isLargeScreen ? BorderRadius.circular(50.0) : null,
               color: Colors.teal,
             ),
+
             child: ListView(
               children: [
                 Padding(
@@ -178,9 +181,11 @@ class _RatingScreenState extends State<RatingScreen> {
                     ),
                   ),
                 ),
+
                 SizedBox(
                   height: 20,
                 ),
+
                 Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -201,6 +206,7 @@ class _RatingScreenState extends State<RatingScreen> {
                                   borderRadius: BorderRadius.circular(30.0),
                                   color: Color.fromARGB(255, 202, 238, 228),
                                 ),
+
                                 child: TextButton(
                                   onPressed: () {
                                     //function();
@@ -216,6 +222,7 @@ class _RatingScreenState extends State<RatingScreen> {
                                   ),
                                 ),
                               ),
+
                               Container(
                                 width: 150,
                                 height: 80,
@@ -223,6 +230,7 @@ class _RatingScreenState extends State<RatingScreen> {
                                   borderRadius: BorderRadius.circular(30.0),
                                   color: Color.fromARGB(255, 181, 238, 228),
                                 ),
+
                                 child: TextButton(
                                   onPressed: () {
                                     //function();
@@ -241,6 +249,7 @@ class _RatingScreenState extends State<RatingScreen> {
                               ),
                             ],
                           ),
+
                           Wrap(
                             spacing: 20,
                             alignment: WrapAlignment.spaceBetween,
@@ -252,6 +261,7 @@ class _RatingScreenState extends State<RatingScreen> {
                                   borderRadius: BorderRadius.circular(30.0),
                                   color: Color.fromARGB(255, 128, 239, 216),
                                 ),
+
                                 child: TextButton(
                                   onPressed: () {
                                     //function();
@@ -267,6 +277,7 @@ class _RatingScreenState extends State<RatingScreen> {
                                   ),
                                 ),
                               ),
+
                               Container(
                                 width: 150,
                                 height: 80,
@@ -293,6 +304,7 @@ class _RatingScreenState extends State<RatingScreen> {
                           ),
                         ],
                       ),
+                      
                       SizedBox(
                         height: 50,
                       ),

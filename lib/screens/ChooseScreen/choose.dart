@@ -14,7 +14,8 @@ class _ChooseScreenState extends State<ChooseScreen> {
   double containerHeight = 600;
   bool isSmallScreen = false;
   bool isLargeScreen = true;
-  
+  String logo = "assets/images/LogoSvg2.svg";
+
   void setValue() {
     if (MediaQuery.of(context).size.width >= 700) {
       setState(() {
@@ -89,7 +90,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(25.0),
                       child:  SvgPicture.asset(
-                  "assets/images/LogoSvg2.svg", height: 100,
+                  logo, height: 100,
                 ),
                     ),
                   ),

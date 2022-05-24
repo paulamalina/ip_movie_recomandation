@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:bordered_text/bordered_text.dart';
+
 import 'package:ip_movie_recomandation/widgets/MyButton.dart';
 
 import '../../data/data.dart';
@@ -21,15 +22,21 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool isFinish = false;
   final _formKey = GlobalKey<FormState>();
+  String logo = "assets/images/LogoSvg2.svg";
+  String urlLink = "http://157.230.114.95:8090/api/v1/login";
+
   void logUser() async {
     print(name);
     print(password);
-    final Uri apiUrl = Uri.parse("http://157.230.114.95:8090/api/v1/login");
+
+    final Uri apiUrl = Uri.parse(urlLink);
     final response = await http.post(apiUrl,
+        
         body: jsonEncode({
           "email": name,
           "password": password,
         }),
+
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods":
@@ -41,9 +48,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
     print("Response: ${response.statusCode}");
     if (response.statusCode == 200) {
-      print("ok, am fost logat cu succes");
+      print("Succesfully login!");
     } else {
-      print("not ok, nu am fost logat cu succes");
+      print("Unsuccesfully login!");
     }
   }
 
@@ -57,6 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
       ),
     );
+
     showDialog(
         barrierDismissible: false,
         context: context,
@@ -77,6 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
   double containerHeight = 600;
   bool isSmallScreen = false;
   bool isLargeScreen = true;
+
   void setValue() {
     if (MediaQuery.of(context).size.width >= 700) {
       setState(() {
@@ -114,6 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final myNameController = TextEditingController();
   final myPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     setValue();
@@ -125,6 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
           end: Alignment.bottomCenter,
         ),
       ),
+
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Center(
@@ -145,22 +156,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       ]
                     : null,
               ),
+
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 40),
                     child: Center(
-                      //child: SvgPicture.asset('assets/images/logoClean.svg', width: 300, height: 200,),
                       child: SvgPicture.asset(
-                        "assets/images/LogoSvg2.svg",
+                        logo,
                         height: 100,
                       ),
                     ),
                   ),
+
                   SizedBox(
                     height: 85,
                   ),
+
                   Container(
                     width: 300,
                     child: MyTextField(
@@ -172,9 +185,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         text: 'Name',
                         controller: myNameController),
                   ),
+
                   SizedBox(
                     height: 50,
                   ),
+
                   Container(
                     width: 300,
                     child: MyTextField(
@@ -187,9 +202,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: myPasswordController,
                         obscureText: true),
                   ),
+
                   SizedBox(
                     height: 50,
                   ),
+
                   Padding(
                     padding: const EdgeInsets.only(left: 70, right: 70),
                     child: Row(

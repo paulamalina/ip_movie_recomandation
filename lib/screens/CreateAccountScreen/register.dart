@@ -48,7 +48,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String phoneNumber="";
   String country="";
   String age="";
-
+  String logo = "assets/images/LogoSvg2.svg";
   String errorText="Error registering user!";
 
   showLoaderDialog(BuildContext context) {
@@ -188,7 +188,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void dispose() {
-    
     super.dispose();
     myNameController.dispose();
     myPasswordController.dispose();
@@ -250,7 +249,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(30.0),
                           child: SvgPicture.asset(
-                            "assets/images/LogoSvg2.svg",
+                            logo,
                             height: 100,
                           ),
                         ),

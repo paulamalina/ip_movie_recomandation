@@ -24,6 +24,8 @@ class _MainScreenState extends State<MainScreen> {
   List<ImageButton> searchedList = [];
   List<ImageButton> recommendedList = [];
   List<ImageButton> rememberRecommended = [];
+  String urlRecommandation = 'http://157.230.114.95:8090/api/v1/recommendation/';
+  String urlSearch = 'http://157.230.114.95:8090/api/v1/movie/search/';
 
   int test = 0;
   List<Widget> CarouselItems = [];
@@ -59,6 +61,7 @@ class _MainScreenState extends State<MainScreen> {
         ],
       ),
     );
+
     showDialog(
         barrierDismissible: false,
         context: context,
@@ -91,7 +94,7 @@ class _MainScreenState extends State<MainScreen> {
 
   Future fetchRecommendedMovie(int number) async {
     final response = await http.get(
-        Uri.parse('http://157.230.114.95:8090/api/v1/recommendation/' +
+        Uri.parse(urlRecommandation +
             number.toString()),
         headers: {"Authorization": authToken});
 
@@ -117,10 +120,9 @@ class _MainScreenState extends State<MainScreen> {
 
   void fetchMovie(String name) async {
     final response = await http.get(
-        Uri.parse('http://157.230.114.95:8090/api/v1/movie/search/' + name),
+        Uri.parse(urlSearch + name),
         headers: {"Authorization": authToken});
 
-    //print("Status code: ${response.statusCode}");
     if (response.statusCode == 404) {
       test = 2;
     } else if (response.statusCode == 200) {
@@ -179,6 +181,7 @@ class _MainScreenState extends State<MainScreen> {
                   fontSize: 80,
                   fontWeight: FontWeight.w200)),
         ),
+
         SizedBox(height: 30),
         FittedBox(
           fit: BoxFit.scaleDown,
@@ -188,6 +191,7 @@ class _MainScreenState extends State<MainScreen> {
                   fontSize: 40,
                   fontWeight: FontWeight.w200)),
         ),
+
         SizedBox(height: 100),
       ]),
     );
@@ -251,27 +255,19 @@ class _MainScreenState extends State<MainScreen> {
       initImages();
       initCarousel();
     }
-    //authToken = ModalRoute.of(context)!.settings.arguments as String;
 
-    //print("Main: $authToken");
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          /*
-          colors: [
-            Colors.white,
-            Color(0xFF99D98C),
-          ],
-          */
           colors: [Colors.white, Color.fromRGBO(52, 160, 164, 1)],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
       ),
+
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          //backgroundColor: Color(0xFF1A759F),
           backgroundColor: Colors.teal,
           title: Container(
               width: 60,
@@ -284,12 +280,8 @@ class _MainScreenState extends State<MainScreen> {
                   Navigator.pushNamed(context, "/main");
                 },
               )
-              /*
-            child: SvgPicture.asset(
-              "assets/images/logoClean.svg",
             ),
-            */
-              ),
+
           actions: [
             isLargeScreen
                 ? BigSearchField(
@@ -306,6 +298,7 @@ class _MainScreenState extends State<MainScreen> {
                 color: Color(0xFFCAEEE4),
               ),
             ),
+
             SizedBox(width: 20),
             Container(
               child: IconButton(
@@ -319,6 +312,7 @@ class _MainScreenState extends State<MainScreen> {
                 },
               ),
             ),
+
             SizedBox(width: 20),
             isLargeScreen ? BigLogoutButton() : SmallLogoutButton(),
             Container(
@@ -327,6 +321,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ],
         ),
+
         drawer: Drawer(
           backgroundColor: Colors.teal,
           child: Padding(
@@ -339,10 +334,9 @@ class _MainScreenState extends State<MainScreen> {
                       child: MainGenreButton(
                     text: "Action",
                     buttonMethod: callGenreGetter,
-                  )),
-                  //onTap: () {
-                  //},
+                  ))
                 ),
+                
                 ListTile(
                   title: Center(
                       child: MainGenreButton(
@@ -350,6 +344,7 @@ class _MainScreenState extends State<MainScreen> {
                     buttonMethod: callGenreGetter,
                   )),
                 ),
+
                 ListTile(
                   title: Center(
                       child: MainGenreButton(
@@ -357,6 +352,7 @@ class _MainScreenState extends State<MainScreen> {
                     buttonMethod: callGenreGetter,
                   )),
                 ),
+
                 ListTile(
                   title: Center(
                       child: MainGenreButton(
@@ -364,6 +360,7 @@ class _MainScreenState extends State<MainScreen> {
                     buttonMethod: callGenreGetter,
                   )),
                 ),
+
                 ListTile(
                   title: Center(
                       child: MainGenreButton(
@@ -371,13 +368,15 @@ class _MainScreenState extends State<MainScreen> {
                     buttonMethod: callGenreGetter,
                   )),
                 ),
+                
                 ListTile(
                   title: Center(
                       child: MainGenreButton(
-                    text: "Scary",
+                    text: "Horror",
                     buttonMethod: callGenreGetter,
                   )),
                 ),
+
                 ListTile(
                   title: Center(
                       child: MainGenreButton(
@@ -389,6 +388,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
         ),
+
         body: SingleChildScrollView(
           controller: ScrollController(),
           child: Row(
@@ -396,11 +396,13 @@ class _MainScreenState extends State<MainScreen> {
               Container(
                 width: MediaQuery.of(context).size.width * 0.025,
               ),
+
               Column(
                 children: [
                   Container(
                     height: 30,
                   ),
+
                   Container(
                     width: MediaQuery.of(context).size.width * 0.95,
                     height: 125,
@@ -415,6 +417,7 @@ class _MainScreenState extends State<MainScreen> {
                         )
                       ],
                     ),
+
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -430,7 +433,7 @@ class _MainScreenState extends State<MainScreen> {
                                     fontWeight: FontWeight.bold)),
                           ),
                         ),
-                        //ToggleButton(),
+
                         Container(
                             width: 120,
                             height: 50,
@@ -440,6 +443,7 @@ class _MainScreenState extends State<MainScreen> {
                               border: Border.all(
                                   color: Color(0xFF2B6086), width: 2),
                             ),
+
                             child: TextButton(
                               onPressed: () {
                                 Navigator.pushNamed(context, "/main");
@@ -456,11 +460,12 @@ class _MainScreenState extends State<MainScreen> {
                       ],
                     ),
                   ),
+
                   Container(
                     height: 30,
                   ),
+                  
                   Container(
-                      //height: MediaQuery.of(context).size.height * 1.5,
                       width: MediaQuery.of(context).size.width * 0.95,
                       decoration: BoxDecoration(
                         boxShadow: [
