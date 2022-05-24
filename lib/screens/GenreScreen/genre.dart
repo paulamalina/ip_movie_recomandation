@@ -1,10 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:ip_movie_recomandation/screens/RatingScreen/rating.dart';
 import 'package:ip_movie_recomandation/widgets/MyButton.dart';
-
 import '../../data/data.dart';
 import '../../widgets/MyBox.dart';
+import 'package:http/http.dart' as http;
 
 class GenreScreen extends StatefulWidget {
   const GenreScreen({Key? key}) : super(key: key);
@@ -14,7 +15,40 @@ class GenreScreen extends StatefulWidget {
 }
 
 class _GenreScreenState extends State<GenreScreen> {
+
+  showLoaderDialog(BuildContext context) {
+    postGenres();
+    AlertDialog alert = AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(),
+          Container(
+              margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+        ],
+      ),
+    );
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          Future.delayed(Duration(seconds: 2), () {
+            Navigator.of(context).pop(true);
+            Navigator.pushNamed(context, '/rating');
+          });
+          return alert;
+        });
+  }
+  
+  
   final pressAttention = ButtonStyle;
+
+  bool button1IsPressed=false;
+  bool button2IsPressed=false;
+  bool button3IsPressed=false;
+  bool button4IsPressed=false;
+  bool button5IsPressed=false;
+  bool button6IsPressed=false;
+  bool button7IsPressed=false;
 
   double containerWidth = 800;
   double containerHeight = 800;
@@ -22,6 +56,53 @@ class _GenreScreenState extends State<GenreScreen> {
   bool isLargeScreen = true;
 
   String authToken = "";
+
+
+  void postGenre(int id) async{
+    final Uri apiUrl = Uri.parse("http://157.230.114.95:8090/api/v1/genre/reviews");
+
+    final response= await http.post(
+        apiUrl,
+        body: jsonEncode({
+          "id": "$id"
+        }),
+        headers: {
+          "Authorization" : "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJybWloYWxhY2hlQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJtb3ZpZXM6cmVhZCJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NTMxNDg0NTEsImV4cCI6MTY1NDMwMDgwMH0.07c60BOq7QjTZHVzuITSMSAZuoIlvOKyjVqrA-LB9PENNQnWe7ftbOc4rCMh71Hy601slCiwL4_XpOaYXOnU_w",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods":
+          "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+          "Content-Type": "application/json",
+    });
+    if(response.statusCode==201){
+      print("binee");
+    }else{
+      print(response.statusCode);
+    }
+  }
+
+  void postGenres(){
+    if(button1IsPressed){
+      postGenre(1);
+    }
+    if(button2IsPressed){
+      postGenre(2);
+    }
+    if(button3IsPressed){
+      postGenre(3);
+    }
+    if(button4IsPressed){
+      postGenre(4);
+    }
+    if(button5IsPressed){
+      postGenre(5);
+    }
+    if(button6IsPressed){
+      postGenre(6);
+    }
+    if(button7IsPressed){
+      postGenre(7);
+    }
+  }
 
   void setValue() {
     if (MediaQuery.of(context).size.width >= 700) {
@@ -47,7 +128,6 @@ class _GenreScreenState extends State<GenreScreen> {
 
   void applyAndNavigateToRating() {
     Navigator.pushNamed(context, '/rating');
-    //Navigator.pushNamed(context, '/main');
   }
 
   void postPrefGenre(){
@@ -124,10 +204,23 @@ class _GenreScreenState extends State<GenreScreen> {
                             Container(
                               child: Column(
                                 children: [
-                                  MyBox(text: 'Action'),
-                                  MyBox(text: 'Comedy'),
-                                  MyBox(text: 'Drama'),
-                                  MyBox(text: 'Fantasy'),
+                                  MyBox(text: 'Action', CallbackFunction: (bool value ) {
+                                    print("Action : $value");
+                                    button1IsPressed=value;
+
+                                  },),
+                                  MyBox(text: 'Comedy', CallbackFunction: (bool value) {
+                                    print("Comedy : $value");
+                                    button2IsPressed=value;
+                                  },),
+                                  MyBox(text: 'Drama', CallbackFunction: (bool value) {
+                                    print("Drama : $value");
+                                    button3IsPressed=value;
+                                  },),
+                                  MyBox(text: 'Fantasy', CallbackFunction: (bool value) {
+                                    print("Fantasy : $value");
+                                    button4IsPressed=value;
+                                  },),
                                   SizedBox(
                                     width: 30,
                                   )
@@ -137,9 +230,18 @@ class _GenreScreenState extends State<GenreScreen> {
                             Container(
                               child: Column(
                                 children: [
-                                  MyBox(text: 'Romantic'),
-                                  MyBox(text: 'Scary'),
-                                  MyBox(text: 'Sci-Fi'),
+                                  MyBox(text: 'Romantic', CallbackFunction: (bool value) {
+                                    print("Romantic : $value");
+                                    button5IsPressed=value;
+                                  },),
+                                  MyBox(text: 'Scary', CallbackFunction: (bool value) {
+                                    print("Scary : $value");
+                                    button6IsPressed=value;
+                                  },),
+                                  MyBox(text: 'Sci-Fi', CallbackFunction: (bool value) {
+                                    print("SF : $value");
+                                    button7IsPressed=value;
+                                  },),
                                   SizedBox(
                                     width: 30,
                                   )
@@ -169,7 +271,10 @@ class _GenreScreenState extends State<GenreScreen> {
                       ),
                       MyButton(
                         text: "Next",
-                        buttonMethod: applyAndNavigateToRating,
+                        buttonMethod: (){
+                          showLoaderDialog(context);
+                          //applyAndNavigateToRating();
+                        },
                       )
                     ],
                   ),
