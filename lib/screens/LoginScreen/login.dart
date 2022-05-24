@@ -20,14 +20,16 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isFinish = false;
+  bool isLoggedIn = false;
+
   final _formKey = GlobalKey<FormState>();
   void logUser() async {
-    print(name);
+    print(email);
     print(password);
     final Uri apiUrl = Uri.parse("http://157.230.114.95:8090/api/v1/login");
     final response = await http.post(apiUrl,
         body: jsonEncode({
-          "email": name,
+          "email": email,
           "password": password,
         }),
         headers: {
@@ -42,12 +44,16 @@ class _LoginScreenState extends State<LoginScreen> {
     print("Response: ${response.statusCode}");
     if (response.statusCode == 200) {
       print("ok, am fost logat cu succes");
+      setState(() {
+        isLoggedIn = true;
+      });
     } else {
       print("not ok, nu am fost logat cu succes");
     }
   }
 
   showLoaderDialog(BuildContext context) {
+    logUser();
     AlertDialog alert = AlertDialog(
       content: new Row(
         children: [
@@ -62,16 +68,43 @@ class _LoginScreenState extends State<LoginScreen> {
         context: context,
         builder: (context) {
           Future.delayed(Duration(seconds: 2), () {
-            setState(() {
-              isFinish = true;
-            });
             Navigator.of(context).pop(true);
+            if (isLoggedIn) {
+              Navigator.pushNamed(context, '/main');
+            } else {
+              showAlert(context);
+            }
           });
           return alert;
         });
   }
 
-  String name = "";
+  String errorText = "Failed to login!";
+
+  void showAlert(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              content: Text(errorText),
+              actions: [
+                TextButton(
+                  // FlatButton widget is used to make a text to work like a button
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  }, // function used to perform after pressing the button
+                  child: Text('CANCEL'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            ));
+  }
+
+  String email = "";
   String password = "";
   double containerWidth = 600;
   double containerHeight = 600;
@@ -107,12 +140,10 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void login() {
-    logUser();
     showLoaderDialog(context);
-    setState(() {});
   }
 
-  final myNameController = TextEditingController();
+  final myEmailController = TextEditingController();
   final myPasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -165,12 +196,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: 300,
                     child: MyTextField(
                         formFieldValidator: (text) {
-                          name = myNameController.text;
+                          email = myEmailController.text;
                           return null;
                         },
                         hintText: 'Popescu Maria',
                         text: 'Name',
-                        controller: myNameController),
+                        controller: myEmailController),
                   ),
                   SizedBox(
                     height: 50,
@@ -206,7 +237,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             text: 'Login',
                             buttonMethod: () {
                               login();
-                              Navigator.pushNamed(context, "/main");
                             },
                           ),
                         ),
