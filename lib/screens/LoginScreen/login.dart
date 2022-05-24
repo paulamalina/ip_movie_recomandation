@@ -165,8 +165,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           name = myNameController.text;
                           return null;
                         },
-                        hintText: 'Popescu Maria',
-                        text: 'Name',
+                        hintText: 'name@gmail.com',
+                        text: 'E-mail',
                         controller: myNameController),
                   ),
                   SizedBox(

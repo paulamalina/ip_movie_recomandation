@@ -308,14 +308,14 @@ class _MainScreenState extends State<MainScreen> {
                   )
                 : SmallSearchField(),
             SizedBox(width: 20),
-            Container(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: Icon(
-                Icons.notifications,
-                color: Color(0xFFCAEEE4),
-              ),
-            ),
-            SizedBox(width: 20),
+            // Container(
+            //   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            //   child: Icon(
+            //     Icons.notifications,
+            //     color: Color(0xFFCAEEE4),
+            //   ),
+            // ),
+            // SizedBox(width: 20),
             Container(
               child: IconButton(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
