@@ -27,6 +27,7 @@ class _MainScreenState extends State<MainScreen> {
   List<ImageButton> rememberRecommended = [];
 
   int test = 0;
+  String headerText = "For you";
   List<Widget> CarouselItems = [];
   Widget MyCarousel = Container();
   bool isFinish = false;
@@ -102,6 +103,7 @@ class _MainScreenState extends State<MainScreen> {
       test = 2;
       throw Exception("Error at fetching data!");
     } else if (response.statusCode == 200) {
+      headerText = genre;
       genreListLeft.clear();
       foundMovies = [];
       foundMovies = searchedMovieFromJson(response.body);
@@ -176,6 +178,7 @@ class _MainScreenState extends State<MainScreen> {
       test = 2;
     } else if (response.statusCode == 200) {
       test = 1;
+      headerText = "Search results";
       searchedList.clear();
       foundMovies = [];
       foundMovies = searchedMovieFromJson(response.body);
@@ -614,14 +617,6 @@ class _MainScreenState extends State<MainScreen> {
                   ),
             SizedBox(width: 20),
             Container(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: Icon(
-                Icons.notifications,
-                color: Color(0xFFCAEEE4),
-              ),
-            ),
-            SizedBox(width: 20),
-            Container(
               child: IconButton(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 icon: const Icon(
@@ -730,60 +725,40 @@ class _MainScreenState extends State<MainScreen> {
                     height: 30,
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.95,
-                    height: 125,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.teal,
-                      borderRadius: BorderRadius.circular(50.0),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 7,
-                          spreadRadius: 2,
-                        )
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(30.0),
-                          child: BorderedText(
-                            strokeWidth: 4.0,
-                            strokeColor: Color(0xFF2B6086),
-                            child: Text("For you",
-                                style: TextStyle(
-                                    color: Color(0xFFCAEEE4),
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold)),
-                          ),
-                        ),
-                        //ToggleButton(),
-                        Container(
-                            width: 120,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50.0),
-                              color: Color(0xFFCAEEE4),
-                              border: Border.all(
-                                  color: Color(0xFF2B6086), width: 2),
-                            ),
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, "/main");
-                              },
-                              child: Text(
-                                "Watchlist",
-                                style: const TextStyle(
-                                  color: Color(0xFF1A759F),
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 20,
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      height: 125,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.teal,
+                        borderRadius: BorderRadius.circular(50.0),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 7,
+                            spreadRadius: 2,
+                          )
+                        ],
+                      ),
+                      child: Wrap(
+                          alignment: WrapAlignment.center,
+                          spacing: 40,
+                          children: [
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: 30,
                                 ),
-                              ),
-                            ))
-                      ],
-                    ),
-                  ),
+                                BorderedText(
+                                  strokeWidth: 4.0,
+                                  strokeColor: Color(0xFF2B6086),
+                                  child: Text(headerText,
+                                      style: TextStyle(
+                                          color: Color(0xFFCAEEE4),
+                                          fontSize: 40,
+                                          fontWeight: FontWeight.bold)),
+                                )
+                              ],
+                            )
+                          ])),
                   Container(
                     height: 30,
                   ),
