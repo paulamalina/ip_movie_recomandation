@@ -28,7 +28,7 @@
 // }
 library animated_splash_screen;
 import 'package:flutter/material.dart';
-import 'package:animated_splash_screen/animated_splash_screen.dart';
+//import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:ip_movie_recomandation/screens/WelcomeScreen/welcome.dart';
@@ -101,7 +101,7 @@ class AnimatedSplashScreen extends StatefulWidget {
   factory AnimatedSplashScreen({
     Curve curve = Curves.easeInCirc,
     Future Function()? function,
-    int duration = 2500,
+    int duration = 300,
     required dynamic splash,
     required Widget nextScreen,
     //required Color backroundColor,
@@ -118,7 +118,7 @@ class AnimatedSplashScreen extends StatefulWidget {
       backgroundColor: backgroundColor,
       animationDuration: animationDuration,
       transitionType: pageTransitionType ?? PageTransitionType.bottomToTop,
-      splashTransition: splashTransition ?? SplashTransition.fadeTransition,
+      splashTransition: splashTransition ?? SplashTransition.rotationTransition,
       splashIconSize: splashIconSize,
       customAnimation: customTween,
       function: function,
@@ -198,7 +198,7 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
     super.initState();
 
     _animationController = new AnimationController(
-        duration: w.animationDuration ?? Duration(milliseconds: 800),
+        duration: w.animationDuration ?? Duration(milliseconds: 1000),
         vsync: this);
 
     Animatable animation = w.customAnimation ??
