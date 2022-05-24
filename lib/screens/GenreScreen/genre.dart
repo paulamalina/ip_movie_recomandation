@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:ip_movie_recomandation/screens/RatingScreen/rating.dart';
 import 'package:ip_movie_recomandation/widgets/MyButton.dart';
 
+import '../../data/data.dart';
 import '../../widgets/MyBox.dart';
 
 class GenreScreen extends StatefulWidget {
@@ -21,6 +22,7 @@ class _GenreScreenState extends State<GenreScreen> {
   bool isLargeScreen = true;
 
   String authToken = "";
+
   void setValue() {
     if (MediaQuery.of(context).size.width >= 700) {
       setState(() {
@@ -44,23 +46,17 @@ class _GenreScreenState extends State<GenreScreen> {
   }
 
   void applyAndNavigateToRating() {
-    //Navigator.pushNamed(context, '/rating');
-    print("Token ul este : $authToken");
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => RatingScreen(),
-        settings: RouteSettings(
-          arguments: authToken,
-        ),
-      ),
-    );
+    Navigator.pushNamed(context, '/rating');
+    //Navigator.pushNamed(context, '/main');
+  }
+
+  void postPrefGenre(){
+
   }
 
   @override
   Widget build(BuildContext context) {
     setValue();
-    authToken = ModalRoute.of(context)!.settings.arguments as String;
 
     return Container(
       decoration: BoxDecoration(
