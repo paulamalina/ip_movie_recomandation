@@ -8,6 +8,7 @@ import '../MainScreen/main.dart';
 import 'globals.dart' as globals;
 import 'package:http/http.dart' as http;
 
+
 class RatingScreen extends StatefulWidget {
   const RatingScreen({Key? key}) : super(key: key);
 
@@ -63,12 +64,9 @@ class _RatingScreenState extends State<RatingScreen> {
 
     var data=jsonDecode(response.body);
     imageLink=data[0]["trailerLink"];
-    imageLink+="jpg";
     print(data[0]["trailerLink"]);
 
   }
-
-  late NetworkImage image;
   void getImage() async{
     final Uri apiUrl =
     Uri.parse(imageLink);
@@ -76,8 +74,7 @@ class _RatingScreenState extends State<RatingScreen> {
       "Authorization" : token,
       "Content-Type": "application/json",
     });
-
-     image=jsonDecode(response.body) ;
+     //print(response.body);
   }
 
   void navigateToRating() {
@@ -131,6 +128,9 @@ class _RatingScreenState extends State<RatingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    function();
+    setValue();
+    // getImage();
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
@@ -203,8 +203,7 @@ class _RatingScreenState extends State<RatingScreen> {
                                 ),
                                 child: TextButton(
                                   onPressed: () {
-                                    //function();
-                                    goToMain();
+                                    Navigator.pushNamed(context, globals.redirect);
                                   },
                                   child: Text(
                                     'Awful',
@@ -225,9 +224,7 @@ class _RatingScreenState extends State<RatingScreen> {
                                 ),
                                 child: TextButton(
                                   onPressed: () {
-                                    //function();
-                                    goToMain();
-                                    Navigator.pushNamed(context, '/main');
+                                    Navigator.pushNamed(context, globals.redirect);
                                   },
                                   child: Text(
                                     'Average',
@@ -254,8 +251,7 @@ class _RatingScreenState extends State<RatingScreen> {
                                 ),
                                 child: TextButton(
                                   onPressed: () {
-                                    //function();
-                                    goToMain();
+                                    Navigator.pushNamed(context, globals.redirect);
                                   },
                                   child: Text(
                                     'Good',
@@ -276,8 +272,7 @@ class _RatingScreenState extends State<RatingScreen> {
                                 ),
                                 child: TextButton(
                                   onPressed: () {
-                                    //function();
-                                    goToMain();
+                                    Navigator.pushNamed(context, globals.redirect);
                                   },
                                   child: Text(
                                     'Amazing',
@@ -300,32 +295,33 @@ class _RatingScreenState extends State<RatingScreen> {
                         child: MyButton(
                           text: 'Skip',
                           buttonMethod: () {
-                            goToMain();
+                            Navigator.pushNamed(context, globals.redirect);
                             //getImage();
                           },
                         ),
                       ),
 
                       // Image.network(
-                      //   imageLink,
-                      //   headers: {
-                      //     "Authorization" : token,
-                      //   },
-                      //   loadingBuilder: (BuildContext context, Widget child,
-                      //       ImageChunkEvent? loadingProgress) {
-                      //     if (loadingProgress == null) {
-                      //       return child;
-                      //     }
-                      //     return Center(
-                      //       child: CircularProgressIndicator(
-                      //         value: loadingProgress.expectedTotalBytes != null
-                      //             ? loadingProgress.cumulativeBytesLoaded /
-                      //             loadingProgress.expectedTotalBytes!
-                      //             : null,
-                      //       ),
-                      //     );
-                      //   },
+                      //   "http://157.230.114.95:8090/api/v1/files/file_416367353",
+                      //
                       // ),
+
+
+                        // loadingBuilder: (BuildContext context, Widget child,
+                        //     ImageChunkEvent? loadingProgress) {
+                        //   if (loadingProgress == null) {
+                        //     return child;
+                        //   }
+                        //   return Center(
+                        //     child: CircularProgressIndicator(
+                        //       value: loadingProgress.expectedTotalBytes != null
+                        //           ? loadingProgress.cumulativeBytesLoaded /
+                        //           loadingProgress.expectedTotalBytes!
+                        //           : null,
+                        //     ),
+                        //   );
+                        // },
+
                     ],
                   ),
                 ),
@@ -340,3 +336,4 @@ class _RatingScreenState extends State<RatingScreen> {
     //Image.asset('./assets/images/image1.jpg');
   }
 }
+
