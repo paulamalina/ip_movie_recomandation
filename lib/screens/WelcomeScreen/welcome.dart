@@ -3,14 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ip_movie_recomandation/widgets/MyButton.dart';
 
+
+//import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'globals.dart' as globals;
+import 'package:ip_movie_recomandation/widgets/LoadingScreen.dart';
+
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
+  
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  
 
   double containerWidth=600;
   double containerHeight=600;
@@ -39,6 +48,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
   @override
   Widget build(BuildContext context) {
+     //LoadingScreen(WelcomeScreen());
+     //Function(WelcomeScreen());
+     if(globals.nr==0){
+       globals.nr=1;
+     return AnimatedSplashScreen(
+      splash: 'assets/images/logo.png',
+      //backgroundColor = Color.fromRGBO(52, 160, 164, 1),
+      nextScreen: WelcomeScreen(),
+      splashTransition: SplashTransition.rotationTransition,
+      pageTransitionType: PageTransitionType.bottomToTop,
+    );
+     }
     setValue();
     return Container(
       decoration: BoxDecoration(
