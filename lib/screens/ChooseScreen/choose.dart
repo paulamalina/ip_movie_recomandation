@@ -14,6 +14,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
   double containerHeight = 600;
   bool isSmallScreen = false;
   bool isLargeScreen = true;
+  
   void setValue() {
     if (MediaQuery.of(context).size.width >= 700) {
       setState(() {
@@ -54,11 +55,13 @@ class _ChooseScreenState extends State<ChooseScreen> {
             blurRadius: 7,
           )
         ],
+
         gradient: LinearGradient(
             colors: [Colors.white, Color.fromRGBO(52, 160, 164, 1)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter),
       ),
+
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Center(
@@ -77,6 +80,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
               borderRadius: isLargeScreen ? BorderRadius.circular(50.0) : null,
               color: Colors.teal,
             ),
+
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -89,6 +93,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
                 ),
                     ),
                   ),
+
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.all(25.0),
@@ -98,6 +103,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
                       ),
                     ),
                   ),
+
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.all(25.0),
@@ -107,6 +113,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
                       ),
                     ),
                   ),
+                  
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.all(25.0),

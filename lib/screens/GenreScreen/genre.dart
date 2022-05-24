@@ -47,7 +47,6 @@ class _GenreScreenState extends State<GenreScreen> {
 
   void applyAndNavigateToRating() {
     Navigator.pushNamed(context, '/rating');
-    //Navigator.pushNamed(context, '/main');
   }
 
   void postPrefGenre(){
@@ -70,6 +69,7 @@ class _GenreScreenState extends State<GenreScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter),
       ),
+
       child: Scaffold(
         backgroundColor: Colors.transparent, //
         body: Center(
@@ -88,6 +88,7 @@ class _GenreScreenState extends State<GenreScreen> {
               borderRadius: isLargeScreen ? BorderRadius.circular(50.0) : null,
               color: Colors.teal,
             ),
+
             child: ListView(children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -95,24 +96,29 @@ class _GenreScreenState extends State<GenreScreen> {
                   SizedBox(
                     height: 20,
                   ),
+
                   Center(
                     child: Text(
                       "What genre would you like to watch?",
                       style: TextStyle(fontSize: 30, color: Colors.white),
                     ),
                   ),
+
                   SizedBox(
                     height: 30,
                   ),
+
                   Center(
                     child: Text(
                       "Please choose at least 3 genres that you are interested in",
                       style: TextStyle(fontSize: 15, color: Colors.white),
                     ),
                   ),
+
                   SizedBox(
                     height: 50,
                   ),
+
                   Container(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -134,6 +140,7 @@ class _GenreScreenState extends State<GenreScreen> {
                                 ],
                               ),
                             ),
+
                             Container(
                               child: Column(
                                 children: [
@@ -148,6 +155,7 @@ class _GenreScreenState extends State<GenreScreen> {
                             ),
                           ],
                         ),
+
                         SizedBox(
                           height: 30,
                         ),
@@ -156,6 +164,7 @@ class _GenreScreenState extends State<GenreScreen> {
                   ),
                 ],
               ),
+              
               Padding(
                 padding: const EdgeInsets.fromLTRB(50, 0, 50, 10),
                 child: Padding(

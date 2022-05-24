@@ -21,6 +21,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+
   final myNameController = TextEditingController();
   final myPasswordController = TextEditingController();
   final myEmailController = TextEditingController();
@@ -61,6 +62,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ],
       ),
     );
+
     showDialog(
         barrierDismissible: false,
         context: context,
@@ -121,15 +123,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   bool isCreatedUser=false;
+
   void createUser() async {
-    print("sunt in functie");
+    
+    print("Data is being processed");
     print(email);
     print(age);
     print(name);
     print(password);
     print(gender);
+
     final Uri apiUrl =
         Uri.parse("http://157.230.114.95:8090/api/v1/users/register");
+    
     final response = await http.post(apiUrl,
         body: jsonEncode({
           "email": email,
@@ -141,6 +147,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "phoneNumber": phoneNumber,
           "age" : age
         }),
+
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods":
@@ -150,11 +157,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     if (response.statusCode == 201) {
       final String responseString = response.body;
-      print("ok");
+      print("Done!");
       logUser();
       isCreatedUser=true;
     } else {
-      print("not ok");
+      print("Warning! Data are not allowed!");
       print(response.statusCode);
       //showAlert(context);
       isCreatedUser=false;
@@ -181,7 +188,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    
     super.dispose();
     myNameController.dispose();
     myPasswordController.dispose();
@@ -197,27 +204,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void register() {
-    // if (_formKey.currentState!.validate()) {
-    //   createUser();
-    //   showLoaderDialog(context);
-    //   token="";
-    //   Navigator.pushNamed(context, '/genre');
-    // }else{
-    //   print("nu sunt date valide");
-    // }
     showLoaderDialog(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    
     setValue();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   if (isFinish) {
-    //     Navigator.pushNamed(
-    //       context, "/genre"
-    //     );
-    //   }
-    // });
     return Container(
       decoration: BoxDecoration(
         color: Color(0xFF99D98C),
@@ -234,7 +227,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(
-                //height: containerHeight,
                 width: containerWidth,
                 decoration: BoxDecoration(
                   color: Colors.teal,
@@ -249,6 +241,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ]
                       : null,
                 ),
+
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -262,6 +255,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                       ),
+
                       Center(
                           child: MyTextField(
                         formFieldValidator: (text) {
@@ -278,9 +272,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         text: 'Name',
                         controller: myNameController,
                       )),
+
                       SizedBox(
                         height: 10,
                       ),
+
                       Center(
                           child: MyTextField(
                         formFieldValidator: (text) {
@@ -297,9 +293,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         text: 'Email',
                         controller: myEmailController,
                       )),
+
                       SizedBox(
                         height: 10,
                       ),
+
                       Center(
                           child: MyTextField(
                         //12+ caractere, cel putin o cifra, o litera mare, o litera mica, un caracter special
@@ -318,9 +316,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         obscureText: true,
                         controller: myPasswordController,
                       )),
+
                       SizedBox(
                         height: 10,
                       ),
+
                       Center(
                           child: MyTextField(
                         formFieldValidator: (text) {
@@ -336,9 +336,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         text: 'Gender',
                         controller: myGenderController,
                       )),
+
                       SizedBox(
                         height: 10,
                       ),
+
                       Center(
                           child: MyTextField(
                         //februarie are tot timpul 29 de zile!
@@ -356,9 +358,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         text: 'Birthdate',
                         controller: myBirthdateController,
                       )),
+
                       SizedBox(
                         height: 10,
                       ),
+
                       Center(
                           child: MyTextField(
                         formFieldValidator: (text) {
@@ -375,9 +379,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         text: 'Country',
                         controller: myCountryController,
                       )),
+
                       SizedBox(
                         height: 10,
                       ),
+
                       Center(
                           child: MyTextField(
                         formFieldValidator: (text) {
@@ -393,6 +399,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         text: 'Phone Number',
                         controller: myPhoneNumberController,
                       )),
+
                       Center(
                           child: MyTextField(
                             hintText: '18',
@@ -402,9 +409,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           },
 
                           )),
+
                       SizedBox(
                         height: 20,
                       ),
+
                       Padding(
                         padding: const EdgeInsets.all(30.0),
                         child: Row(
@@ -432,53 +441,3 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 }
-
-
-
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-//
-//   static const String _title = 'Flutter Code Sample';
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: _title,
-//       home: Scaffold(
-//         appBar: AppBar(title: const Text(_title)),
-//         body: const Center(
-//           child: MyStatelessWidget(),
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// class MyStatelessWidget extends StatelessWidget {
-//   const MyStatelessWidget({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return TextButton(
-//       onPressed: () => showDialog<String>(
-//         context: context,
-//         builder: (BuildContext context) => AlertDialog(
-//           title: const Text('AlertDialog Title'),
-//           content: const Text('AlertDialog description'),
-//           actions: <Widget>[
-//             TextButton(
-//               onPressed: () => Navigator.pop(context, 'Cancel'),
-//               child: const Text('Cancel'),
-//             ),
-//             TextButton(
-//               onPressed: () => Navigator.pop(context, 'OK'),
-//               child: const Text('OK'),
-//             ),
-//           ],
-//         ),
-//       ),
-//       child: const Text('Show Dialog'),
-//     );
-//   }
-// }

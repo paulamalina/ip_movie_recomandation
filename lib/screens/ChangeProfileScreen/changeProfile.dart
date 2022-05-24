@@ -15,11 +15,13 @@ class ChangeProfieScreen extends StatefulWidget {
 }
 
 class _ChangeProfieScreen extends State<ChangeProfieScreen> {
+  
   final _formKey = GlobalKey<FormState>();
   double containerWidth = 1000;
   double containerHeight = 900;
   bool isSmallScreen = false;
   bool isLargeScreen = true;
+  
   void setValue() {
     if (MediaQuery.of(context).size.width >= 700) {
       setState(() {
@@ -45,6 +47,7 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
   }
 
   final myPasswordController = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     setValue();
@@ -55,13 +58,16 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
             blurRadius: 7,
           )
         ],
+
         gradient: LinearGradient(
             colors: [Colors.white, Color.fromRGBO(52, 160, 164, 1)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter),
       ),
+
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        
         body: Center(
           child: Container(
             width: containerWidth,
@@ -78,23 +84,28 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
               borderRadius: isLargeScreen ? BorderRadius.circular(50.0) : null,
               color: Colors.teal,
             ),
+
             child: Form(
               key: _formKey,
-              child: Center(
+              
+              child: Center(  
                 child: ListView(
                   children: [
                     SizedBox(
                       height: 20,
                     ),
+
                     Container(
                       child: SvgPicture.asset(
                         "assets/images/LogoSvg2.svg",
                         height: 100,
                       ),
                     ),
+
                     SizedBox(
                       height: 20,
                     ),
+
                     Container(
                       decoration: BoxDecoration(),
                       child: Align(
@@ -109,9 +120,11 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                       width: 50,
                       height: 50,
                     ),
+
                     SizedBox(
                       height: 20,
                     ),
+
                     Container(
                         child: Center(
                             child: Padding(
@@ -137,11 +150,13 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                                                 hintText: 'Popescu Maria',
                                                 text: 'Name',
                                                 controller:
-                                                    TextEditingController()),
+                                                    TextEditingController()),                                                    
                                           ),
+
                                           SizedBox(
                                             height: 10,
                                           ),
+
                                           Container(
                                             child: MyTextField(
                                                 formFieldValidator: (text) {
@@ -159,9 +174,11 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                                                 controller:
                                                     TextEditingController()),
                                           ),
+
                                           SizedBox(
                                             height: 20,
                                           ),
+
                                           Container(
                                             child: MyTextField(
                                                 formFieldValidator: (text) {
@@ -180,9 +197,11 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                                                 controller:
                                                     myPasswordController),
                                           ),
+
                                           SizedBox(
                                             height: 10,
                                           ),
+
                                           Container(
                                             child: MyTextField(
                                                 formFieldValidator: (text) {
@@ -207,6 +226,7 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                                         ],
                                       ),
                                     ),
+
                                     Container(
                                       child: Column(
                                         children: [
@@ -226,9 +246,11 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                                                 controller:
                                                     TextEditingController()),
                                           ),
+
                                           SizedBox(
                                             height: 10,
                                           ),
+
                                           Container(
                                             child: MyTextField(
                                                 formFieldValidator: (text) {
@@ -245,9 +267,11 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                                                 controller:
                                                     TextEditingController()),
                                           ),
+
                                           SizedBox(
                                             height: 10,
                                           ),
+
                                           Container(
                                             child: MyTextField(
                                                 formFieldValidator: (text) {
@@ -264,9 +288,11 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                                                 controller:
                                                     TextEditingController()),
                                           ),
+
                                           SizedBox(
                                             height: 10,
                                           ),
+
                                           Container(
                                             child: MyTextField(
                                                 formFieldValidator: (text) {
@@ -285,9 +311,11 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                                     ),
                                   ],
                                 )))),
+
                     SizedBox(
                       height: 20,
                     ),
+
                     Padding(
                         padding: const EdgeInsets.only(left: 70, right: 70),
                         child: Row(
