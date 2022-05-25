@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:ip_movie_recomandation/data/data.dart';
 import 'package:ip_movie_recomandation/screens/RatingScreen/rating.dart';
 import 'package:ip_movie_recomandation/widgets/MyTextField.dart';
 import 'package:ip_movie_recomandation/widgets/MyButton.dart';
@@ -29,13 +30,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final myPhoneNumberController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  String authorizationToken = "token";
-
+  double containerWidth = 700;
+  double containerHeight = 850;
+  bool isSmallScreen = false;
+  bool isLargeScreen = true;
   bool isPressed = false;
   bool isFinish = false;
-  String get AuthorizationToken => authorizationToken;
+  bool isLoading = true;
+
+  String email="";
+  String password="";
+  String gender="";
+  String name="";
+  String birthday="";
+  String phoneNumber="";
+  String country="";
+
+  String errorText="Error registering user!";
 
   showLoaderDialog(BuildContext context) {
+    createUser();
     AlertDialog alert = AlertDialog(
       content: new Row(
         children: [
@@ -50,23 +64,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
         context: context,
         builder: (context) {
           Future.delayed(Duration(seconds: 2), () {
-            setState(() {
-              isFinish = true;
-            });
             Navigator.of(context).pop(true);
+            if(isCreatedUser){
+              Navigator.pushNamed(context, '/genre');
+            }else{
+              showAlert(context);
+            }
           });
           return alert;
         });
   }
 
-  bool isLoading = true;
+  void showAlert(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: Text(errorText),
+          actions: [
+            TextButton(                     // FlatButton widget is used to make a text to work like a button
+              onPressed: () {
+                Navigator.of(context).pop(true);              },             // function used to perform after pressing the button
+              child: Text('CANCEL'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);              },
+              child: Text('OK'),
+            ),
+          ],
+        ));
+  }
 
   void logUser() async {
     final Uri apiUrl = Uri.parse("http://157.230.114.95:8090/api/v1/login");
     final response = await http.post(apiUrl,
         body: jsonEncode({
-          "email": "stefanmihalache1302@gmail.com",
-          "password": "123456789"
+          "email": email,
+          "password": password
         }),
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -74,24 +108,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
               "POST, GET, OPTIONS, PUT, DELETE, HEAD",
           "Content-Type": "application/json",
         });
-
-    print("-----");
-    print("${response.headers["authorization"]}");
-    authorizationToken = response.headers["authorization"] as String;
-
-    print("-----");
     if (response.statusCode == 200) {
       print("ok, am fost logat cu succes");
+      token = response.headers["authorization"] as String;
+      print("token : " + token);
     } else {
       print("not ok, nu am fost logat cu succes");
-      print(response.statusCode);
+      print("Status code la login : ${response.statusCode}");
+
     }
   }
 
-  Future<Object> createUser() async {
+  bool isCreatedUser=false;
+  void createUser() async {
     print("sunt in functie");
+    print(email);
+    print(name);
+    print(password);
+    print(gender);
     final Uri apiUrl =
-        Uri.parse("http://157.230.114.95:8090/api/v1/user/register");
+        Uri.parse("http://157.230.114.95:8090/api/v1/users/register");
     final response = await http.post(apiUrl,
         body: jsonEncode({
           "email": email,
@@ -100,7 +136,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "gender": gender,
           "birthdate": birthday,
           "country": country,
-          "phoneNumber": phoneNumber
+          "phoneNumber": phoneNumber,
         }),
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -109,35 +145,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "Content-Type": "application/json",
         });
 
-    print(response.request);
-    if (response.statusCode == 201) {
-      final String responseString = response.body;
-      print("ok");
-      print(responseString);
-      Map<String, String> responseHearders = response.headers;
-      print(responseHearders.toString());
-      logUser();
-      return modelFromJson(responseString);
-    } else {
-      print(response.statusCode);
-      return 1;
+    switch(response.statusCode){
+      case 201: {
+        isCreatedUser=true;
+        print("Ok, am fost inregistrat cu succes");
+        logUser();
+      }
+      break;
+      case 409: {
+        errorText="Email address already in use!";
+        isCreatedUser=false;
+      }
+      break;
+      default: {
+        print(" eroare la register ${response.statusCode}");
+      }
     }
-
-    logUser();
-    return 1;
   }
-
-  double containerWidth = 700;
-  double containerHeight = 850;
-  String name = "Paula";
-  String email = "pastraguspaula@gmail.com";
-  String password = "anaaremere";
-  String gender = "F";
-  String birthday = "2001-02-14";
-  String country = "Romania";
-  String phoneNumber = "0758000000";
-  bool isSmallScreen = false;
-  bool isLargeScreen = true;
 
   void setValue() {
     if (MediaQuery.of(context).size.width >= 700) {
@@ -175,70 +199,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void register() {
-    createUser();
-
-    showLoaderDialog(context); // if(isLoading){
+    // if (_formKey.currentState!.validate()) {
+    //   createUser();
     //   showLoaderDialog(context);
+    //   token="";
+    //   Navigator.pushNamed(context, '/genre');
     // }else{
-    // if(authorizationToken!="token"){
-    //   Navigator.pushNamed(context, "genre");
-    // }else{
-    //   showLoaderDialog(context);
+    //   print("nu sunt date valide");
     // }
-    // if(isFinish){
-    //   Navigator.push(context, MaterialPageRoute(
-    //     builder: (context) => GenreScreen(),
-    //     settings: RouteSettings(
-    //       arguments: authorizationToken,
-    //     ),
-    //   ),
-    //   );
-    // }
-    if (_formKey.currentState!.validate()) {
-      createUser();
-      Navigator.pushNamed(context, '/genre');
-    }
+    showLoaderDialog(context);
   }
 
   @override
   Widget build(BuildContext context) {
     setValue();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Add Your Code here.
-      if (isFinish) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => GenreScreen(),
-            settings: RouteSettings(
-              arguments: authorizationToken,
-            ),
-          ),
-        );
-      }
-    });
-    // if(isFinish){
-    //   Navigator.push(context, MaterialPageRoute(
-    //     builder: (context) => GenreScreen(),
-    //     settings: RouteSettings(
-    //       arguments: authorizationToken,
-    //     ),
-    //   ),
-    //   );
-    // }
-    // if(authorizationToken!="token"){
-    //   Navigator.push(context, MaterialPageRoute(
-    //     builder: (context) => GenreScreen(),
-    //     settings: RouteSettings(
-    //       arguments: authorizationToken,
-    //     ),
-    //   ),
-    //   );
-    // }else{
-    //   if(isPressed)
-    //   showLoaderDialog(context);
-    // }
-    //register();
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   if (isFinish) {
+    //     Navigator.pushNamed(
+    //       context, "/genre"
+    //     );
+    //   }
+    // });
     return Container(
       decoration: BoxDecoration(
         color: Color(0xFF99D98C),
@@ -444,3 +425,53 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 }
+
+
+
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
+//
+//   static const String _title = 'Flutter Code Sample';
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: _title,
+//       home: Scaffold(
+//         appBar: AppBar(title: const Text(_title)),
+//         body: const Center(
+//           child: MyStatelessWidget(),
+//         ),
+//       ),
+//     );
+//   }
+// }
+//
+// class MyStatelessWidget extends StatelessWidget {
+//   const MyStatelessWidget({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return TextButton(
+//       onPressed: () => showDialog<String>(
+//         context: context,
+//         builder: (BuildContext context) => AlertDialog(
+//           title: const Text('AlertDialog Title'),
+//           content: const Text('AlertDialog description'),
+//           actions: <Widget>[
+//             TextButton(
+//               onPressed: () => Navigator.pop(context, 'Cancel'),
+//               child: const Text('Cancel'),
+//             ),
+//             TextButton(
+//               onPressed: () => Navigator.pop(context, 'OK'),
+//               child: const Text('OK'),
+//             ),
+//           ],
+//         ),
+//       ),
+//       child: const Text('Show Dialog'),
+//     );
+//   }
+// }

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class MyBox extends StatefulWidget {
   final String text;
-  const MyBox({Key? key, required this.text}) : super(key: key);
+  final Function(bool) CallbackFunction;
+  const MyBox({Key? key, required this.text, required this.CallbackFunction}) : super(key: key);
 
   @override
   State<MyBox> createState() => _MyBoxState();
@@ -66,6 +67,7 @@ class _MyBoxState extends State<MyBox> {
     onTap:(){
       setState(() {
         ispressed = !ispressed;
+        widget.CallbackFunction(ispressed);
       });
     },
     );

@@ -160,7 +160,7 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                                                     TextEditingController()),
                                           ),
                                           SizedBox(
-                                            height: 20,
+                                            height: 10,
                                           ),
                                           Container(
                                             child: MyTextField(
@@ -215,25 +215,6 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                                                 formFieldValidator: (text) {
                                                   if (text == null ||
                                                       text.isEmpty ||
-                                                      !RegExp(r"^[1-9][0-9]$")
-                                                          .hasMatch(text)) {
-                                                    return "Invalid age";
-                                                  }
-                                                  return null;
-                                                },
-                                                hintText: '21',
-                                                text: 'Age',
-                                                controller:
-                                                    TextEditingController()),
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Container(
-                                            child: MyTextField(
-                                                formFieldValidator: (text) {
-                                                  if (text == null ||
-                                                      text.isEmpty ||
                                                       !RegExp(r"^(19[0-9][0-9]|20[0-1][0-9]).(((0[1,3,5,7,8]|1[0,2]).([0-2][0-9]|3[0-1]))|((0[4,5,9]|11).([0-2][0-9]|30))|(02.[0-2][0-9]))$")
                                                           .hasMatch(text)) {
                                                     return "Invalid date";
@@ -272,11 +253,27 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                                                 formFieldValidator: (text) {
                                                   if (text == null ||
                                                       text.isEmpty) {
-                                                    return 'Invalid bio';
+                                                    return 'Invalid phone number';
                                                   }
                                                 },
-                                                hintText: 'I love movies!',
-                                                text: 'Bio',
+                                                hintText: '0778992124',
+                                                text: 'Phone number',
+                                                controller:
+                                                    TextEditingController()),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Container(
+                                            child: MyTextField(
+                                                formFieldValidator: (text) {
+                                                  if (text == null ||
+                                                      text.isEmpty) {
+                                                    return 'Invalid gender';
+                                                  }
+                                                },
+                                                hintText: 'F/M',
+                                                text: 'Gender',
                                                 controller:
                                                     TextEditingController()),
                                           ),

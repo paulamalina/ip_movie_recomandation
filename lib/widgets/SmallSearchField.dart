@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:ip_movie_recomandation/widgets/BigSearchField.dart';
 
 class SmallSearchField extends StatefulWidget {
+  final Function returnSearch;
+
   const SmallSearchField({
     Key? key,
+    required this.returnSearch,
   }) : super(key: key);
 
   @override
@@ -37,27 +40,35 @@ class _SmallSearchField extends State<SmallSearchField> {
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton<SmallSearchIcon>(
-        // Callback that sets the selected popup menu item.
-        //icon: const Icon(Icons.search),
-        icon: const Icon(
-          Icons.search,
-          color: Color(0xFFCAEEE4),
-        ),
-        onSelected: (SmallSearchIcon item) {
-          setState(() {});
-        },
-        itemBuilder: (BuildContext context) =>
-            <PopupMenuEntry<SmallSearchIcon>>[
-              PopupMenuItem(
-                  value: SmallSearchIcon.itemOne,
-                  child: Container(
-                    color: Colors.red,
-                    child: BigSearchField(
-                      returnSearch: () {},
-                    ),
-                  ))
-            ]);
+    return Theme(
+      data: Theme.of(context).copyWith(
+        cardColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        focusColor: Colors.transparent,
+        splashColor: Colors.transparent,
+      ),
+      child: PopupMenuButton<SmallSearchIcon>(
+          // Callback that sets the selected popup menu item.
+          //icon: const Icon(Icons.search),
+          //color: Colors.transparent,
+          icon: const Icon(
+            Icons.search,
+            color: Color(0xFFCAEEE4),
+          ),
+          onSelected: (SmallSearchIcon item) {
+            setState(() {});
+          },
+          itemBuilder: (BuildContext context) =>
+              <PopupMenuEntry<SmallSearchIcon>>[
+                PopupMenuItem(
+                    value: SmallSearchIcon.itemOne,
+                    child: Container(
+                      child: BigSearchField(returnSearch: widget.returnSearch),
+                    ))
+              ]),
+    );
 
     Container(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
