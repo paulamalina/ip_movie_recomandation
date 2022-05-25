@@ -14,6 +14,7 @@ class ImageButton extends StatelessWidget {
     return Padding(
         padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
         child: Container(
+            width: 300,
             decoration: BoxDecoration(
                 color: Color(0xFFCAEEE4),
                 borderRadius: BorderRadius.circular(30),
@@ -28,6 +29,7 @@ class ImageButton extends StatelessWidget {
                   iconSize: 250,
                 ),
                 Text(text,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color(0xFF1A759F),
                       fontSize: 20,
