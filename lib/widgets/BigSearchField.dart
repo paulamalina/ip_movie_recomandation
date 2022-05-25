@@ -30,7 +30,7 @@ class _BigSearchFieldState extends State<BigSearchField> {
           child: TextField(
         controller: searchController,
         style: TextStyle(
-          color: Colors.white,
+          color: Color(0xFF1A759F),
         ),
         decoration: InputDecoration(
           enabledBorder: UnderlineInputBorder(

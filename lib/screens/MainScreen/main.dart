@@ -21,12 +21,17 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  List<ImageButton> searchedList = [];
+  List<ImageButton> genreListLeft = [];
+  List<ImageButton> recommendedList = [];
+  List<ImageButton> rememberRecommended = [];
+
   int test = 0;
+  String headerText = "For you";
   List<Widget> CarouselItems = [];
   Widget MyCarousel = Container();
   bool isFinish = false;
   List<SearchedMovie> foundMovies = [];
-  String foundMovieName = 'null';
   bool isLargeScreen = true;
   double imgWidth = 300;
   double imgHeight = 250;
@@ -70,35 +75,117 @@ class _MainScreenState extends State<MainScreen> {
         });
   }
 
-  void testGenre() {
-    Navigator.pushNamed(context, '/main');
+  void callRecommendGetter() {
+    fetchRecommendedMovie(10);
+    showLoaderDialog(context);
+    setState(() {});
+  }
+
+  void callGenreGetter(String genre) {
+    fetchVoidGenreMovie(genre);
+    showLoaderDialog(context);
+    setState(() {});
   }
 
   void callMovieGetter(String name) {
     fetchMovie(name);
     showLoaderDialog(context);
-    //final searchedMovie = searchedMovieFromJson(fetchMovie(name).toString());
     setState(() {});
-    //test = 0;
+  }
+
+  void fetchVoidGenreMovie(String genre) async {
+    final response = await http.get(
+        Uri.parse(
+            'http://157.230.114.95:8090/api/v1/movies/search/genre/' + genre),
+        headers: {"Authorization": authToken});
+
+    if (response.statusCode == 404) {
+      test = 2;
+      throw Exception("Error at fetching data!");
+    } else if (response.statusCode == 200) {
+      headerText = genre;
+      genreListLeft.clear();
+      foundMovies = [];
+      foundMovies = searchedMovieFromJson(response.body);
+      if (foundMovies.length <= 0) {
+        test = 2;
+        throw Exception("Error at fetching data!");
+      } else {
+        test = 3;
+        for (int i = 0; i < foundMovies.length; i++) {
+          genreListLeft.add(ImageButton(
+              image: Image.asset("assets/images/image1.png"),
+              text: foundMovies[i].name));
+        }
+      }
+    } else {
+      test = 2;
+      throw Exception("Error at fetching data!");
+    }
+  }
+
+  Future fetchGenreMovie(String genre) async {
+    final response = await http.get(
+        Uri.parse(
+            'http://157.230.114.95:8090/api/v1/movies/search/genre/' + genre),
+        headers: {"Authorization": authToken});
+
+    if (response.statusCode == 404) {
+      throw Exception("Error at fetching data!");
+    } else if (response.statusCode == 200) {
+      List<SearchedMovie> genreList = searchedMovieFromJson(response.body);
+      if (genreList.length <= 0) {
+        throw Exception("Error at fetching data!");
+      } else {
+        return genreList;
+      }
+    } else {
+      throw Exception("Error at fetching data!");
+    }
+  }
+
+  Future fetchRecommendedMovie(int number) async {
+    final response = await http.get(
+        Uri.parse('http://157.230.114.95:8090/api/v1/recommendation/' +
+            number.toString()),
+        headers: {"Authorization": authToken});
+
+    if (response.statusCode == 404) {
+      throw Exception("Error at fetching data!");
+    } else if (response.statusCode == 200) {
+      searchedList.clear();
+      foundMovies = [];
+      foundMovies = searchedMovieFromJson(response.body);
+      if (foundMovies.length <= 0) {
+        throw Exception("Error at fetching data!");
+      } else {
+        populateList(recommendedList);
+        return recommendedList;
+      }
+    } else {
+      throw Exception("Error at fetching data!");
+    }
   }
 
   void fetchMovie(String name) async {
     final response = await http.get(
-        Uri.parse('http://157.230.114.95:8090/api/v1/movie/search/' + name),
+        Uri.parse(
+            'http://157.230.114.95:8090/api/v1/movies/search/name/' + name),
         headers: {"Authorization": authToken});
 
-    print("Status code: ${response.statusCode}");
+    //print("Status code: ${response.statusCode}");
     if (response.statusCode == 404) {
       test = 2;
     } else if (response.statusCode == 200) {
       test = 1;
-      foundMovieList.clear();
+      headerText = "Search results";
+      searchedList.clear();
       foundMovies = [];
       foundMovies = searchedMovieFromJson(response.body);
       if (foundMovies.length <= 0) {
         test = 2;
       } else {
-        populateList();
+        populateList(searchedList);
       }
     } else {
       test = 2;
@@ -107,19 +194,34 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Container manageContent() {
-    if (test == 0) return normalPrint();
-    if (test == 1) return displayMovieReturned();
-    return noMovieReturned();
+    if (test == 0) {
+      return normalPrint();
+    }
+    if (test == 1) {
+      return displayMovieReturned();
+    }
+    if (test == 2) {
+      return noMovieReturned();
+    }
+    return displayGenreMovie();
   }
 
-  List<ImageButton> foundMovieList = [];
-
-  void populateList() {
+  void populateList(List<ImageButton> buttonList) {
     for (int i = 0; i < foundMovies.length; i++) {
-      foundMovieList.add(ImageButton(
+      buttonList.add(ImageButton(
           image: Image.asset("assets/images/image1.png"),
           text: foundMovies[i].name));
     }
+  }
+
+  Container displayGenreMovie() {
+    return Container(
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 40,
+        children: genreListLeft,
+      ),
+    );
   }
 
   Container displayMovieReturned() {
@@ -127,7 +229,7 @@ class _MainScreenState extends State<MainScreen> {
       child: Wrap(
         alignment: WrapAlignment.center,
         spacing: 40,
-        children: foundMovieList,
+        children: searchedList,
       ),
     );
   }
@@ -158,19 +260,44 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+  Widget initGenreCarousel(List<SearchedMovie> genreMovies) {
+    Widget Carousel = Container();
+    List<Widget> Items = [];
+    List<ImageButton> Images = [];
+
+    //Populate list
+    for (int i = 0; i < genreMovies.length; i++) {
+      Images.add(ImageButton(
+          image: Image.asset("assets/images/image1.png"),
+          text: genreMovies[i].name));
+    }
+    //Init Carousel
+    Items = Images;
+    Carousel = Padding(
+      padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+      child: CarouselSlider(
+        items: Items,
+        options: CarouselOptions(
+          autoPlayInterval: Duration(seconds: 3),
+          autoPlayAnimationDuration: Duration(milliseconds: 800),
+          autoPlayCurve: Curves.fastOutSlowIn,
+          viewportFraction: 0.3,
+          height: 400,
+          scrollDirection: Axis.horizontal,
+        ),
+        carouselController: CarouselController(),
+      ),
+    );
+
+    return Carousel;
+  }
+
   void initCarousel() {
     MyCarousel = Padding(
       padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
       child: CarouselSlider(
         items: CarouselItems,
         options: CarouselOptions(
-          onPageChanged: (index, reason) {
-            setState(() {
-              //_currentPage = index;
-              //_currentKeyword = keywords[_currentPage];
-            });
-          },
-          //autoPlay: true,
           autoPlayInterval: Duration(seconds: 3),
           autoPlayAnimationDuration: Duration(milliseconds: 800),
           autoPlayCurve: Curves.fastOutSlowIn,
@@ -184,95 +311,263 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void initImages() {
-    CarouselItems = [
-      ImageButton(
-        text: "film1",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-      ImageButton(
-        text: "film2",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-      ImageButton(
-        text: "film3",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-      ImageButton(
-        text: "film4",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-      ImageButton(
-        text: "film5",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-      ImageButton(
-        text: "film6",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-      ImageButton(
-        text: "film7",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-      ImageButton(
-        text: "film8",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-      ImageButton(
-        text: "film9",
-        image: Image.asset(
-          "assets/images/image1.png",
-          width: imgWidth,
-          height: imgHeight,
-        ),
-      ),
-    ];
+    CarouselItems = rememberRecommended;
   }
 
   Container normalPrint() {
     return Container(
-        child: Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 40,
-            children: [MyCarousel, MyCarousel, MyCarousel]));
+        child: Wrap(alignment: WrapAlignment.center, spacing: 40, children: [
+      FutureBuilder(
+        future: fetchRecommendedMovie(10),
+        builder: (context, snapshot) {
+          if (snapshot.data == null) {
+            return Container(
+              child: null,
+            );
+          } else {
+            rememberRecommended = snapshot.data as List<ImageButton>;
+            initImages();
+            initCarousel();
+            return Container(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Recommended Movies",
+                    style: TextStyle(
+                        color: Color(0xFFCAEEE4),
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  MyCarousel,
+                ],
+              ),
+            );
+          }
+        },
+      ),
+      FutureBuilder(
+        future: fetchGenreMovie("Action"),
+        builder: (context, snapshotAction) {
+          if (snapshotAction.data == null) {
+            return Container(
+              child: null,
+            );
+          } else {
+            Widget CarouselGenreChild =
+                initGenreCarousel(snapshotAction.data as List<SearchedMovie>);
+            return Container(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Action",
+                    style: TextStyle(
+                        color: Color(0xFFCAEEE4),
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  CarouselGenreChild,
+                ],
+              ),
+            );
+          }
+        },
+      ),
+      FutureBuilder(
+        future: fetchGenreMovie("Comedy"),
+        builder: (context, snapshotAction) {
+          if (snapshotAction.data == null) {
+            return Container(
+              child: null,
+            );
+          } else {
+            Widget CarouselGenreChild =
+                initGenreCarousel(snapshotAction.data as List<SearchedMovie>);
+            return Container(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Comedy",
+                    style: TextStyle(
+                        color: Color(0xFFCAEEE4),
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  CarouselGenreChild,
+                ],
+              ),
+            );
+          }
+        },
+      ),
+      FutureBuilder(
+        future: fetchGenreMovie("Drama"),
+        builder: (context, snapshotAction) {
+          if (snapshotAction.data == null) {
+            return Container(
+              child: null,
+            );
+          } else {
+            Widget CarouselGenreChild =
+                initGenreCarousel(snapshotAction.data as List<SearchedMovie>);
+            return Container(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Drama",
+                    style: TextStyle(
+                        color: Color(0xFFCAEEE4),
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  CarouselGenreChild,
+                ],
+              ),
+            );
+          }
+        },
+      ),
+      FutureBuilder(
+        future: fetchGenreMovie("Fantasy"),
+        builder: (context, snapshotAction) {
+          if (snapshotAction.data == null) {
+            return Container(
+              child: null,
+            );
+          } else {
+            Widget CarouselGenreChild =
+                initGenreCarousel(snapshotAction.data as List<SearchedMovie>);
+            return Container(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Fantasy",
+                    style: TextStyle(
+                        color: Color(0xFFCAEEE4),
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  CarouselGenreChild,
+                ],
+              ),
+            );
+          }
+        },
+      ),
+      FutureBuilder(
+        future: fetchGenreMovie("Romantic"),
+        builder: (context, snapshotAction) {
+          if (snapshotAction.data == null) {
+            return Container(
+              child: null,
+            );
+          } else {
+            Widget CarouselGenreChild =
+                initGenreCarousel(snapshotAction.data as List<SearchedMovie>);
+            return Container(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Romantic",
+                    style: TextStyle(
+                        color: Color(0xFFCAEEE4),
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  CarouselGenreChild,
+                ],
+              ),
+            );
+          }
+        },
+      ),
+      FutureBuilder(
+        future: fetchGenreMovie("Scary"),
+        builder: (context, snapshotAction) {
+          if (snapshotAction.data == null) {
+            return Container(
+              child: null,
+            );
+          } else {
+            Widget CarouselGenreChild =
+                initGenreCarousel(snapshotAction.data as List<SearchedMovie>);
+            return Container(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Horror",
+                    style: TextStyle(
+                        color: Color(0xFFCAEEE4),
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  CarouselGenreChild,
+                ],
+              ),
+            );
+          }
+        },
+      ),
+      FutureBuilder(
+        future: fetchGenreMovie("Sci-Fi"),
+        builder: (context, snapshotAction) {
+          if (snapshotAction.data == null) {
+            return Container(
+              child: null,
+            );
+          } else {
+            Widget CarouselGenreChild =
+                initGenreCarousel(snapshotAction.data as List<SearchedMovie>);
+            return Container(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Sci-Fi",
+                    style: TextStyle(
+                        color: Color(0xFFCAEEE4),
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  CarouselGenreChild,
+                ],
+              ),
+            );
+          }
+        },
+      )
+    ]));
   }
 
   @override
   Widget build(BuildContext context) {
     setDimentions();
-    initImages();
-    initCarousel();
+    if (!recommendedList.isEmpty) {
+      initImages();
+      initCarousel();
+    }
     //authToken = ModalRoute.of(context)!.settings.arguments as String;
 
     //print("Main: $authToken");
@@ -296,17 +591,22 @@ class _MainScreenState extends State<MainScreen> {
           //backgroundColor: Color(0xFF1A759F),
           backgroundColor: Colors.teal,
           title: Container(
-            width: 60,
-            child: SvgPicture.asset(
-              "assets/images/LogoSvg2.svg",
-              height: 100,
-            ),
-            /*
+              width: 60,
+              child: IconButton(
+                icon: SvgPicture.asset(
+                  "assets/images/LogoSvg2.svg",
+                  height: 100,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, "/main");
+                },
+              )
+              /*
             child: SvgPicture.asset(
               "assets/images/logoClean.svg",
             ),
             */
-          ),
+              ),
           actions: [
             isLargeScreen
                 ? BigSearchField(
@@ -315,14 +615,6 @@ class _MainScreenState extends State<MainScreen> {
                 : SmallSearchField(
                     returnSearch: callMovieGetter,
                   ),
-            SizedBox(width: 20),
-            Container(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: Icon(
-                Icons.notifications,
-                color: Color(0xFFCAEEE4),
-              ),
-            ),
             SizedBox(width: 20),
             Container(
               child: IconButton(
@@ -355,7 +647,9 @@ class _MainScreenState extends State<MainScreen> {
                   title: Center(
                       child: MainGenreButton(
                     text: "Action",
-                    buttonMethod: testGenre,
+                    buttonMethod: () {
+                      callGenreGetter("Action");
+                    },
                   )),
                   //onTap: () {
                   //},
@@ -364,42 +658,54 @@ class _MainScreenState extends State<MainScreen> {
                   title: Center(
                       child: MainGenreButton(
                     text: "Comedy",
-                    buttonMethod: testGenre,
+                    buttonMethod: () {
+                      callGenreGetter("Comedy");
+                    },
                   )),
                 ),
                 ListTile(
                   title: Center(
                       child: MainGenreButton(
                     text: "Drama",
-                    buttonMethod: testGenre,
+                    buttonMethod: () {
+                      callGenreGetter("Drama");
+                    },
                   )),
                 ),
                 ListTile(
                   title: Center(
                       child: MainGenreButton(
                     text: "Fantasy",
-                    buttonMethod: testGenre,
+                    buttonMethod: () {
+                      callGenreGetter("Fantasy");
+                    },
                   )),
                 ),
                 ListTile(
                   title: Center(
                       child: MainGenreButton(
                     text: "Romantic",
-                    buttonMethod: testGenre,
+                    buttonMethod: () {
+                      callGenreGetter("Romantic");
+                    },
                   )),
                 ),
                 ListTile(
                   title: Center(
                       child: MainGenreButton(
-                    text: "Scary",
-                    buttonMethod: testGenre,
+                    text: "Horror",
+                    buttonMethod: () {
+                      callGenreGetter("Scary");
+                    },
                   )),
                 ),
                 ListTile(
                   title: Center(
                       child: MainGenreButton(
                     text: "Sci-Fi",
-                    buttonMethod: testGenre,
+                    buttonMethod: () {
+                      callGenreGetter("Sci-Fi");
+                    },
                   )),
                 ),
               ],
@@ -419,60 +725,40 @@ class _MainScreenState extends State<MainScreen> {
                     height: 30,
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.95,
-                    height: 125,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.teal,
-                      borderRadius: BorderRadius.circular(50.0),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 7,
-                          spreadRadius: 2,
-                        )
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(30.0),
-                          child: BorderedText(
-                            strokeWidth: 4.0,
-                            strokeColor: Color(0xFF2B6086),
-                            child: Text("For you",
-                                style: TextStyle(
-                                    color: Color(0xFFCAEEE4),
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold)),
-                          ),
-                        ),
-                        //ToggleButton(),
-                        Container(
-                            width: 120,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50.0),
-                              color: Color(0xFFCAEEE4),
-                              border: Border.all(
-                                  color: Color(0xFF2B6086), width: 2),
-                            ),
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, "/main");
-                              },
-                              child: Text(
-                                "Watchlist",
-                                style: const TextStyle(
-                                  color: Color(0xFF1A759F),
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 20,
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      height: 125,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.teal,
+                        borderRadius: BorderRadius.circular(50.0),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 7,
+                            spreadRadius: 2,
+                          )
+                        ],
+                      ),
+                      child: Wrap(
+                          alignment: WrapAlignment.center,
+                          spacing: 40,
+                          children: [
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: 30,
                                 ),
-                              ),
-                            ))
-                      ],
-                    ),
-                  ),
+                                BorderedText(
+                                  strokeWidth: 4.0,
+                                  strokeColor: Color(0xFF2B6086),
+                                  child: Text(headerText,
+                                      style: TextStyle(
+                                          color: Color(0xFFCAEEE4),
+                                          fontSize: 40,
+                                          fontWeight: FontWeight.bold)),
+                                )
+                              ],
+                            )
+                          ])),
                   Container(
                     height: 30,
                   ),

@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ip_movie_recomandation/widgets/MyButton.dart';
+import '../../data/data.dart';
 import '../MainScreen/main.dart';
 import 'globals.dart' as globals;
 import 'package:http/http.dart' as http;
+
 
 class RatingScreen extends StatefulWidget {
   const RatingScreen({Key? key}) : super(key: key);
@@ -12,6 +17,7 @@ class RatingScreen extends StatefulWidget {
 }
 
 class _RatingScreenState extends State<RatingScreen> {
+  String token="Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYUBnbWFpbC5jb20iLCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoibW92aWVzOnJlYWQifSx7ImF1dGhvcml0eSI6IlJPTEVfVVNFUiJ9XSwiaWF0IjoxNjUzMzAwMjg0LCJleHAiOjE2NTQ0NzM2MDB9.cqT8YRb-M6qkUO57oI0WjbW_30zY-iFUg-7jm6F-wZ5c8EfjX-_2lF1NZojzfkD_D5VJHWnfQpM_14DCwMY6pA";
   // @override
   void function() {
     if (globals.Index == 0) {
@@ -32,37 +38,61 @@ class _RatingScreenState extends State<RatingScreen> {
       globals.Index++;
     }
   }
+  var imageLink;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getMovies();
+  }
   void getMovies() async {
     print("------------");
-    print(authToken);
+    print(token);
     print("------------");
 
     final Uri apiUrl =
-        Uri.parse("http://157.230.114.95:8090/api/v1/movie/profiler");
+        Uri.parse("http://157.230.114.95:8090/api/v1/movies");
     final response = await http.get(apiUrl, headers: {
-      "Authorization": authToken,
+      "Authorization": token,
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE, HEAD",
       "Content-Type": "application/json",
     });
 
     print(response.statusCode);
+
+    var data=jsonDecode(response.body);
+    imageLink=data[0]["trailerLink"];
+    print(data[0]["trailerLink"]);
+
+  }
+  void getImage() async{
+    final Uri apiUrl =
+    Uri.parse(imageLink);
+    var response=await http.get(apiUrl, headers: {
+      "Authorization" : token,
+      "Content-Type": "application/json",
+    });
+     //print(response.body);
   }
 
   void navigateToRating() {
     Navigator.pushNamed(context, globals.redirect);
   }
 
+  // Future<void> getImage(String myUrl) async {
+  //   final url=Uri.parse(myUrl);
+  //   final response=await http.get(url, headers: {
+  //     "Authorization" : token,
+  //   });
+  //
+  // }
+
   void goToMain() {
-    Navigator.push(
+    Navigator.pushNamed(
       context,
-      MaterialPageRoute(
-        builder: (context) => MainScreen(),
-        settings: RouteSettings(
-          arguments: authToken,
-        ),
-      ),
+      '/main'
     );
   }
 
@@ -74,6 +104,8 @@ class _RatingScreenState extends State<RatingScreen> {
   double containerHeight = 850;
   bool isSmallScreen = false;
   bool isLargeScreen = true;
+
+
 
   void setValue() {
     if (MediaQuery.of(context).size.width >= 700) {
@@ -93,13 +125,12 @@ class _RatingScreenState extends State<RatingScreen> {
     }
   }
 
-  String authToken = "";
 
   @override
   Widget build(BuildContext context) {
-    // function();
-    // setValue();
-    authToken = ModalRoute.of(context)!.settings.arguments as String;
+    function();
+    setValue();
+    // getImage();
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
@@ -172,8 +203,7 @@ class _RatingScreenState extends State<RatingScreen> {
                                 ),
                                 child: TextButton(
                                   onPressed: () {
-                                    //function();
-                                    goToMain();
+                                    Navigator.pushNamed(context, globals.redirect);
                                   },
                                   child: Text(
                                     'Awful',
@@ -194,9 +224,7 @@ class _RatingScreenState extends State<RatingScreen> {
                                 ),
                                 child: TextButton(
                                   onPressed: () {
-                                    //function();
-                                    goToMain();
-                                    Navigator.pushNamed(context, '/main');
+                                    Navigator.pushNamed(context, globals.redirect);
                                   },
                                   child: Text(
                                     'Average',
@@ -223,8 +251,7 @@ class _RatingScreenState extends State<RatingScreen> {
                                 ),
                                 child: TextButton(
                                   onPressed: () {
-                                    //function();
-                                    goToMain();
+                                    Navigator.pushNamed(context, globals.redirect);
                                   },
                                   child: Text(
                                     'Good',
@@ -245,8 +272,7 @@ class _RatingScreenState extends State<RatingScreen> {
                                 ),
                                 child: TextButton(
                                   onPressed: () {
-                                    //function();
-                                    goToMain();
+                                    Navigator.pushNamed(context, globals.redirect);
                                   },
                                   child: Text(
                                     'Amazing',
@@ -269,13 +295,37 @@ class _RatingScreenState extends State<RatingScreen> {
                         child: MyButton(
                           text: 'Skip',
                           buttonMethod: () {
-                            goToMain();
+                            Navigator.pushNamed(context, globals.redirect);
+                            //getImage();
                           },
                         ),
                       ),
+
+                      // Image.network(
+                      //   "http://157.230.114.95:8090/api/v1/files/file_416367353",
+                      //
+                      // ),
+
+
+                        // loadingBuilder: (BuildContext context, Widget child,
+                        //     ImageChunkEvent? loadingProgress) {
+                        //   if (loadingProgress == null) {
+                        //     return child;
+                        //   }
+                        //   return Center(
+                        //     child: CircularProgressIndicator(
+                        //       value: loadingProgress.expectedTotalBytes != null
+                        //           ? loadingProgress.cumulativeBytesLoaded /
+                        //           loadingProgress.expectedTotalBytes!
+                        //           : null,
+                        //     ),
+                        //   );
+                        // },
+
                     ],
                   ),
                 ),
+
               ],
             ),
           ),
@@ -286,3 +336,4 @@ class _RatingScreenState extends State<RatingScreen> {
     //Image.asset('./assets/images/image1.jpg');
   }
 }
+
