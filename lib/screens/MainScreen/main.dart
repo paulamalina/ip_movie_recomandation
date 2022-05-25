@@ -27,6 +27,7 @@ class _MainScreenState extends State<MainScreen> {
   List<ImageButton> rememberRecommended = [];
 
   int test = 0;
+  int carouselMaxNumber = 10;
   String headerText = "For you";
   List<Widget> CarouselItems = [];
   Widget MyCarousel = Container();
@@ -172,8 +173,6 @@ class _MainScreenState extends State<MainScreen> {
         Uri.parse(
             'http://157.230.114.95:8090/api/v1/movies/search/name/' + name),
         headers: {"Authorization": authToken});
-
-    //print("Status code: ${response.statusCode}");
     if (response.statusCode == 404) {
       test = 2;
     } else if (response.statusCode == 200) {
@@ -266,7 +265,7 @@ class _MainScreenState extends State<MainScreen> {
     List<ImageButton> Images = [];
 
     //Populate list
-    for (int i = 0; i < genreMovies.length; i++) {
+    for (int i = 0; i < genreMovies.length && i < carouselMaxNumber; i++) {
       Images.add(ImageButton(
           image: Image.asset("assets/images/image1.png"),
           text: genreMovies[i].name));
@@ -281,7 +280,7 @@ class _MainScreenState extends State<MainScreen> {
           autoPlayInterval: Duration(seconds: 3),
           autoPlayAnimationDuration: Duration(milliseconds: 800),
           autoPlayCurve: Curves.fastOutSlowIn,
-          viewportFraction: 0.3,
+          viewportFraction: MediaQuery.of(context).size.width > 800 ? 0.3 : 1,
           height: 400,
           scrollDirection: Axis.horizontal,
         ),
@@ -301,7 +300,7 @@ class _MainScreenState extends State<MainScreen> {
           autoPlayInterval: Duration(seconds: 3),
           autoPlayAnimationDuration: Duration(milliseconds: 800),
           autoPlayCurve: Curves.fastOutSlowIn,
-          viewportFraction: 0.3,
+          viewportFraction: MediaQuery.of(context).size.width > 800 ? 0.3 : 1,
           height: 400,
           scrollDirection: Axis.horizontal,
         ),
@@ -318,7 +317,7 @@ class _MainScreenState extends State<MainScreen> {
     return Container(
         child: Wrap(alignment: WrapAlignment.center, spacing: 40, children: [
       FutureBuilder(
-        future: fetchRecommendedMovie(10),
+        future: fetchRecommendedMovie(carouselMaxNumber),
         builder: (context, snapshot) {
           if (snapshot.data == null) {
             return Container(
