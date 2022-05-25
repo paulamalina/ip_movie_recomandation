@@ -199,6 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           email = myEmailController.text;
                           return null;
                         },
+
                         hintText: 'email@gmail.com',
                         text: 'Email',
                         controller: myEmailController),
