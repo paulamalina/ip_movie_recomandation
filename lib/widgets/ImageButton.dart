@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ip_movie_recomandation/data/data.dart';
+import 'package:ip_movie_recomandation/screens/MovieDetailsScreen/details.dart';
 
 class ImageButton extends StatelessWidget {
   final String text;
@@ -23,6 +25,7 @@ class ImageButton extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
+                    titleText=text;
                     Navigator.pushNamed(context, '/details');
                   },
                   icon: image,

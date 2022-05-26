@@ -3,18 +3,25 @@ import 'package:flutter/material.dart';
 class MyButton extends StatelessWidget {
   final String text;
   final VoidCallback buttonMethod;
-
-  const MyButton({
+  final TextStyle textStyle;
+  final double width;
+  final double height;
+   MyButton({
     Key? key,
     required this.text,
-    required this.buttonMethod, 
+    required this.buttonMethod,
+    this.textStyle=const TextStyle(
+      color: Color(0xFF1A759F),
+      fontWeight: FontWeight.bold,
+      fontSize: 25,
+    ), this.width=125, this.height=50,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 125,
-        height: 50,
+        width: width,
+        height: height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50.0),
           color: Color(0xFFCAEEE4),
@@ -26,11 +33,7 @@ class MyButton extends StatelessWidget {
           },
           child: Text(
             text,
-            style: const TextStyle(
-              color: Color(0xFF1A759F),
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-            ),
+            style: textStyle
           ),
         ));
   }

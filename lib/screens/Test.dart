@@ -129,6 +129,7 @@ class _TestMeState extends State<TestMe> {
 
   @override
   Widget build(BuildContext context) {
+    print("current id : $currentId");
     return Scaffold(
       appBar: AppBar(
           title: Text("Comment Page"),
