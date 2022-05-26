@@ -27,6 +27,7 @@ class _MainScreenState extends State<MainScreen> {
   List<ImageButton> rememberRecommended = [];
 
   int test = 0;
+  String toSearch = "NULL";
   int carouselMaxNumber = 10;
   String headerText = "For you";
   List<Widget> CarouselItems = [];
@@ -83,46 +84,46 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void callGenreGetter(String genre) {
-    fetchVoidGenreMovie(genre);
-    showLoaderDialog(context);
+    //fetchAllGenreMovie(genre);
+    //showLoaderDialog(context);
+    test = 3;
+    toSearch = genre;
+    headerText = genre;
     setState(() {});
   }
 
   void callMovieGetter(String name) {
-    fetchMovie(name);
-    showLoaderDialog(context);
+    //fetchMovie(name);
+    //showLoaderDialog(context);
+    test = 1;
+    toSearch = name;
+    headerText = "Search results";
     setState(() {});
   }
 
-  void fetchVoidGenreMovie(String genre) async {
+  Future fetchAllGenreMovie(String genre) async {
     final response = await http.get(
         Uri.parse(
             'http://157.230.114.95:8090/api/v1/movies/search/genre/' + genre),
         headers: {"Authorization": authToken});
 
-    if (response.statusCode == 404) {
-      test = 2;
-      throw Exception("Error at fetching data!");
-    } else if (response.statusCode == 200) {
+    if (response.statusCode == 200) {
       headerText = genre;
       genreListLeft.clear();
       foundMovies = [];
       foundMovies = searchedMovieFromJson(response.body);
-      if (foundMovies.length <= 0) {
-        test = 2;
-        throw Exception("Error at fetching data!");
-      } else {
-        test = 3;
+      if (foundMovies.length > 0) {
         for (int i = 0; i < foundMovies.length; i++) {
           genreListLeft.add(ImageButton(
               image: Image.asset("assets/images/image1.png"),
               text: foundMovies[i].name));
         }
+        return genreListLeft;
       }
-    } else {
-      test = 2;
-      throw Exception("Error at fetching data!");
     }
+    test = 2;
+    setState(() {});
+    throw Exception("Error at fetching data!");
   }
 
   Future fetchGenreMovie(String genre) async {
@@ -131,18 +132,13 @@ class _MainScreenState extends State<MainScreen> {
             'http://157.230.114.95:8090/api/v1/movies/search/genre/' + genre),
         headers: {"Authorization": authToken});
 
-    if (response.statusCode == 404) {
-      throw Exception("Error at fetching data!");
-    } else if (response.statusCode == 200) {
+    if (response.statusCode == 200) {
       List<SearchedMovie> genreList = searchedMovieFromJson(response.body);
-      if (genreList.length <= 0) {
-        throw Exception("Error at fetching data!");
-      } else {
+      if (genreList.length > 0) {
         return genreList;
       }
-    } else {
-      throw Exception("Error at fetching data!");
     }
+    throw Exception("Error at fetching data!");
   }
 
   Future fetchRecommendedMovie(int number) async {
@@ -151,45 +147,35 @@ class _MainScreenState extends State<MainScreen> {
             number.toString()),
         headers: {"Authorization": authToken});
 
-    if (response.statusCode == 404) {
-      throw Exception("Error at fetching data!");
-    } else if (response.statusCode == 200) {
+    if (response.statusCode == 200) {
       searchedList.clear();
       foundMovies = [];
       foundMovies = searchedMovieFromJson(response.body);
-      if (foundMovies.length <= 0) {
-        throw Exception("Error at fetching data!");
-      } else {
+      if (foundMovies.length > 0) {
         populateList(recommendedList);
         return recommendedList;
       }
-    } else {
-      throw Exception("Error at fetching data!");
     }
+    throw Exception("Error at fetching data!");
   }
 
-  void fetchMovie(String name) async {
+  Future fetchMovie(String name) async {
     final response = await http.get(
         Uri.parse(
             'http://157.230.114.95:8090/api/v1/movies/search/name/' + name),
         headers: {"Authorization": authToken});
-    if (response.statusCode == 404) {
-      test = 2;
-    } else if (response.statusCode == 200) {
-      test = 1;
-      headerText = "Search results";
+    if (response.statusCode == 200) {
       searchedList.clear();
       foundMovies = [];
       foundMovies = searchedMovieFromJson(response.body);
-      if (foundMovies.length <= 0) {
-        test = 2;
-      } else {
+      if (foundMovies.length > 0) {
         populateList(searchedList);
+        return searchedList;
       }
-    } else {
-      test = 2;
-      throw Exception("Error at fetching data!");
     }
+    test = 2;
+    setState(() {});
+    throw Exception("Error at fetching data!");
   }
 
   Container manageContent() {
@@ -215,22 +201,44 @@ class _MainScreenState extends State<MainScreen> {
 
   Container displayGenreMovie() {
     return Container(
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        spacing: 40,
-        children: genreListLeft,
-      ),
-    );
+        child: FutureBuilder(
+      future: fetchAllGenreMovie(toSearch),
+      builder: (context, snapshotGenreSearch) {
+        if (snapshotGenreSearch.data == null) {
+          return Container(
+            child: null,
+          );
+        } else {
+          genreListLeft = snapshotGenreSearch.data as List<ImageButton>;
+          return Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 40,
+            children: genreListLeft,
+          );
+        }
+      },
+    ));
   }
 
   Container displayMovieReturned() {
     return Container(
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        spacing: 40,
-        children: searchedList,
-      ),
-    );
+        child: FutureBuilder(
+      future: fetchMovie(toSearch),
+      builder: (context, snapshotSearch) {
+        if (snapshotSearch.data == null) {
+          return Container(
+            child: null,
+          );
+        } else {
+          searchedList = snapshotSearch.data as List<ImageButton>;
+          return Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 40,
+            children: searchedList,
+          );
+        }
+      },
+    ));
   }
 
   Container noMovieReturned() {
