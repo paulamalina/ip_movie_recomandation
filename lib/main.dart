@@ -6,6 +6,7 @@ import 'package:ip_movie_recomandation/screens/GenreScreen/genre.dart';
 import 'package:ip_movie_recomandation/screens/LoginScreen/login.dart';
 import 'package:ip_movie_recomandation/screens/MainScreen/main.dart';
 import 'package:ip_movie_recomandation/screens/MovieDetailsScreen/details.dart';
+import 'package:ip_movie_recomandation/screens/MovieDetailsScreen/movieDetails.dart';
 import 'package:ip_movie_recomandation/screens/Test.dart';
 import 'package:ip_movie_recomandation/screens/WatchListScreen/watchList.dart';
 import 'package:ip_movie_recomandation/screens/WelcomeScreen/welcome.dart';
@@ -28,7 +29,7 @@ void main() {
         '/rating': (context) => const RatingScreen(),
         '/main': (context) => const MainScreen(),
         '/genre': (context) => const GenreScreen(),
-        '/details': (context) => const MovieDetailsScreen(),
+        '/details': (context) => const MovieDetailsScreen1(),
         '/changeProfile': (context) => const ChangeProfieScreen(),
         '/commentBox': (context) => TestMe(),
         '/watchList': (context) => const WatchList(),
