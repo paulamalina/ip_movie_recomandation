@@ -30,6 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final myPhoneNumberController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  double padding = 10.0;
   double containerWidth = 700;
   double containerHeight = 850;
   bool isSmallScreen = false;
@@ -38,15 +39,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool isFinish = false;
   bool isLoading = true;
 
-  String email="";
-  String password="";
-  String gender="";
-  String name="";
-  String birthday="";
-  String phoneNumber="";
-  String country="";
+  String email = "";
+  String password = "";
+  String gender = "";
+  String name = "";
+  String birthday = "";
+  String phoneNumber = "";
+  String country = "";
 
-  String errorText="Error registering user!";
+  String errorText = "Error registering user!";
 
   showLoaderDialog(BuildContext context) {
     createUser();
@@ -65,9 +66,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         builder: (context) {
           Future.delayed(Duration(seconds: 2), () {
             Navigator.of(context).pop(true);
-            if(isCreatedUser){
+            if (isCreatedUser) {
               Navigator.pushNamed(context, '/genre');
-            }else{
+            } else {
               showAlert(context);
             }
           });
@@ -79,29 +80,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          content: Text(errorText),
-          actions: [
-            TextButton(                     // FlatButton widget is used to make a text to work like a button
-              onPressed: () {
-                Navigator.of(context).pop(true);              },             // function used to perform after pressing the button
-              child: Text('CANCEL'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(true);              },
-              child: Text('OK'),
-            ),
-          ],
-        ));
+              content: Text(errorText),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            ));
   }
 
   void logUser() async {
     final Uri apiUrl = Uri.parse("http://157.230.114.95:8090/api/v1/login");
     final response = await http.post(apiUrl,
-        body: jsonEncode({
-          "email": email,
-          "password": password
-        }),
+        body: jsonEncode({"email": email, "password": password}),
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods":
@@ -115,11 +109,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     } else {
       print("not ok, nu am fost logat cu succes");
       print("Status code la login : ${response.statusCode}");
-
     }
   }
 
-  bool isCreatedUser=false;
+  bool isCreatedUser = false;
   void createUser() async {
     print("sunt in functie");
     print(email);
@@ -145,27 +138,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "Content-Type": "application/json",
         });
 
-    switch(response.statusCode){
-      case 201: {
-        isCreatedUser=true;
-        print("Ok, am fost inregistrat cu succes");
-        logUser();
-      }
-      break;
-      case 409: {
-        errorText="Email address already in use!";
-        isCreatedUser=false;
-      }
-      break;
-      default: {
-        print(" eroare la register ${response.statusCode}");
-      }
+    switch (response.statusCode) {
+      case 201:
+        {
+          isCreatedUser = true;
+          print("Ok, am fost inregistrat cu succes");
+          logUser();
+        }
+        break;
+      case 409:
+        {
+          errorText = "Email address already in use!";
+          isCreatedUser = false;
+        }
+        break;
+      default:
+        {
+          print(" eroare la register ${response.statusCode}");
+        }
     }
   }
 
   void setValue() {
     if (MediaQuery.of(context).size.width >= 700) {
       setState(() {
+        padding = 10.0;
         containerWidth = 700;
         containerHeight = 850;
         isSmallScreen = false;
@@ -173,6 +170,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       });
     } else {
       setState(() {
+        padding = 0;
         containerWidth = double.infinity;
         containerHeight = double.infinity;
         isSmallScreen = true;
@@ -210,6 +208,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
     showLoaderDialog(context);
   }
 
+  bool isValidDate(String date) {
+    if (date.length != 10) return false;
+    int day, month, year;
+    date = date.replaceAll(RegExp(r'\.|\/'), '-');
+    var dtSplit = date.split("-");
+    year = int.parse(dtSplit[0]);
+    month = int.parse(dtSplit[1]);
+    day = int.parse(dtSplit[2]);
+    var now = DateTime.now();
+    if (month > 12 ||
+        month < 1 ||
+        day < 1 ||
+        day > daysInMonth(month, year) ||
+        year < 1900 ||
+        (year > now.year - 10 && day > now.day && month > now.month)) {
+      return false;
+    }
+    return true;
+  }
+
+  static int daysInMonth(int month, int year) {
+    int days = 28 +
+        (month + (month / 8).floor()) % 2 +
+        2 % month +
+        2 * (1 / month).floor();
+    return (isLeapYear(year) && month == 2) ? 29 : days;
+  }
+
+  static bool isLeapYear(int year) =>
+      ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0);
+
   @override
   Widget build(BuildContext context) {
     setValue();
@@ -234,7 +263,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         body: SingleChildScrollView(
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(padding),
               child: Container(
                 //height: containerHeight,
                 width: containerWidth,
@@ -269,7 +298,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         formFieldValidator: (text) {
                           if (text == null ||
                               text.isEmpty ||
-                              !RegExp(r"^[A-Z][a-z]*((-|\s)[A-Z][a-z]*)+$")
+                              !RegExp(r"^(?=.{7,25}$)(\w{3,}(\s\w{3,})+)$")
                                   .hasMatch(text)) {
                             return "Invalid name";
                           }
@@ -288,7 +317,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         formFieldValidator: (text) {
                           if (text == null ||
                               text.isEmpty ||
-                              !RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
+                              !RegExp(r"^(?=.{7,25})[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$")
                                   .hasMatch(text)) {
                             return "Invalid email address";
                           }
@@ -308,7 +337,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         formFieldValidator: (text) {
                           if (text == null ||
                               text.isEmpty ||
-                              !RegExp(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&_]{12,}$")
+                              !RegExp(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&_]{12,50}$")
                                   .hasMatch(text)) {
                             return "Invalid password";
                           }
@@ -343,18 +372,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       Center(
                           child: MyTextField(
-                        //februarie are tot timpul 29 de zile!
                         formFieldValidator: (text) {
                           if (text == null ||
                               text.isEmpty ||
-                              !RegExp(r"^(19[0-9][0-9]|20[0-1][0-9]).(((0[1,3,5,7,8]|1[0,2]).([0-2][0-9]|3[0-1]))|((0[4,5,9]|11).([0-2][0-9]|30))|(02.[0-2][0-9]))$")
-                                  .hasMatch(text)) {
+                              !isValidDate(text)) {
                             return "Invalid date";
                           }
-                          birthday = myBirthdateController.text;
+                          birthday = myBirthdateController.text
+                              .replaceAll(RegExp(r'\.|\/'), '-');
                           return null;
                         },
-                        hintText: 'Year.Month.Day',
+                        hintText: 'Year-Month-Day',
                         text: 'Birthdate',
                         controller: myBirthdateController,
                       )),
@@ -366,7 +394,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         formFieldValidator: (text) {
                           if (text == null ||
                               text.isEmpty ||
-                              !RegExp(r"^[A-Z][a-z]*((-|\s)[A-Z][a-z]*)*$")
+                              !RegExp(r"^(?=.{7,25}$)(\w{3,}(\s\w{3,})+)$")
                                   .hasMatch(text)) {
                             return "Invalid country";
                           }

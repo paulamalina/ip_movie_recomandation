@@ -88,13 +88,6 @@ class _LoginScreenState extends State<LoginScreen> {
               content: Text(errorText),
               actions: [
                 TextButton(
-                  // FlatButton widget is used to make a text to work like a button
-                  onPressed: () {
-                    Navigator.of(context).pop(true);
-                  }, // function used to perform after pressing the button
-                  child: Text('CANCEL'),
-                ),
-                TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(true);
                   },
@@ -199,7 +192,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           email = myEmailController.text;
                           return null;
                         },
-
                         hintText: 'email@gmail.com',
                         text: 'Email',
                         controller: myEmailController),
