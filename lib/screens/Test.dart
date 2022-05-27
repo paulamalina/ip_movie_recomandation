@@ -75,7 +75,7 @@ class _TestMeState extends State<TestMe> {
   void fetchComments(int id_movie) async {
     final response = await http.get(
         Uri.parse('http://157.230.114.95:8090/api/v1/movies/comments/' + id_movie.toString()),
-        headers: {"Authorization": authToken});
+        headers: {"Authorization": authToken}); //inlocuit cu token de mai sus 
 
     print("Status code: ${response.statusCode}");
     if (response.statusCode == 404) {
