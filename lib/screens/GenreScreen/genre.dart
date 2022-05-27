@@ -67,7 +67,7 @@ class _GenreScreenState extends State<GenreScreen> {
           "id": "$id"
         }),
         headers: {
-          "Authorization" : "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJybWloYWxhY2hlQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJtb3ZpZXM6cmVhZCJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NTMxNDg0NTEsImV4cCI6MTY1NDMwMDgwMH0.07c60BOq7QjTZHVzuITSMSAZuoIlvOKyjVqrA-LB9PENNQnWe7ftbOc4rCMh71Hy601slCiwL4_XpOaYXOnU_w",
+          "Authorization" : token,
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods":
           "POST, GET, OPTIONS, PUT, DELETE, HEAD",

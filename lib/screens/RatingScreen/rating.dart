@@ -26,7 +26,9 @@ class _RatingScreenState extends State<RatingScreen> {
   String image4="";
   String image5="";
 
-  List<String> thumbnailLink=[];
+  int movieId=0;
+  int currentReview=0;
+  int id1=0,id2=0,id3=0,id4=0,id5=0;
   @override
   void initState() {
     // TODO: implement initState
@@ -37,18 +39,23 @@ class _RatingScreenState extends State<RatingScreen> {
   void function() {
     if (globals.Index == 0) {
       globals.image = image1;
+      currentReview=id1;
       globals.Index++;
     } else if (globals.Index == 1) {
       globals.image = image2;
+      currentReview=id2;
       globals.Index++;
     } else if (globals.Index == 2) {
       globals.image = image3;
+      currentReview=id3;
       globals.Index++;
     } else if (globals.Index == 3) {
       globals.image = image4;
+      currentReview=id4;
       globals.Index++;
     } else if (globals.Index == 4) {
       globals.image = image5;
+      currentReview=id5;
       globals.redirect = "/main";
       globals.Index++;
     }
@@ -70,22 +77,45 @@ class _RatingScreenState extends State<RatingScreen> {
 
     if(response.statusCode==200){
       print(data.length);
-      // for(int i=0;i<data.length;i++){
-      //   print(data[i]["thumbnailLink"]);
-      //   thumbnailLink[i]=data[i]["thumbnailLink"];
-      // }
       image1=data[0]["thumbnailLink"];
       image2=data[1]["thumbnailLink"];
       image3=data[2]["thumbnailLink"];
       image4=data[3]["thumbnailLink"];
       image5=data[4]["thumbnailLink"];
+      id1=data[0]["id"];
+      id2=data[0]["id"];
+      id3=data[0]["id"];
+      id4=data[0]["id"];
+      id5=data[0]["id"];
       function();
-      print("data");
       return data;
     }
 
   }
 
+  void postReview() async{
+    final Uri apiUrl = Uri.parse(
+        "http://157.230.114.95:8090/api/v1/reviews");
+    final response = await http.post(
+        apiUrl,
+        body: jsonEncode({
+          "movie": {
+            "id": currentId,
+          },
+          "reviewValue": currentReview
+        }),
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+          "Content-Type": "application/json",
+          "Authorization": token
+        });
+    if(response.statusCode==201){
+      print("super xd");
+    }else{
+      print("oh no");
+    }
+  }
   void navigateToRating() {
     Navigator.pushNamed(context, globals.redirect);
   }
@@ -150,8 +180,6 @@ class _RatingScreenState extends State<RatingScreen> {
                 ),
               );
             } else {
-              print("aoco");
-              print(globals.image);
               return Center(
                 child: Container(
                   width: containerWidth,
@@ -221,6 +249,9 @@ class _RatingScreenState extends State<RatingScreen> {
                                       ),
                                       child: TextButton(
                                         onPressed: () {
+                                          print("awful : ${globals.redirect}");
+                                          currentReview=1;
+                                          postReview();
                                           Navigator.pushNamed(context, globals.redirect);
                                         },
                                         child: Text(
@@ -242,6 +273,9 @@ class _RatingScreenState extends State<RatingScreen> {
                                       ),
                                       child: TextButton(
                                         onPressed: () {
+                                          print("average : ${globals.redirect}");
+                                          currentReview=2;
+                                          postReview();
                                           Navigator.pushNamed(context, globals.redirect);
                                         },
                                         child: Text(
@@ -269,6 +303,9 @@ class _RatingScreenState extends State<RatingScreen> {
                                       ),
                                       child: TextButton(
                                         onPressed: () {
+                                          print("good : ${globals.redirect}");
+                                          currentReview=4;
+                                          postReview();
                                           Navigator.pushNamed(context, globals.redirect);
                                         },
                                         child: Text(
@@ -290,6 +327,9 @@ class _RatingScreenState extends State<RatingScreen> {
                                       ),
                                       child: TextButton(
                                         onPressed: () {
+                                          print("amazing : ${globals.redirect}");
+                                          currentReview=5;
+                                          postReview();
                                           Navigator.pushNamed(context, globals.redirect);
                                         },
                                         child: Text(
@@ -313,8 +353,8 @@ class _RatingScreenState extends State<RatingScreen> {
                               child: MyButton(
                                 text: 'Skip',
                                 buttonMethod: () {
+                                  print("skip : ${globals.redirect}");
                                   Navigator.pushNamed(context, globals.redirect);
-//getImage();
                                 },
                               ),
                             ),

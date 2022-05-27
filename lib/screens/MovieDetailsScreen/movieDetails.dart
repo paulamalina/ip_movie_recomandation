@@ -15,6 +15,7 @@ class MovieDetailsScreen1 extends StatefulWidget {
 }
 
 class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
+
   String title = "";
   String description = "";
   int ageRestriction = 0;
@@ -27,12 +28,10 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
   double averageRatingStars=0.0;
   late double _rating;
   // late VideoPlayerController _controller;
-
   double containerWidth = 800;
   double containerHeight = 800;
   bool isSmallScreen = false;
   bool isLargeScreen = true;
-
   TextStyle textStyle=TextStyle(
     color: Colors.white
   );
@@ -41,8 +40,8 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
     fontSize: 20,
     fontWeight: FontWeight.bold,
   );
-
   String trailerLink="";
+  String responseRatingSubmit='';
   @override
   void initState() {
   //   // TODO: implement initState
@@ -111,6 +110,46 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
     }
   }
 
+  showPopUp(){
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: Text(responseRatingSubmit, style: TextStyle(color: Colors.teal),),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ));
+  }
+  void postRating() async{
+    print("current id : $currentId $_rating");
+    final Uri apiUrl = Uri.parse(
+        "http://157.230.114.95:8090/api/v1/reviews");
+    final response = await http.post(
+        apiUrl,
+        body: jsonEncode({
+          "movie": {
+            "id": currentId,
+          },
+          "reviewValue": _rating
+        }),
+        headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+      "Content-Type": "application/json",
+      "Authorization": token
+    });
+    if(response.statusCode==201){
+      responseRatingSubmit="Thank you for your review!";
+      showPopUp();
+    }else{
+      responseRatingSubmit="There was an error submitting the review! Please try again later!";
+    }
+  }
   @override
   Widget build(BuildContext context) {
     setValue();
@@ -222,8 +261,23 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                                       },
                                       updateOnDrag: true,
                                     ),
-                                    SizedBox(
-                                      height: 20,
+                                    Center(
+                                      child: Container(
+                                        width: 130,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                          color: Color(0xFFCAEEE4),
+                                          //border: Border.all(color: Color(0xFF2B6086), width: 2),
+                                        ),
+                                        child: TextButton(onPressed: (){
+                                          postRating();
+                                        }, child: const Text("Submit rating", style: TextStyle(
+                                          color: Colors.teal,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),),),
+                                      ),
                                     ),
                                     Container(
                                         padding: const EdgeInsets.only(top: 30, right: 30, left: 50),
