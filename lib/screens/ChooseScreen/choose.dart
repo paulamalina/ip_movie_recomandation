@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ip_movie_recomandation/widgets/MyButton.dart';
+import 'package:ip_movie_recomandation/widgets/my_button.dart';
 
 class ChooseScreen extends StatefulWidget {
   const ChooseScreen({Key? key}) : super(key: key);
@@ -48,7 +48,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
   Widget build(BuildContext context) {
     setValue();
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         boxShadow: [
           BoxShadow(
             blurRadius: 7,
@@ -68,7 +68,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
             decoration: BoxDecoration(
               boxShadow: isLargeScreen
                   ? [
-                      BoxShadow(
+                      const BoxShadow(
                         blurRadius: 7,
                         spreadRadius: 2,
                       )

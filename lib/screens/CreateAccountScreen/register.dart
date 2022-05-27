@@ -1,17 +1,11 @@
 import 'dart:convert';
-import 'dart:ui';
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ip_movie_recomandation/data/data.dart';
-import 'package:ip_movie_recomandation/screens/RatingScreen/rating.dart';
-import 'package:ip_movie_recomandation/widgets/MyTextField.dart';
-import 'package:ip_movie_recomandation/widgets/MyButton.dart';
+import 'package:ip_movie_recomandation/widgets/my_text_field.dart';
+import 'package:ip_movie_recomandation/widgets/my_button.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
-import '../../models/movieListModel.dart';
-import '../GenreScreen/genre.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -52,11 +46,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   showLoaderDialog(BuildContext context) {
     createUser();
     AlertDialog alert = AlertDialog(
-      content: new Row(
+      content: Row(
         children: [
-          CircularProgressIndicator(),
+          const CircularProgressIndicator(),
           Container(
-              margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+              margin: const EdgeInsets.only(left: 7), child: const Text("Loading...")),
         ],
       ),
     );
@@ -64,7 +58,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         barrierDismissible: false,
         context: context,
         builder: (context) {
-          Future.delayed(Duration(seconds: 2), () {
+          Future.delayed(const Duration(seconds: 2), () {
             Navigator.of(context).pop(true);
             if (isCreatedUser) {
               Navigator.pushNamed(context, '/genre');
@@ -86,7 +80,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   onPressed: () {
                     Navigator.of(context).pop(true);
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             ));
@@ -103,22 +97,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "Content-Type": "application/json",
         });
     if (response.statusCode == 200) {
-      print("ok, am fost logat cu succes");
+      if (kDebugMode) {
+        print("ok, am fost logat cu succes");
+      }
       token = response.headers["authorization"] as String;
-      print("token : " + token);
+      if (kDebugMode) {
+        print("token : " + token);
+      }
     } else {
-      print("not ok, nu am fost logat cu succes");
-      print("Status code la login : ${response.statusCode}");
+      if (kDebugMode) {
+        print("not ok, nu am fost logat cu succes");
+      }
+      if (kDebugMode) {
+        print("Status code la login : ${response.statusCode}");
+      }
     }
   }
 
   bool isCreatedUser = false;
   void createUser() async {
-    print("sunt in functie");
-    print(email);
-    print(name);
-    print(password);
-    print(gender);
+    if (kDebugMode) {
+      print("sunt in functie");
+    }
+    if (kDebugMode) {
+      print(email);
+    }
+    if (kDebugMode) {
+      print(name);
+    }
+    if (kDebugMode) {
+      print(password);
+    }
+    if (kDebugMode) {
+      print(gender);
+    }
     final Uri apiUrl =
         Uri.parse("http://157.230.114.95:8090/api/v1/users/register");
     final response = await http.post(apiUrl,
@@ -142,7 +154,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       case 201:
         {
           isCreatedUser = true;
-          print("Ok, am fost inregistrat cu succes");
+          if (kDebugMode) {
+            print("Ok, am fost inregistrat cu succes");
+          }
           logUser();
         }
         break;
@@ -154,7 +168,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         break;
       default:
         {
-          print(" eroare la register ${response.statusCode}");
+          if (kDebugMode) {
+            print(" eroare la register ${response.statusCode}");
+          }
         }
     }
   }
@@ -181,7 +197,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     myNameController.dispose();
     myPasswordController.dispose();
@@ -250,7 +265,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     //   }
     // });
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color(0xFF99D98C),
         gradient: LinearGradient(
           colors: [Colors.white, Color.fromRGBO(52, 160, 164, 1)],
@@ -273,7 +288,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       isLargeScreen ? BorderRadius.circular(50) : null,
                   boxShadow: isLargeScreen
                       ? [
-                          BoxShadow(
+                          const BoxShadow(
                             spreadRadius: 2,
                             blurRadius: 7,
                           ),
@@ -309,7 +324,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         text: 'Name',
                         controller: myNameController,
                       )),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Center(
@@ -328,7 +343,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         text: 'Email',
                         controller: myEmailController,
                       )),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Center(
@@ -349,7 +364,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         obscureText: true,
                         controller: myPasswordController,
                       )),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Center(
@@ -367,7 +382,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         text: 'Gender',
                         controller: myGenderController,
                       )),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Center(
@@ -386,7 +401,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         text: 'Birthdate',
                         controller: myBirthdateController,
                       )),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Center(
@@ -405,7 +420,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         text: 'Country',
                         controller: myCountryController,
                       )),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Center(
@@ -423,7 +438,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         text: 'Phone Number',
                         controller: myPhoneNumberController,
                       )),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Padding(

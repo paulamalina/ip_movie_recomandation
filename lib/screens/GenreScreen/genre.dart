@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:ip_movie_recomandation/widgets/MyButton.dart';
+import 'package:flutter/material.dart';
+import 'package:ip_movie_recomandation/widgets/my_button.dart';
 import '../../data/data.dart';
-import '../../widgets/MyBox.dart';
+import '../../widgets/my_box.dart';
 import 'package:http/http.dart' as http;
 
 class GenreScreen extends StatefulWidget {
@@ -19,11 +19,11 @@ class _GenreScreenState extends State<GenreScreen> {
   showLoaderDialog(BuildContext context) {
     postGenres();
     AlertDialog alert = AlertDialog(
-      content: new Row(
+      content: Row(
         children: [
-          CircularProgressIndicator(),
+          const CircularProgressIndicator(),
           Container(
-              margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+              margin: const EdgeInsets.only(left: 7), child: const Text("Loading...")),
         ],
       ),
     );
@@ -31,7 +31,7 @@ class _GenreScreenState extends State<GenreScreen> {
         barrierDismissible: false,
         context: context,
         builder: (context) {
-          Future.delayed(Duration(seconds: 2), () {
+          Future.delayed(const Duration(seconds: 2), () {
             Navigator.of(context).pop(true);
             Navigator.pushNamed(context, '/rating');
           });
@@ -74,9 +74,13 @@ class _GenreScreenState extends State<GenreScreen> {
           "Content-Type": "application/json",
     });
     if(response.statusCode==201){
-      print("binee");
+      if (kDebugMode) {
+        print("binee");
+      }
     }else{
-      print(response.statusCode);
+      if (kDebugMode) {
+        print(response.statusCode);
+      }
     }
   }
 
@@ -139,7 +143,7 @@ class _GenreScreenState extends State<GenreScreen> {
     setValue();
 
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         boxShadow: [
           BoxShadow(
             blurRadius: 7,
@@ -159,7 +163,7 @@ class _GenreScreenState extends State<GenreScreen> {
             decoration: BoxDecoration(
               boxShadow: isLargeScreen
                   ? [
-                      BoxShadow(
+                      const BoxShadow(
                         blurRadius: 7,
                         spreadRadius: 2,
                       )
@@ -172,89 +176,97 @@ class _GenreScreenState extends State<GenreScreen> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Center(
+                  const Center(
                     child: Text(
                       "What genre would you like to watch?",
                       style: TextStyle(fontSize: 30, color: Colors.white),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
-                  Center(
+                  const Center(
                     child: Text(
                       "Please choose at least 3 genres that you are interested in",
                       style: TextStyle(fontSize: 15, color: Colors.white),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
-                  Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Wrap(
-                          spacing: 50,
-                          alignment: WrapAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Column(
-                                children: [
-                                  MyBox(text: 'Action', CallbackFunction: (bool value ) {
-                                    print("Action : $value");
-                                    button1IsPressed=value;
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Wrap(
+                        spacing: 50,
+                        alignment: WrapAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              MyBox(text: 'Action', callbackFunction: (bool value ) {
+                                if (kDebugMode) {
+                                  print("Action : $value");
+                                }
+                                button1IsPressed=value;
 
-                                  },),
-                                  MyBox(text: 'Comedy', CallbackFunction: (bool value) {
-                                    print("Comedy : $value");
-                                    button2IsPressed=value;
-                                  },),
-                                  MyBox(text: 'Drama', CallbackFunction: (bool value) {
-                                    print("Drama : $value");
-                                    button3IsPressed=value;
-                                  },),
-                                  MyBox(text: 'Fantasy', CallbackFunction: (bool value) {
-                                    print("Fantasy : $value");
-                                    button4IsPressed=value;
-                                  },),
-                                  SizedBox(
-                                    width: 30,
-                                  )
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Column(
-                                children: [
-                                  MyBox(text: 'Romantic', CallbackFunction: (bool value) {
-                                    print("Romantic : $value");
-                                    button5IsPressed=value;
-                                  },),
-                                  MyBox(text: 'Scary', CallbackFunction: (bool value) {
-                                    print("Scary : $value");
-                                    button6IsPressed=value;
-                                  },),
-                                  MyBox(text: 'Sci-Fi', CallbackFunction: (bool value) {
-                                    print("SF : $value");
-                                    button7IsPressed=value;
-                                  },),
-                                  SizedBox(
-                                    width: 30,
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                      ],
-                    ),
+                              },),
+                              MyBox(text: 'Comedy', callbackFunction: (bool value) {
+                                if (kDebugMode) {
+                                  print("Comedy : $value");
+                                }
+                                button2IsPressed=value;
+                              },),
+                              MyBox(text: 'Drama', callbackFunction: (bool value) {
+                                if (kDebugMode) {
+                                  print("Drama : $value");
+                                }
+                                button3IsPressed=value;
+                              },),
+                              MyBox(text: 'Fantasy', callbackFunction: (bool value) {
+                                if (kDebugMode) {
+                                  print("Fantasy : $value");
+                                }
+                                button4IsPressed=value;
+                              },),
+                              const SizedBox(
+                                width: 30,
+                              )
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              MyBox(text: 'Romantic', callbackFunction: (bool value) {
+                                if (kDebugMode) {
+                                  print("Romantic : $value");
+                                }
+                                button5IsPressed=value;
+                              },),
+                              MyBox(text: 'Scary', callbackFunction: (bool value) {
+                                if (kDebugMode) {
+                                  print("Scary : $value");
+                                }
+                                button6IsPressed=value;
+                              },),
+                              MyBox(text: 'Sci-Fi', callbackFunction: (bool value) {
+                                if (kDebugMode) {
+                                  print("SF : $value");
+                                }
+                                button7IsPressed=value;
+                              },),
+                              const SizedBox(
+                                width: 30,
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                    ],
                   ),
                 ],
               ),

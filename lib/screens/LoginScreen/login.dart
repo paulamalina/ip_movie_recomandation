@@ -1,15 +1,13 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
-import 'package:bordered_text/bordered_text.dart';
-import 'package:ip_movie_recomandation/widgets/MyButton.dart';
+import 'package:ip_movie_recomandation/widgets/my_button.dart';
 
 import '../../data/data.dart';
-import '../../widgets/MyTextField.dart';
+import '../../widgets/my_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -24,8 +22,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _formKey = GlobalKey<FormState>();
   void logUser() async {
-    print(email);
-    print(password);
+    if (kDebugMode) {
+      print(email);
+    }
+    if (kDebugMode) {
+      print(password);
+    }
     final Uri apiUrl = Uri.parse("http://157.230.114.95:8090/api/v1/login");
     final response = await http.post(apiUrl,
         body: jsonEncode({
@@ -41,25 +43,31 @@ class _LoginScreenState extends State<LoginScreen> {
 
     token = response.headers["authorization"] as String;
 
-    print("Response: ${response.statusCode}");
+    if (kDebugMode) {
+      print("Response: ${response.statusCode}");
+    }
     if (response.statusCode == 200) {
-      print("ok, am fost logat cu succes");
+      if (kDebugMode) {
+        print("ok, am fost logat cu succes");
+      }
       setState(() {
         isLoggedIn = true;
       });
     } else {
-      print("not ok, nu am fost logat cu succes");
+      if (kDebugMode) {
+        print("not ok, nu am fost logat cu succes");
+      }
     }
   }
 
   showLoaderDialog(BuildContext context) {
     logUser();
     AlertDialog alert = AlertDialog(
-      content: new Row(
+      content: Row(
         children: [
-          CircularProgressIndicator(),
+          const CircularProgressIndicator(),
           Container(
-              margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+              margin: const EdgeInsets.only(left: 7), child: const Text("Loading...")),
         ],
       ),
     );
@@ -67,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
         barrierDismissible: false,
         context: context,
         builder: (context) {
-          Future.delayed(Duration(seconds: 2), () {
+          Future.delayed(const Duration(seconds: 2), () {
             Navigator.of(context).pop(true);
             if (isLoggedIn) {
               Navigator.pushNamed(context, '/main');
@@ -91,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     Navigator.of(context).pop(true);
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             ));
@@ -142,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     setValue();
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [Colors.white, Color.fromRGBO(52, 160, 164, 1)],
           begin: Alignment.topCenter,
@@ -162,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 borderRadius: isLargeScreen ? BorderRadius.circular(50) : null,
                 boxShadow: isLargeScreen
                     ? [
-                        BoxShadow(
+                        const BoxShadow(
                           blurRadius: 7,
                           spreadRadius: 2,
                         ),
@@ -182,10 +190,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 85,
                   ),
-                  Container(
+                  SizedBox(
                     width: 300,
                     child: MyTextField(
                         formFieldValidator: (text) {
@@ -196,10 +204,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         text: 'Email',
                         controller: myEmailController),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
-                  Container(
+                  SizedBox(
                     width: 300,
                     child: MyTextField(
                         formFieldValidator: (text) {
@@ -211,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: myPasswordController,
                         obscureText: true),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   Padding(
@@ -219,19 +227,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          child: MyButton(
-                            text: 'Back',
-                            buttonMethod: navigateToChoose,
-                          ),
+                        MyButton(
+                          text: 'Back',
+                          buttonMethod: navigateToChoose,
                         ),
-                        Container(
-                          child: MyButton(
-                            text: 'Login',
-                            buttonMethod: () {
-                              login();
-                            },
-                          ),
+                        MyButton(
+                          text: 'Login',
+                          buttonMethod: () {
+                            login();
+                          },
                         ),
                       ],
                     ),

@@ -2,15 +2,13 @@ import 'package:http/http.dart' as http;
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter/widgets.dart';
-import 'package:ip_movie_recomandation/widgets/BigLogoutButton.dart';
-import 'package:ip_movie_recomandation/widgets/BigSearchField.dart';
-import 'package:ip_movie_recomandation/widgets/ImageButton.dart';
-import 'package:ip_movie_recomandation/widgets/Toggle.dart';
-import 'package:ip_movie_recomandation/widgets/SmallLogoutButton.dart';
-import 'package:ip_movie_recomandation/widgets/SmallSearchField.dart';
-import 'package:ip_movie_recomandation/widgets/MainGenreButton.dart';
-import 'package:ip_movie_recomandation/models/searchedMovie.dart';
+import 'package:ip_movie_recomandation/widgets/big_logout_button.dart';
+import 'package:ip_movie_recomandation/widgets/big_search_field.dart';
+import 'package:ip_movie_recomandation/widgets/image_button.dart';
+import 'package:ip_movie_recomandation/widgets/small_logout_button.dart';
+import 'package:ip_movie_recomandation/widgets/small_search_field.dart';
+import 'package:ip_movie_recomandation/widgets/main_genre_button.dart';
+import 'package:ip_movie_recomandation/models/searched_movie.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class MainScreen extends StatefulWidget {
@@ -30,8 +28,8 @@ class _MainScreenState extends State<MainScreen> {
   String toSearch = "NULL";
   int carouselMaxNumber = 10;
   String headerText = "For you";
-  List<Widget> CarouselItems = [];
-  Widget MyCarousel = Container();
+  List<Widget> carouselItems = [];
+  Widget myCarousel = Container();
   bool isFinish = false;
   List<SearchedMovie> foundMovies = [];
   bool isLargeScreen = true;
@@ -55,11 +53,11 @@ class _MainScreenState extends State<MainScreen> {
 
   showLoaderDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
-      content: new Row(
+      content: Row(
         children: [
-          CircularProgressIndicator(),
+          const CircularProgressIndicator(),
           Container(
-              margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+              margin: const EdgeInsets.only(left: 7), child: const Text("Loading...")),
         ],
       ),
     );
@@ -67,7 +65,7 @@ class _MainScreenState extends State<MainScreen> {
         barrierDismissible: false,
         context: context,
         builder: (context) {
-          Future.delayed(Duration(seconds: 2), () {
+          Future.delayed(const Duration(seconds: 2), () {
             setState(() {
               isFinish = true;
             });
@@ -112,7 +110,7 @@ class _MainScreenState extends State<MainScreen> {
       genreListLeft.clear();
       foundMovies = [];
       foundMovies = searchedMovieFromJson(response.body);
-      if (foundMovies.length > 0) {
+      if (foundMovies.isNotEmpty) {
         for (int i = 0; i < foundMovies.length; i++) {
           genreListLeft.add(ImageButton(
               image: Image.asset("assets/images/image1.png"),
@@ -134,7 +132,7 @@ class _MainScreenState extends State<MainScreen> {
 
     if (response.statusCode == 200) {
       List<SearchedMovie> genreList = searchedMovieFromJson(response.body);
-      if (genreList.length > 0) {
+      if (genreList.isNotEmpty) {
         return genreList;
       }
     }
@@ -151,7 +149,7 @@ class _MainScreenState extends State<MainScreen> {
       searchedList.clear();
       foundMovies = [];
       foundMovies = searchedMovieFromJson(response.body);
-      if (foundMovies.length > 0) {
+      if (foundMovies.isNotEmpty) {
         populateList(recommendedList);
         return recommendedList;
       }
@@ -168,7 +166,7 @@ class _MainScreenState extends State<MainScreen> {
       searchedList.clear();
       foundMovies = [];
       foundMovies = searchedMovieFromJson(response.body);
-      if (foundMovies.length > 0) {
+      if (foundMovies.isNotEmpty) {
         populateList(searchedList);
         return searchedList;
       }
@@ -243,12 +241,12 @@ class _MainScreenState extends State<MainScreen> {
 
   Container noMovieReturned() {
     return Container(
-      child: Column(children: [
+      child: Column(children: const [
         SizedBox(height: 80),
         FittedBox(
           fit: BoxFit.scaleDown,
           child: Text("Nothing Found",
-              style: const TextStyle(
+              style: TextStyle(
                   color: Color(0xFFCAEEE4),
                   fontSize: 80,
                   fontWeight: FontWeight.w200)),
@@ -257,7 +255,7 @@ class _MainScreenState extends State<MainScreen> {
         FittedBox(
           fit: BoxFit.scaleDown,
           child: Text("Sorry, but nothing matched your search terms",
-              style: const TextStyle(
+              style: TextStyle(
                   color: Color(0xFFCAEEE4),
                   fontSize: 40,
                   fontWeight: FontWeight.w200)),
@@ -268,25 +266,25 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget initGenreCarousel(List<SearchedMovie> genreMovies) {
-    Widget Carousel = Container();
-    List<Widget> Items = [];
-    List<ImageButton> Images = [];
+    Widget carousel = Container();
+    List<Widget> items = [];
+    List<ImageButton> images = [];
 
     //Populate list
     for (int i = 0; i < genreMovies.length && i < carouselMaxNumber; i++) {
-      Images.add(ImageButton(
+      images.add(ImageButton(
           image: Image.asset("assets/images/image1.png"),
           text: genreMovies[i].name));
     }
     //Init Carousel
-    Items = Images;
-    Carousel = Padding(
-      padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+    items = images;
+    carousel = Padding(
+      padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
       child: CarouselSlider(
-        items: Items,
+        items: items,
         options: CarouselOptions(
-          autoPlayInterval: Duration(seconds: 3),
-          autoPlayAnimationDuration: Duration(milliseconds: 800),
+          autoPlayInterval: const Duration(seconds: 3),
+          autoPlayAnimationDuration: const Duration(milliseconds: 800),
           autoPlayCurve: Curves.fastOutSlowIn,
           viewportFraction: MediaQuery.of(context).size.width > 800 ? 0.3 : 1,
           height: 400,
@@ -296,17 +294,17 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
 
-    return Carousel;
+    return carousel;
   }
 
   void initCarousel() {
-    MyCarousel = Padding(
-      padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+    myCarousel = Padding(
+      padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
       child: CarouselSlider(
-        items: CarouselItems,
+        items: carouselItems,
         options: CarouselOptions(
-          autoPlayInterval: Duration(seconds: 3),
-          autoPlayAnimationDuration: Duration(milliseconds: 800),
+          autoPlayInterval: const Duration(seconds: 3),
+          autoPlayAnimationDuration: const Duration(milliseconds: 800),
           autoPlayCurve: Curves.fastOutSlowIn,
           viewportFraction: MediaQuery.of(context).size.width > 800 ? 0.3 : 1,
           height: 400,
@@ -318,7 +316,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void initImages() {
-    CarouselItems = rememberRecommended;
+    carouselItems = rememberRecommended;
   }
 
   Container normalPrint() {
@@ -335,22 +333,20 @@ class _MainScreenState extends State<MainScreen> {
             rememberRecommended = snapshot.data as List<ImageButton>;
             initImages();
             initCarousel();
-            return Container(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Recommended Movies",
-                    style: TextStyle(
-                        color: Color(0xFFCAEEE4),
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  MyCarousel,
-                ],
-              ),
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Recommended Movies",
+                  style: TextStyle(
+                      color: Color(0xFFCAEEE4),
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold),
+                ),
+                myCarousel,
+              ],
             );
           }
         },
@@ -363,24 +359,22 @@ class _MainScreenState extends State<MainScreen> {
               child: null,
             );
           } else {
-            Widget CarouselGenreChild =
+            Widget carouselGenreChild =
                 initGenreCarousel(snapshotAction.data as List<SearchedMovie>);
-            return Container(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Action",
-                    style: TextStyle(
-                        color: Color(0xFFCAEEE4),
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  CarouselGenreChild,
-                ],
-              ),
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Action",
+                  style: TextStyle(
+                      color: Color(0xFFCAEEE4),
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold),
+                ),
+                carouselGenreChild,
+              ],
             );
           }
         },
@@ -393,24 +387,22 @@ class _MainScreenState extends State<MainScreen> {
               child: null,
             );
           } else {
-            Widget CarouselGenreChild =
+            Widget carouselGenreChild =
                 initGenreCarousel(snapshotAction.data as List<SearchedMovie>);
-            return Container(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Comedy",
-                    style: TextStyle(
-                        color: Color(0xFFCAEEE4),
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  CarouselGenreChild,
-                ],
-              ),
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Comedy",
+                  style: TextStyle(
+                      color: Color(0xFFCAEEE4),
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold),
+                ),
+                carouselGenreChild,
+              ],
             );
           }
         },
@@ -423,24 +415,22 @@ class _MainScreenState extends State<MainScreen> {
               child: null,
             );
           } else {
-            Widget CarouselGenreChild =
+            Widget carouselGenreChild =
                 initGenreCarousel(snapshotAction.data as List<SearchedMovie>);
-            return Container(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Drama",
-                    style: TextStyle(
-                        color: Color(0xFFCAEEE4),
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  CarouselGenreChild,
-                ],
-              ),
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Drama",
+                  style: TextStyle(
+                      color: Color(0xFFCAEEE4),
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold),
+                ),
+                carouselGenreChild,
+              ],
             );
           }
         },
@@ -453,24 +443,22 @@ class _MainScreenState extends State<MainScreen> {
               child: null,
             );
           } else {
-            Widget CarouselGenreChild =
+            Widget carouselGenreChild =
                 initGenreCarousel(snapshotAction.data as List<SearchedMovie>);
-            return Container(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Fantasy",
-                    style: TextStyle(
-                        color: Color(0xFFCAEEE4),
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  CarouselGenreChild,
-                ],
-              ),
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Fantasy",
+                  style: TextStyle(
+                      color: Color(0xFFCAEEE4),
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold),
+                ),
+                carouselGenreChild,
+              ],
             );
           }
         },
@@ -483,24 +471,22 @@ class _MainScreenState extends State<MainScreen> {
               child: null,
             );
           } else {
-            Widget CarouselGenreChild =
+            Widget carouselGenreChild =
                 initGenreCarousel(snapshotAction.data as List<SearchedMovie>);
-            return Container(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Romantic",
-                    style: TextStyle(
-                        color: Color(0xFFCAEEE4),
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  CarouselGenreChild,
-                ],
-              ),
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Romantic",
+                  style: TextStyle(
+                      color: Color(0xFFCAEEE4),
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold),
+                ),
+                carouselGenreChild,
+              ],
             );
           }
         },
@@ -513,24 +499,22 @@ class _MainScreenState extends State<MainScreen> {
               child: null,
             );
           } else {
-            Widget CarouselGenreChild =
+            Widget carouselGenreChild =
                 initGenreCarousel(snapshotAction.data as List<SearchedMovie>);
-            return Container(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Horror",
-                    style: TextStyle(
-                        color: Color(0xFFCAEEE4),
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  CarouselGenreChild,
-                ],
-              ),
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Horror",
+                  style: TextStyle(
+                      color: Color(0xFFCAEEE4),
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold),
+                ),
+                carouselGenreChild,
+              ],
             );
           }
         },
@@ -543,24 +527,22 @@ class _MainScreenState extends State<MainScreen> {
               child: null,
             );
           } else {
-            Widget CarouselGenreChild =
+            Widget carouselGenreChild =
                 initGenreCarousel(snapshotAction.data as List<SearchedMovie>);
-            return Container(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Sci-Fi",
-                    style: TextStyle(
-                        color: Color(0xFFCAEEE4),
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  CarouselGenreChild,
-                ],
-              ),
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Sci-Fi",
+                  style: TextStyle(
+                      color: Color(0xFFCAEEE4),
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold),
+                ),
+                carouselGenreChild,
+              ],
             );
           }
         },
@@ -571,7 +553,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     setDimentions();
-    if (!recommendedList.isEmpty) {
+    if (recommendedList.isNotEmpty) {
       initImages();
       initCarousel();
     }
@@ -579,7 +561,7 @@ class _MainScreenState extends State<MainScreen> {
 
     //print("Main: $authToken");
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           /*
           colors: [
@@ -597,7 +579,7 @@ class _MainScreenState extends State<MainScreen> {
         appBar: AppBar(
           //backgroundColor: Color(0xFF1A759F),
           backgroundColor: Colors.teal,
-          title: Container(
+          title: SizedBox(
               width: 60,
               child: IconButton(
                 icon: SvgPicture.asset(
@@ -622,22 +604,20 @@ class _MainScreenState extends State<MainScreen> {
                 : SmallSearchField(
                     returnSearch: callMovieGetter,
                   ),
-            SizedBox(width: 20),
-            Container(
-              child: IconButton(
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                icon: const Icon(
-                  Icons.person,
-                  color: Color(0xFFCAEEE4),
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/changeProfile');
-                },
+            const SizedBox(width: 20),
+            IconButton(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              icon: const Icon(
+                Icons.person,
+                color: Color(0xFFCAEEE4),
               ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/changeProfile');
+              },
             ),
-            SizedBox(width: 20),
-            isLargeScreen ? BigLogoutButton() : SmallLogoutButton(),
-            Container(
+            const SizedBox(width: 20),
+            isLargeScreen ? const BigLogoutButton() : const SmallLogoutButton(),
+            const SizedBox(
               width: 40,
               height: 40,
             ),
@@ -738,7 +718,7 @@ class _MainScreenState extends State<MainScreen> {
                       decoration: BoxDecoration(
                         color: Colors.teal,
                         borderRadius: BorderRadius.circular(50.0),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             blurRadius: 7,
                             spreadRadius: 2,
@@ -751,14 +731,14 @@ class _MainScreenState extends State<MainScreen> {
                           children: [
                             Column(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 30,
                                 ),
                                 BorderedText(
                                   strokeWidth: 4.0,
-                                  strokeColor: Color(0xFF2B6086),
+                                  strokeColor: const Color(0xFF2B6086),
                                   child: Text(headerText,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Color(0xFFCAEEE4),
                                           fontSize: 40,
                                           fontWeight: FontWeight.bold)),
@@ -773,7 +753,7 @@ class _MainScreenState extends State<MainScreen> {
                       //height: MediaQuery.of(context).size.height * 1.5,
                       width: MediaQuery.of(context).size.width * 0.95,
                       decoration: BoxDecoration(
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             blurRadius: 7,
                             spreadRadius: 2,

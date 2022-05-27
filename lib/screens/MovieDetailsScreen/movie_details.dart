@@ -1,11 +1,11 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:ip_movie_recomandation/data/data.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:video_player/video_player.dart';
 
-import '../../widgets/MyButton.dart';
+import '../../widgets/my_button.dart';
 
 class MovieDetailsScreen1 extends StatefulWidget {
   const MovieDetailsScreen1({Key? key}) : super(key: key);
@@ -32,10 +32,10 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
   double containerHeight = 800;
   bool isSmallScreen = false;
   bool isLargeScreen = true;
-  TextStyle textStyle=TextStyle(
+  TextStyle textStyle=const TextStyle(
     color: Colors.white
   );
-  TextStyle titleStyle=TextStyle(
+  TextStyle titleStyle=const TextStyle(
       color: Colors.white,
     fontSize: 20,
     fontWeight: FontWeight.bold,
@@ -44,7 +44,6 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
   String responseRatingSubmit='';
   @override
   void initState() {
-  //   // TODO: implement initState
   //   _controller = VideoPlayerController.network(
   //       trailerLink,
   //       httpHeaders: {
@@ -114,19 +113,21 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          content: Text(responseRatingSubmit, style: TextStyle(color: Colors.teal),),
+          content: Text(responseRatingSubmit, style: const TextStyle(color: Colors.teal),),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         ));
   }
   void postRating() async{
-    print("current id : $currentId $_rating");
+    if (kDebugMode) {
+      print("current id : $currentId $_rating");
+    }
     final Uri apiUrl = Uri.parse(
         "http://157.230.114.95:8090/api/v1/reviews");
     final response = await http.post(
@@ -154,7 +155,7 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
   Widget build(BuildContext context) {
     setValue();
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color(0xFF99D98C),
         gradient: LinearGradient(
           colors: [Colors.white, Color.fromRGBO(52, 160, 164, 1)],
@@ -166,14 +167,14 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
         backgroundColor: Colors.transparent,
         body: ListView(
           children: [
-            isLargeScreen ? SizedBox(
+            isLargeScreen ? const SizedBox(
               height: 50,
             ) : Container(),
             FutureBuilder(
               future: getDetailsForMovie(),
               builder: (context, snapshot) {
                 if (snapshot.data == null) {
-                  return SizedBox(
+                  return const SizedBox(
                     child: Center(child: CircularProgressIndicator()),
                     width: 100,
                     height: 100,
@@ -189,7 +190,7 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                             isLargeScreen ? BorderRadius.circular(50) : null,
                         boxShadow: isLargeScreen
                             ? [
-                                BoxShadow(
+                                const BoxShadow(
                                   spreadRadius: 2,
                                   blurRadius: 7,
                                 ),
@@ -219,23 +220,23 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
 
                               Container(
                                 width: MediaQuery.of(context).size.width >900 ? 500 : double.infinity,
-                                padding: EdgeInsets.only(right: 20),
+                                padding: const EdgeInsets.only(right: 20),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 40,
                                     ),
                                     Container(
-                                      padding: EdgeInsets.only(right: 20, left: 20),
+                                      padding: const EdgeInsets.only(right: 20, left: 20),
                                         child: Center(child: Text(titleText, style: titleStyle,),
                                         ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
                                     Center(child: Text("$releaseDate  |  $ageRestriction +  | $duration min |  $genre ",style: textStyle,)),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
                                     RatingBar.builder(
@@ -247,7 +248,7 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                                       Colors.amber.withAlpha(50),
                                       itemCount: 5,
                                       itemSize: 50.0,
-                                      itemPadding: EdgeInsets.symmetric(
+                                      itemPadding: const EdgeInsets.symmetric(
                                           horizontal: 4.0),
                                       itemBuilder: (context, _) => Icon(
                                         _selectedIcon ?? Icons.star,
@@ -256,7 +257,9 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                                       onRatingUpdate: (rating) {
                                         setState(() {
                                           _rating = rating;
-                                          print(_rating);
+                                          if (kDebugMode) {
+                                            print(_rating);
+                                          }
                                         });
                                       },
                                       updateOnDrag: true,
@@ -267,7 +270,7 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                                         height: 30,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(50.0),
-                                          color: Color(0xFFCAEEE4),
+                                          color: const Color(0xFFCAEEE4),
                                           //border: Border.all(color: Color(0xFF2B6086), width: 2),
                                         ),
                                         child: TextButton(onPressed: (){
@@ -311,7 +314,7 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                     children: [
                       MyButton(
                         text: 'Back',
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                           color: Color(0xFF1A759F),
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -324,7 +327,7 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                       ),
                       MyButton(
                         text: 'Comment',
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                           color: Color(0xFF1A759F),
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -350,7 +353,7 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                   isLargeScreen ? BorderRadius.circular(50) : null,
                   boxShadow: isLargeScreen
                       ? [
-                    BoxShadow(
+                    const BoxShadow(
                       spreadRadius: 2,
                       blurRadius: 7,
                     ),
@@ -359,11 +362,11 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                 ),
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 50,
                     ),
                     Row(
-                      children: [
+                      children: const [
                         Text("    Watch the trailer here ", style: TextStyle(
                             color: Colors.white,
                             fontSize: 30
@@ -373,12 +376,12 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                         ),
                       ],
                     ),
-                    //TODO Video HERE
+                    //Todo Video HERE
                   ],
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             Center(
@@ -391,7 +394,7 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                   isLargeScreen ? BorderRadius.circular(50) : null,
                   boxShadow: isLargeScreen
                       ? [
-                    BoxShadow(
+                    const BoxShadow(
                       spreadRadius: 2,
                       blurRadius: 7,
                     ),
@@ -400,11 +403,11 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                 ),
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 50,
                     ),
                     Row(
-                      children: [
+                      children: const [
                         Text("    Watch the movie here ", style: TextStyle(
                           color: Colors.white,
                           fontSize: 30
@@ -414,7 +417,7 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                         ),
                       ],
                     ),
-                    //TODO Video HERE
+                    //Todo Video HERE
                   ],
                 ),
               ),
@@ -447,7 +450,7 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
             //     ),
             //   ],
             // )
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
           ],
