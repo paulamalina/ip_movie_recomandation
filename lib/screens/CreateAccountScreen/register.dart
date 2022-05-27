@@ -298,9 +298,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         formFieldValidator: (text) {
                           if (text == null ||
                               text.isEmpty ||
-                              !RegExp(r"^(?=.{7,25}$)(\w{3,}(\s\w{3,})+)$")
+                              !RegExp(r"^(?=.{2,25}$)(\w{2,}(\s?\w{2,})?)$")
                                   .hasMatch(text)) {
-                            return "Invalid name";
+                            return "Invalid name.";
                           }
                           name = myNameController.text;
                           return null;
@@ -317,9 +317,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         formFieldValidator: (text) {
                           if (text == null ||
                               text.isEmpty ||
-                              !RegExp(r"^(?=.{7,25})[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$")
+                              !RegExp(r"^(?=.{5,30})[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$")
                                   .hasMatch(text)) {
-                            return "Invalid email address";
+                            return "Invalid email address.";
                           }
                           email = myEmailController.text;
                           return null;
@@ -337,9 +337,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         formFieldValidator: (text) {
                           if (text == null ||
                               text.isEmpty ||
-                              !RegExp(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&_]{12,50}$")
+                              !RegExp(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&_]{10,50}$")
                                   .hasMatch(text)) {
-                            return "Invalid password";
+                            return "Invalid password, must contain at least 10 to 50 \ncharacters, a mix of upper and lower case letters, \nnumbers and special characters.";
                           }
                           password = myPasswordController.text;
                           return null;
@@ -357,8 +357,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         formFieldValidator: (text) {
                           if (text == null ||
                               text.isEmpty ||
-                              !RegExp(r"(M|F)").hasMatch(text)) {
-                            return "Invalid gender";
+                              !RegExp(r"^(M|F)$").hasMatch(text)) {
+                            return "Invalid gender.";
                           }
                           gender = myGenderController.text;
                           return null;
@@ -376,7 +376,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           if (text == null ||
                               text.isEmpty ||
                               !isValidDate(text)) {
-                            return "Invalid date";
+                            return "Invalid date.";
                           }
                           birthday = myBirthdateController.text
                               .replaceAll(RegExp(r'\.|\/'), '-');
@@ -394,9 +394,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         formFieldValidator: (text) {
                           if (text == null ||
                               text.isEmpty ||
-                              !RegExp(r"^(?=.{7,25}$)(\w{3,}(\s\w{3,})+)$")
+                              !RegExp(r"^(?=.{2,25}$)(\w{2,}(\s?\w{2,})?)$")
                                   .hasMatch(text)) {
-                            return "Invalid country";
+                            return "Invalid country.";
                           }
                           country = myCountryController.text;
                           return null;
@@ -414,7 +414,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           if (text == null ||
                               text.isEmpty ||
                               !RegExp(r"^07[0-9]{8}$").hasMatch(text)) {
-                            return "Invalid phone number";
+                            return "Invalid phone number.";
                           }
                           phoneNumber = myPhoneNumberController.text;
                           return null;
