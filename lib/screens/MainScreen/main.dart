@@ -3,6 +3,7 @@ import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter/widgets.dart';
+import 'package:ip_movie_recomandation/data/data.dart';
 import 'package:ip_movie_recomandation/widgets/BigLogoutButton.dart';
 import 'package:ip_movie_recomandation/widgets/BigSearchField.dart';
 import 'package:ip_movie_recomandation/widgets/ImageButton.dart';
@@ -12,6 +13,7 @@ import 'package:ip_movie_recomandation/widgets/SmallSearchField.dart';
 import 'package:ip_movie_recomandation/widgets/MainGenreButton.dart';
 import 'package:ip_movie_recomandation/models/searchedMovie.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ip_movie_recomandation/data/data.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -50,38 +52,8 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-  String authToken =
-      "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJybWloYWxhY2hlQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJtb3ZpZXM6cmVhZCJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NTMxNDg0NTEsImV4cCI6MTY1NDMwMDgwMH0.07c60BOq7QjTZHVzuITSMSAZuoIlvOKyjVqrA-LB9PENNQnWe7ftbOc4rCMh71Hy601slCiwL4_XpOaYXOnU_w";
-
-  showLoaderDialog(BuildContext context) {
-    AlertDialog alert = AlertDialog(
-      content: new Row(
-        children: [
-          CircularProgressIndicator(),
-          Container(
-              margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
-        ],
-      ),
-    );
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (context) {
-          Future.delayed(Duration(seconds: 2), () {
-            setState(() {
-              isFinish = true;
-            });
-            Navigator.of(context).pop(true);
-          });
-          return alert;
-        });
-  }
-
-  void callRecommendGetter() {
-    fetchRecommendedMovie(10);
-    showLoaderDialog(context);
-    setState(() {});
-  }
+  String authToken = token;
+//      "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJybWloYWxhY2hlQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJtb3ZpZXM6cmVhZCJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NTMxNDg0NTEsImV4cCI6MTY1NDMwMDgwMH0.07c60BOq7QjTZHVzuITSMSAZuoIlvOKyjVqrA-LB9PENNQnWe7ftbOc4rCMh71Hy601slCiwL4_XpOaYXOnU_w";
 
   void callGenreGetter(String genre) {
     //fetchAllGenreMovie(genre);
@@ -115,7 +87,7 @@ class _MainScreenState extends State<MainScreen> {
       if (foundMovies.length > 0) {
         for (int i = 0; i < foundMovies.length; i++) {
           genreListLeft.add(ImageButton(
-              image: Image.asset("assets/images/image1.png"),
+              image: Image.network(foundMovies[i].thumbnailLink),
               text: foundMovies[i].name));
         }
         return genreListLeft;
@@ -194,7 +166,7 @@ class _MainScreenState extends State<MainScreen> {
   void populateList(List<ImageButton> buttonList) {
     for (int i = 0; i < foundMovies.length; i++) {
       buttonList.add(ImageButton(
-          image: Image.asset("assets/images/image1.png"),
+          image: Image.network(foundMovies[i].thumbnailLink),
           text: foundMovies[i].name));
     }
   }
@@ -275,7 +247,7 @@ class _MainScreenState extends State<MainScreen> {
     //Populate list
     for (int i = 0; i < genreMovies.length && i < carouselMaxNumber; i++) {
       Images.add(ImageButton(
-          image: Image.asset("assets/images/image1.png"),
+          image: Image.network(genreMovies[i].thumbnailLink),
           text: genreMovies[i].name));
     }
     //Init Carousel
