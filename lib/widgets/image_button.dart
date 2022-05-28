@@ -23,21 +23,29 @@ class ImageButton extends StatelessWidget {
                 border: Border.all(color: const Color(0xFF2B6086), width: 2)),
             child: Column(
               children: [
+                const SizedBox(
+                  height: 10,
+                ),
                 IconButton(
                   onPressed: () {
-                    titleText=text;
+                    titleText = text;
                     Navigator.pushNamed(context, '/details');
                   },
                   icon: image,
                   iconSize: 250,
                 ),
-                Text(text,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Color(0xFF1A759F),
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    )),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(text,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Color(0xFF1A759F),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        )),
+                  ),
+                )
               ],
             )));
   }

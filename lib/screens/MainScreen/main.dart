@@ -198,6 +198,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Container displayGenreMovie() {
+    // ignore: avoid_unnecessary_containers
     return Container(
         child: FutureBuilder(
       future: fetchAllGenreMovie(toSearch),
@@ -219,6 +220,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Container displayMovieReturned() {
+    // ignore: avoid_unnecessary_containers
     return Container(
         child: FutureBuilder(
       future: fetchMovie(toSearch),
@@ -240,6 +242,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Container noMovieReturned() {
+    // ignore: avoid_unnecessary_containers
     return Container(
       child: Column(children: const [
         SizedBox(height: 80),
@@ -320,6 +323,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Container normalPrint() {
+    // ignore: avoid_unnecessary_containers
     return Container(
         child: Wrap(alignment: WrapAlignment.center, spacing: 40, children: [
       FutureBuilder(
