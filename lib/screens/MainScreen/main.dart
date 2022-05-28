@@ -587,17 +587,14 @@ class _MainScreenState extends State<MainScreen> {
             */
               ),
           actions: [
-            BigSearchField(
+            isLargeScreen
+                ? BigSearchField(
                     returnSearch: callMovieGetter,
-            ),
-            // isLargeScreen
-            //     ? BigSearchField(
-            //         returnSearch: callMovieGetter,
-            //       )
-            //     : SmallSearchField(
-            //         returnSearch: callMovieGetter,
-            //       ),
-            SizedBox(width: 15),
+                  )
+                : SmallSearchField(
+                    returnSearch: callMovieGetter,
+                  ),
+            SizedBox(width: 20),
             Container(
               child: IconButton(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
