@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
