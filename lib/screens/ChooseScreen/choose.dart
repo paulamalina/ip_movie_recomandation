@@ -41,7 +41,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
   }
 
   void goBack() {
-    Navigator.pop(context);
+    Navigator.pushNamed(context, "/"); 
   }
 
   @override
