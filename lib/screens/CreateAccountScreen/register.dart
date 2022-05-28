@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ip_movie_recomandation/data/data.dart';
@@ -97,40 +96,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "Content-Type": "application/json",
         });
     if (response.statusCode == 200) {
-      if (kDebugMode) {
-        print("ok, am fost logat cu succes");
-      }
+      
       token = response.headers["authorization"] as String;
-      if (kDebugMode) {
-        print("token : " + token);
-      }
-    } else {
-      if (kDebugMode) {
-        print("not ok, nu am fost logat cu succes");
-      }
-      if (kDebugMode) {
-        print("Status code la login : ${response.statusCode}");
-      }
-    }
+      
+    } 
   }
 
   bool isCreatedUser = false;
   void createUser() async {
-    if (kDebugMode) {
-      print("sunt in functie");
-    }
-    if (kDebugMode) {
-      print(email);
-    }
-    if (kDebugMode) {
-      print(name);
-    }
-    if (kDebugMode) {
-      print(password);
-    }
-    if (kDebugMode) {
-      print(gender);
-    }
+
     final Uri apiUrl =
         Uri.parse("http://157.230.114.95:8090/api/v1/users/register");
     final response = await http.post(apiUrl,
@@ -154,9 +128,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       case 201:
         {
           isCreatedUser = true;
-          if (kDebugMode) {
-            print("Ok, am fost inregistrat cu succes");
-          }
           logUser();
         }
         break;
@@ -167,11 +138,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         }
         break;
       default:
-        {
-          if (kDebugMode) {
-            print(" eroare la register ${response.statusCode}");
-          }
-        }
     }
   }
 
@@ -212,14 +178,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void register() {
-    // if (_formKey.currentState!.validate()) {
-    //   createUser();
-    //   showLoaderDialog(context);
-    //   token="";
-    //   Navigator.pushNamed(context, '/genre');
-    // }else{
-    //   print("nu sunt date valide");
-    // }
+  
     showLoaderDialog(context);
   }
 

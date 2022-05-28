@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:ip_movie_recomandation/data/data.dart';
@@ -125,9 +124,6 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
         ));
   }
   void postRating() async{
-    if (kDebugMode) {
-      print("current id : $currentId $_rating");
-    }
     final Uri apiUrl = Uri.parse(
         "http://157.230.114.95:8090/api/v1/reviews");
     final response = await http.post(
@@ -257,9 +253,6 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                                       onRatingUpdate: (rating) {
                                         setState(() {
                                           _rating = rating;
-                                          if (kDebugMode) {
-                                            print(_rating);
-                                          }
                                         });
                                       },
                                       updateOnDrag: true,

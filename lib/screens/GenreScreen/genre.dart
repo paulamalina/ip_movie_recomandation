@@ -1,11 +1,7 @@
-import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ip_movie_recomandation/widgets/my_button.dart';
-import '../../data/data.dart';
 import '../../widgets/my_box.dart';
-import 'package:http/http.dart' as http;
 
 class GenreScreen extends StatefulWidget {
   const GenreScreen({Key? key}) : super(key: key);
@@ -59,29 +55,7 @@ class _GenreScreenState extends State<GenreScreen> {
 
 
   void postGenre(int id) async{
-    final Uri apiUrl = Uri.parse("http://157.230.114.95:8090/api/v1/genre/reviews");
 
-    final response= await http.post(
-        apiUrl,
-        body: jsonEncode({
-          "id": "$id"
-        }),
-        headers: {
-          "Authorization" : token,
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods":
-          "POST, GET, OPTIONS, PUT, DELETE, HEAD",
-          "Content-Type": "application/json",
-    });
-    if(response.statusCode==201){
-      if (kDebugMode) {
-        print("binee");
-      }
-    }else{
-      if (kDebugMode) {
-        print(response.statusCode);
-      }
-    }
   }
 
   void postGenres(){
@@ -207,28 +181,20 @@ class _GenreScreenState extends State<GenreScreen> {
                           Column(
                             children: [
                               MyBox(text: 'Action', callbackFunction: (bool value ) {
-                                if (kDebugMode) {
-                                  print("Action : $value");
-                                }
+
                                 button1IsPressed=value;
 
                               },),
                               MyBox(text: 'Comedy', callbackFunction: (bool value) {
-                                if (kDebugMode) {
-                                  print("Comedy : $value");
-                                }
+
                                 button2IsPressed=value;
                               },),
                               MyBox(text: 'Drama', callbackFunction: (bool value) {
-                                if (kDebugMode) {
-                                  print("Drama : $value");
-                                }
+
                                 button3IsPressed=value;
                               },),
                               MyBox(text: 'Fantasy', callbackFunction: (bool value) {
-                                if (kDebugMode) {
-                                  print("Fantasy : $value");
-                                }
+
                                 button4IsPressed=value;
                               },),
                               const SizedBox(
@@ -239,21 +205,14 @@ class _GenreScreenState extends State<GenreScreen> {
                           Column(
                             children: [
                               MyBox(text: 'Romantic', callbackFunction: (bool value) {
-                                if (kDebugMode) {
-                                  print("Romantic : $value");
-                                }
+
                                 button5IsPressed=value;
                               },),
                               MyBox(text: 'Scary', callbackFunction: (bool value) {
-                                if (kDebugMode) {
-                                  print("Scary : $value");
-                                }
+
                                 button6IsPressed=value;
                               },),
                               MyBox(text: 'Sci-Fi', callbackFunction: (bool value) {
-                                if (kDebugMode) {
-                                  print("SF : $value");
-                                }
                                 button7IsPressed=value;
                               },),
                               const SizedBox(

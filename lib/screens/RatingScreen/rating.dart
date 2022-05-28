@@ -71,17 +71,10 @@ class _RatingScreenState extends State<RatingScreen> {
       "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE, HEAD",
       "Content-Type": "application/json"
     });
-
-    if (kDebugMode) {
-      print(response.statusCode);
-    }
-
     List data=jsonDecode(response.body);
 
     if(response.statusCode==200){
-      if (kDebugMode) {
-        print(data.length);
-      }
+
       image1=data[0]["thumbnailLink"];
       image2=data[1]["thumbnailLink"];
       image3=data[2]["thumbnailLink"];
@@ -115,15 +108,6 @@ class _RatingScreenState extends State<RatingScreen> {
           "Content-Type": "application/json",
           "Authorization": token
         });
-    if(response.statusCode==201){
-      if (kDebugMode) {
-        print("super xd");
-      }
-    }else{
-      if (kDebugMode) {
-        print("oh no");
-      }
-    }
   }
   void navigateToRating() {
     Navigator.pushNamed(context, globals.redirect);
@@ -256,9 +240,6 @@ class _RatingScreenState extends State<RatingScreen> {
                                       ),
                                       child: TextButton(
                                         onPressed: () {
-                                          if (kDebugMode) {
-                                            print("awful : ${globals.redirect}");
-                                          }
                                           currentReview=1;
                                           postReview();
                                           Navigator.pushNamed(context, globals.redirect);
@@ -282,9 +263,6 @@ class _RatingScreenState extends State<RatingScreen> {
                                       ),
                                       child: TextButton(
                                         onPressed: () {
-                                          if (kDebugMode) {
-                                            print("average : ${globals.redirect}");
-                                          }
                                           currentReview=2;
                                           postReview();
                                           Navigator.pushNamed(context, globals.redirect);
@@ -314,9 +292,6 @@ class _RatingScreenState extends State<RatingScreen> {
                                       ),
                                       child: TextButton(
                                         onPressed: () {
-                                          if (kDebugMode) {
-                                            print("good : ${globals.redirect}");
-                                          }
                                           currentReview=4;
                                           postReview();
                                           Navigator.pushNamed(context, globals.redirect);
@@ -340,9 +315,6 @@ class _RatingScreenState extends State<RatingScreen> {
                                       ),
                                       child: TextButton(
                                         onPressed: () {
-                                          if (kDebugMode) {
-                                            print("amazing : ${globals.redirect}");
-                                          }
                                           currentReview=5;
                                           postReview();
                                           Navigator.pushNamed(context, globals.redirect);
@@ -367,9 +339,6 @@ class _RatingScreenState extends State<RatingScreen> {
                             MyButton(
                               text: 'Skip',
                               buttonMethod: () {
-                                if (kDebugMode) {
-                                  print("skip : ${globals.redirect}");
-                                }
                                 Navigator.pushNamed(context, globals.redirect);
                               },
                             ),
