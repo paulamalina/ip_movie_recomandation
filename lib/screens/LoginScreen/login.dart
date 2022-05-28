@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
         });
   }
 
-  String errorText = "Failed to login!";
+  String errorText = "You've entered a wrong username or password!"; 
 
   void showAlert(BuildContext context) {
     showDialog(
