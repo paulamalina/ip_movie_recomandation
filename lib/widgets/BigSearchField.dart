@@ -19,7 +19,7 @@ class _BigSearchFieldState extends State<BigSearchField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
+      width: 170,
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50.0),
@@ -38,7 +38,7 @@ class _BigSearchFieldState extends State<BigSearchField> {
                 BorderSide(color: Color(0xFF1A759F).withOpacity(0.5), width: 2),
           ),
           hintStyle: TextStyle(
-            fontSize: 25,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
             color: Color(0xFF1A759F).withOpacity(0.5),
           ),
