@@ -1,14 +1,13 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ip_movie_recomandation/widgets/MyButton.dart';
+import 'package:ip_movie_recomandation/widgets/my_button.dart';
 
 
 //import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'globals.dart' as globals;
-import 'package:ip_movie_recomandation/widgets/LoadingScreen.dart';
+import 'package:ip_movie_recomandation/widgets/loading_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -55,14 +54,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
      return AnimatedSplashScreen(
       splash: 'assets/images/logo.png',
       //backgroundColor = Color.fromRGBO(52, 160, 164, 1),
-      nextScreen: WelcomeScreen(),
+      nextScreen: const WelcomeScreen(),
       splashTransition: SplashTransition.rotationTransition,
       pageTransitionType: PageTransitionType.bottomToTop,
     );
      }
     setValue();
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         boxShadow: [
           BoxShadow(
             blurRadius: 7,
@@ -83,7 +82,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             decoration: BoxDecoration(
               color: Colors.teal,
               boxShadow: isLargeScreen ? [
-                BoxShadow(
+                const BoxShadow(
                   blurRadius: 7,
                   spreadRadius: 2,
                 )
@@ -97,20 +96,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 SvgPicture.asset(
                   "assets/images/LogoSvg2.svg", height: 100,
                 ),
-                Container(
+                SizedBox(
                   width: 400,
                   height: 50,
                   
-                  child: Container(
-                    child: BorderedText(
-                      strokeWidth: 4.0,
-                      strokeColor: Color(0xFF2B6086),
-                      child: Text('Let\'s find a movie', style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 36,
+                  child: BorderedText(
+                    strokeWidth: 4.0,
+                    strokeColor: const Color(0xFF2B6086),
+                    child: const Text('Let\'s find a movie', style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 36,
 
-                      ),),
-                    ),
+                    ),),
                   ),
                 ),
                 Center(

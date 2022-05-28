@@ -3,27 +3,27 @@ import 'package:flutter/material.dart';
 
 class MyBox extends StatefulWidget {
   final String text;
-  final Function(bool) CallbackFunction;
-  const MyBox({Key? key, required this.text, required this.CallbackFunction}) : super(key: key);
+  final Function(bool) callbackFunction;
+  const MyBox({Key? key, required this.text, required this.callbackFunction}) : super(key: key);
 
   @override
   State<MyBox> createState() => _MyBoxState();
 }
 
 class _MyBoxState extends State<MyBox> {
-  Color boxColor = Color.fromRGBO(202, 238, 228, 1);
-  Color boxColorPressed = Color(0xffC5EAA4);
-  Color currentBoxCol = Color(0xffC5EAA4);
+  Color boxColor = const Color.fromRGBO(202, 238, 228, 1);
+  Color boxColorPressed = const Color(0xffC5EAA4);
+  Color currentBoxCol = const Color(0xffC5EAA4);
   bool ispressed = false;
 
   void updateValue() {
     if (ispressed) {
       setState(() {
-        currentBoxCol = Color.fromARGB(255, 121, 234, 202);
+        currentBoxCol = const Color.fromARGB(255, 121, 234, 202);
       });
     } else {
       setState(() {
-        currentBoxCol = Color(0xffCAEEE4);
+        currentBoxCol = const Color(0xffCAEEE4);
       });
     }
   }
@@ -37,7 +37,7 @@ class _MyBoxState extends State<MyBox> {
       Container(
         width: 300,
         height: 92,
-        padding: EdgeInsets.only(left: 30, right: 30),
+        padding: const EdgeInsets.only(left: 30, right: 30),
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             border: Border.all(color: Colors.black),
@@ -46,7 +46,7 @@ class _MyBoxState extends State<MyBox> {
                 color: Colors.black.withOpacity(0.5),
                 spreadRadius: 3,
                 blurRadius: 7,
-                offset: Offset(0, 3), 
+                offset: const Offset(0, 3), 
               ),
             ],
             borderRadius: BorderRadius.circular(30.0),
@@ -55,7 +55,7 @@ class _MyBoxState extends State<MyBox> {
         child: Center(
           child: Text(
                 widget.text,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 23,
                   color: Color(0xff168AAD),
                   fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ class _MyBoxState extends State<MyBox> {
     onTap:(){
       setState(() {
         ispressed = !ispressed;
-        widget.CallbackFunction(ispressed);
+        widget.callbackFunction(ispressed);
       });
     },
     );

@@ -4,12 +4,12 @@
 
 import 'dart:convert';
 
-List<movieListModel> modelFromJson(String str) => List<movieListModel>.from(json.decode(str).map((x) => movieListModel.fromJson(x)));
+List<MovieListModel> modelFromJson(String str) => List<MovieListModel>.from(json.decode(str).map((x) => MovieListModel.fromJson(x)));
 
-String modelToJson(List<movieListModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String modelToJson(List<MovieListModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class movieListModel {
-  movieListModel({
+class MovieListModel {
+  MovieListModel({
     required this.id,
     required this.name,
     required this.summary,
@@ -37,7 +37,7 @@ class movieListModel {
   List<Rating> ratings;
   List<Comment> comments;
 
-  factory movieListModel.fromJson(Map<String, dynamic> json) => movieListModel(
+  factory MovieListModel.fromJson(Map<String, dynamic> json) => MovieListModel(
     id: json["id"],
     name: json["name"],
     summary: json["summary"],

@@ -27,13 +27,9 @@
 //   }
 // }
 library animated_splash_screen;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 //import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:ip_movie_recomandation/screens/WelcomeScreen/welcome.dart';
-import 'package:ip_movie_recomandation/screens/LoginScreen/login.dart';
-import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 enum _splashType { simpleSplash, backgroundScreenReturn }
@@ -164,7 +160,7 @@ class AnimatedSplashScreen extends StatefulWidget {
     );
   }
 
-  AnimatedSplashScreen._internal({
+  const AnimatedSplashScreen._internal({
     required this.animationDuration,
     required this.splashTransition,
     required this.customAnimation,
@@ -197,8 +193,8 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
   void initState() {
     super.initState();
 
-    _animationController = new AnimationController(
-        duration: w.animationDuration ?? Duration(milliseconds: 1000),
+    _animationController = AnimationController(
+        duration: w.animationDuration ?? const Duration(milliseconds: 1000),
         vsync: this);
 
     Animatable animation = w.customAnimation ??
@@ -207,13 +203,13 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
             case SplashTransition.slideTransition:
               return Tween<Offset>(
                 end: Offset.zero,
-                begin: Offset(1, 0),
+                begin: const Offset(1, 0),
               );
 
             case SplashTransition.decoratedBoxTransition:
               return DecorationTween(
-                  end: BoxDecoration(color: Colors.black87),
-                  begin: BoxDecoration(color: Colors.redAccent));
+                  end: const BoxDecoration(color: Colors.black87),
+                  begin: const BoxDecoration(color: Colors.redAccent));
 
             default:
               return Tween(begin: 0.0, end: 1.0);
@@ -227,9 +223,11 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
 
   /// call function case needed and then jump to next screen
   doTransition() async {
-    if (w.type == _splashType.backgroundScreenReturn)
+    if (w.type == _splashType.backgroundScreenReturn) {
       navigator(await w.function!());
-    else if (!w.disableNavigation) navigator(w.nextScreen);
+    } else if (!w.disableNavigation) {
+      navigator(w.nextScreen);
+    }
   }
 
   @override
@@ -246,9 +244,11 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
         Navigator.of(_context).pushReplacement(
             PageTransition(type: w.transitionType, child: screen));
       } catch (msg) {
-        print('AnimatedSplashScreen -> '
+        if (kDebugMode) {
+          print('AnimatedSplashScreen -> '
             'error in jump to next screen, probably '
             'this run is in hot reload: $msg');
+        }
       }
     });
   }
@@ -267,11 +267,12 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
                 height: size,
                 child: w.splash is String
                     ? <Widget>() {
-                        if (w.splash.toString().contains('[n]'))
+                        if (w.splash.toString().contains('[n]')) {
                           return Image.network(
                               w.splash.toString().replaceAll('[n]', ''));
-                        else
+                        } else {
                           return Image.asset(w.splash);
+                        }
                       }()
                     : (w.splash is IconData
                         ? Icon(w.splash, size: size)

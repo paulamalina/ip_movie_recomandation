@@ -1,21 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:bordered_text/bordered_text.dart';
 
-class BioTextField extends StatelessWidget {
+class MyTextField extends StatelessWidget {
   final String hintText;
   final String text;
   final bool obscureText;
-  final double height;
-  final double width;
-  final double textHeight;
+  final FormFieldValidator formFieldValidator;
   final TextEditingController controller;
-  const BioTextField(
+  const MyTextField(
       {Key? key,
-      required this.height,
-      required this.width,
+      required this.formFieldValidator,
       required this.hintText,
       required this.text,
-      required this.textHeight,
       this.obscureText = false,
       required this.controller})
       : super(key: key);
@@ -25,39 +21,46 @@ class BioTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          text,
-          style: TextStyle(
-            color: Color(0xFFB5E48C),
-            fontSize: textHeight,
+        BorderedText(
+          strokeWidth: 4.0,
+          strokeColor: const Color(0xFF2B6086),
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: Color(0xFFCAEEE4),
+              fontSize: 25,
+            ),
           ),
         ),
-        SizedBox(
-          height: height * 0.05,
+        const SizedBox(
+          height: 5,
         ),
         Container(
-          width: width,
-          height: height * 0.5,
+          width: 300,
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 214, 254, 255),
+            color: const Color(0xFFEDF8FF),
             borderRadius: BorderRadius.circular(25),
-            border: Border.all(color: Color(0xFFB5E48C)),
+            border: Border.all(color: const Color(0xFF2B6086), width: 2),
           ),
-          child: TextField(
+          child: TextFormField(
+            validator: formFieldValidator,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             textAlignVertical: TextAlignVertical.center,
             textAlign: TextAlign.center,
-            maxLines: 4,
+            maxLines: 1,
             controller: controller,
             obscureText: obscureText,
             cursorColor: const Color(0xFF34A0A4),
-            style: TextStyle(
+            style: const TextStyle(
               height: 1.5,
               fontWeight: FontWeight.w500,
-              color: const Color(0xFF34A0A4),
+              color: Color(0xFF34A0A4),
             ),
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: hintText,
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               hintStyle: const TextStyle(
                 color: Color(0xFFBBBFC2),
               ),

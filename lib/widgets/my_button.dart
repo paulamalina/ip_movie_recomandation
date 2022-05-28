@@ -6,7 +6,7 @@ class MyButton extends StatelessWidget {
   final TextStyle textStyle;
   final double width;
   final double height;
-   MyButton({
+   const MyButton({
     Key? key,
     required this.text,
     required this.buttonMethod,
@@ -24,8 +24,8 @@ class MyButton extends StatelessWidget {
         height: height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50.0),
-          color: Color(0xFFCAEEE4),
-          border: Border.all(color: Color(0xFF2B6086), width: 2),
+          color: const Color(0xFFCAEEE4),
+          border: Border.all(color: const Color(0xFF2B6086), width: 2),
         ),
         child: TextButton(
           onPressed: () {

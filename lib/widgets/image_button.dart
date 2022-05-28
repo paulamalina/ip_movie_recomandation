@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ip_movie_recomandation/data/data.dart';
-import 'package:ip_movie_recomandation/screens/MovieDetailsScreen/details.dart';
 
 class ImageButton extends StatelessWidget {
   final String text;
@@ -14,17 +13,17 @@ class ImageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+        padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
         child: Container(
             width: 300,
             height: 350,
             decoration: BoxDecoration(
-                color: Color(0xFFCAEEE4),
+                color: const Color(0xFFCAEEE4),
                 borderRadius: BorderRadius.circular(30),
-                border: Border.all(color: Color(0xFF2B6086), width: 2)),
+                border: Border.all(color: const Color(0xFF2B6086), width: 2)),
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 IconButton(
@@ -40,7 +39,7 @@ class ImageButton extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Text(text,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Color(0xFF1A759F),
                           fontSize: 20,
                           fontWeight: FontWeight.bold,

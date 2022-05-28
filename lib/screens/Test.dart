@@ -1,12 +1,16 @@
+// ignore_for_file: file_names
 import 'package:comment_box/comment/comment.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:intl/intl.dart';
 import 'package:ip_movie_recomandation/data/data.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:intl/intl.dart' show DateFormat;
 
 class TestMe extends StatefulWidget {
+  const TestMe({Key? key}) : super(key: key);
+
   @override
   _TestMeState createState() => _TestMeState();
 }
@@ -20,13 +24,13 @@ class _TestMeState extends State<TestMe> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          content: Text("rEVIEW POSTED"),
+          content: const Text("rEVIEW POSTED"),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         ));
@@ -34,11 +38,11 @@ class _TestMeState extends State<TestMe> {
 
   showLoaderDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
-      content: new Row(
+      content: Row(
         children: [
-          CircularProgressIndicator(),
+          const CircularProgressIndicator(),
           Container(
-              margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+              margin: const EdgeInsets.only(left: 7), child: const Text("Loading...")),
         ],
       ),
     );
@@ -46,7 +50,7 @@ class _TestMeState extends State<TestMe> {
         barrierDismissible: false,
         context: context,
         builder: (context) {
-          Future.delayed(Duration(milliseconds: 500), () {
+          Future.delayed(const Duration(milliseconds: 500), () {
             Navigator.pop(context);
           });
           return alert;
@@ -56,8 +60,8 @@ class _TestMeState extends State<TestMe> {
   bool checkVar=false;
   void postComment(String text) async {
     final Uri apiUrl = Uri.parse("http://157.230.114.95:8090/api/v1/comments");
-    var now = new DateTime.now();
-    var formatter = new DateFormat('yyyy-MM-dd');
+    var now = DateTime.now();
+    var formatter = DateFormat('yyyy-MM-dd');
     String formattedDate = formatter.format(now);
     final response = await http.post(apiUrl,
         body: jsonEncode({
@@ -75,11 +79,17 @@ class _TestMeState extends State<TestMe> {
           "Content-Type": "application/json",
         });
 
-    print("Response: ${response.statusCode}");
+    if (kDebugMode) {
+      print("Response: ${response.statusCode}");
+    }
     if (response.statusCode == 201) {
-      print("post comment ok");
+      if (kDebugMode) {
+        print("post comment ok");
+      }
     } else {
-      print("post comment not ok");
+      if (kDebugMode) {
+        print("post comment not ok");
+      }
     }
   }
 
@@ -91,13 +101,17 @@ class _TestMeState extends State<TestMe> {
   var listComments=[];
   Future fetchComments() async {
     checkVar=true;
-    print("haha");
+    if (kDebugMode) {
+      print("haha");
+    }
     getName();
     final response = await http.get(
         Uri.parse('http://157.230.114.95:8090/api/v1/movies/comments/' + currentId.toString()),
         headers: {"Authorization": token}); //inlocuit cu token de mai sus
 
-    print("Status code: ${response.statusCode}");
+    if (kDebugMode) {
+      print("Status code: ${response.statusCode}");
+    }
     if (response.statusCode == 404) {
       //afisare text "niciun comentariu"
     } else if (response.statusCode == 200) {
@@ -120,7 +134,9 @@ class _TestMeState extends State<TestMe> {
     });
     var data=jsonDecode(response.body);
     name=data["name"];
-    print("name $name");
+    if (kDebugMode) {
+      print("name $name");
+    }
   }
 
 
@@ -129,7 +145,7 @@ class _TestMeState extends State<TestMe> {
         future: fetchComments(),
         builder: (context, snapshot) {
           if (snapshot.data == null) {
-            return SizedBox(
+            return const SizedBox(
               child: Center(child: CircularProgressIndicator()),
               width: 100,
               height: 100,
@@ -145,22 +161,24 @@ class _TestMeState extends State<TestMe> {
                       leading: GestureDetector(
                         onTap: () async {
                           // Display the image in large form.
-                          print("Comment Clicked");
+                          if (kDebugMode) {
+                            print("Comment Clicked");
+                          }
                         },
                         child: Container(
                           height: 50.0,
                           width: 50.0,
-                          decoration: new BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: Colors.blue,
-                              borderRadius: new BorderRadius.all(Radius.circular(50))),
-                          child: CircleAvatar(
+                              borderRadius: BorderRadius.all(Radius.circular(50))),
+                          child: const CircleAvatar(
                               radius: 50,
                               backgroundImage: AssetImage( "assets/images/image1.png"),  ),
                         ),
                       ),
                       title: Text(
                         listComments[i]["appUser"]["name"],
-                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                        style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
                       ),
                       subtitle: Text(listComments[i]['text']),
                     ),
@@ -174,43 +192,45 @@ class _TestMeState extends State<TestMe> {
 
   @override
   Widget build(BuildContext context) {
-    print("current id : $currentId");
+    if (kDebugMode) {
+      print("current id : $currentId");
+    }
     return Scaffold(
       appBar: AppBar(
-          title: Text("Comment Page"),
-          backgroundColor: Color.fromRGBO(52, 160, 164, 1)),
-      body: Container(
-        child: CommentBox(
-          userImage:
-          "https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400",
-          child: commentChild(),
-          labelText: 'Write a comment...',
-          withBorder: false,
-          errorText: 'Comment cannot be blank',
-          sendButtonMethod: () {
-            if (formKey.currentState!.validate()) {
+          title: const Text("Comment Page"),
+          backgroundColor: const Color.fromRGBO(52, 160, 164, 1)),
+      body: CommentBox(
+        userImage:
+        "https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400",
+        child: commentChild(),
+        labelText: 'Write a comment...',
+        withBorder: false,
+        errorText: 'Comment cannot be blank',
+        sendButtonMethod: () {
+          if (formKey.currentState!.validate()) {
+            if (kDebugMode) {
               print("aici $name");
+            }
+            if (kDebugMode) {
               print(commentController.text);
-                var value = {
-                  'name': name,
-                  'message': commentController.text
-                };
-                //listComments.insert(0, value);
-                postComment(commentController.text);
-                showLoaderDialog(context);
+            }
+              //listComments.insert(0, value);
+              postComment(commentController.text);
+              showLoaderDialog(context);
 
-              commentController.clear();
-              FocusScope.of(context).unfocus();
-            } else {
+            commentController.clear();
+            FocusScope.of(context).unfocus();
+          } else {
+            if (kDebugMode) {
               print("Not validated");
             }
-          },
-          formKey: formKey,
-          commentController: commentController,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          sendWidget: Icon(Icons.send_sharp, size: 30, color: Colors.white),
-        ),
+          }
+        },
+        formKey: formKey,
+        commentController: commentController,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        sendWidget: const Icon(Icons.send_sharp, size: 30, color: Colors.white),
       ),
     );
   }

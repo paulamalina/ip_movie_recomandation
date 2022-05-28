@@ -12,7 +12,7 @@ class MainGenreButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         width: 125,
         height: 50,
         child: TextButton(
