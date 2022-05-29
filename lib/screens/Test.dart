@@ -17,6 +17,13 @@ class _TestMeState extends State<TestMe> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController commentController = TextEditingController();
   var filedata = [ ];
+  var hour=DateTime.now().hour.toString();
+  var minute=DateTime.now().minute.toString();
+  String time="x";
+
+  void goodTime(){
+    time=hour+":"+minute;
+  }
 
   void showAlert(BuildContext context) {
     showDialog(
@@ -102,6 +109,7 @@ class _TestMeState extends State<TestMe> {
 
 
   Widget commentChild() {
+    goodTime();
     return FutureBuilder(
         future: fetchComments(),
         builder: (context, snapshot) {
@@ -114,12 +122,13 @@ class _TestMeState extends State<TestMe> {
           }
           else{
             return ListView(
+
               children: [
                 for (var i = 0; i < listComments.length; i++)
                   Padding(
                     padding: const EdgeInsets.fromLTRB(2.0, 8.0, 2.0, 0.0),
-                    child: ListTile(
-                      leading: GestureDetector(
+                    child: Stack(
+                      children: [GestureDetector(
                         onTap: () async {
                           // Display the image in large form.
                         },
@@ -134,15 +143,56 @@ class _TestMeState extends State<TestMe> {
                               backgroundImage: AssetImage( "assets/images/image1.png"),  ),
                         ),
                       ),
-                      title: Text(
+                      Wrap(
+                        spacing: 20,
+                            children: <Widget>[
+                      Container(
+                      //title: //Padding(
+                        //padding: const EdgeInsets.only(bottom: 0.0),
+                        //child:
+                        child:Padding( padding: const EdgeInsets.only(left: 60.0),
+                        child:Text(
                         listComments[i]["appUser"]["name"],
                         style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                      ),),
                       ),
-                      subtitle: Text(listComments[i]['text']),
-                    ),
-                  )
-              ],
-            );
+                      //subtitle: Transform.translate(
+                        
+                      
+                  
+                        //offset: Offset(0, 0), //Padding(
+                        //padding: const EdgeInsets.only(left: 15.0),
+                        //child:Stack(
+                        //child:
+                        //children: [
+                          
+                            Container (
+                            child:Padding( padding: const EdgeInsets.only(left: 0.0),
+                            child:Text(listComments[i]['text']),
+                            ),
+                          ),
+                            ],
+                          ),
+                          Container(
+                            child:Padding( padding: const EdgeInsets.only(top: 25.0),
+                            child:Padding( padding: const EdgeInsets.only(left: 60.0),
+                            child:Text(time),
+                            ),),
+                            ),
+                          
+                          
+                          
+                        
+                        
+                        ],
+                        ),
+                      ),
+                      //isThreeLine: true,
+                      ],
+                    );
+                  //),
+              //],
+           // );
           }
         }
     );
@@ -155,7 +205,16 @@ class _TestMeState extends State<TestMe> {
       appBar: AppBar(
           title: const Text("Comment Page"),
           backgroundColor: const Color.fromRGBO(52, 160, 164, 1)),
-      body: CommentBox(
+      body: Container(
+        decoration: const BoxDecoration(
+        
+        gradient: LinearGradient(
+            colors: [Colors.white, Color.fromRGBO(52, 160, 164, 1)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter),
+      ),
+      
+      child:CommentBox(
         userImage:
         "https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400",
         child: commentChild(),
@@ -180,6 +239,7 @@ class _TestMeState extends State<TestMe> {
         backgroundColor: Colors.black,
         textColor: Colors.white,
         sendWidget: const Icon(Icons.send_sharp, size: 30, color: Colors.white),
+      ),
       ),
     );
   }
