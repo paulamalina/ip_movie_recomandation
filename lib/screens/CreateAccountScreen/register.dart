@@ -131,13 +131,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
           logUser();
         }
         break;
-      case 409:
+      case 401:
         {
-          errorText = "Email address already in use!";
+          errorText = "Unauthorized!\nYou don't have permission to access this page.";
+          isCreatedUser = false;
+        }
+        break;
+      case 403:
+        {
+          errorText = "Forbidden!\nPermission denied";
+          isCreatedUser = false;
+        }
+        break;
+      case 404:
+        {
+          errorText = "Page Not Found!";
           isCreatedUser = false;
         }
         break;
       default:
+
     }
   }
 
