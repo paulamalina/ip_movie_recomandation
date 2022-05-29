@@ -40,7 +40,6 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
   void navigateBackToMain() {
     setState(() {
       backWasPressed = true;
-      print(backWasPressed);
     });
     Navigator.pushNamed(context, '/main');
   }
@@ -136,7 +135,6 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                                                   text.isEmpty ||
                                                   !RegExp(r"^[A-Z][a-z]*((-|\s)[A-Z][a-z]*)+$")
                                                       .hasMatch(text))) {
-                                            print("invalid la validare");
                                             return "Invalid name";
                                           }
                                           return null;

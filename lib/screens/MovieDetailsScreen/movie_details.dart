@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:ip_movie_recomandation/data/data.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../widgets/my_button.dart';
 
@@ -26,32 +27,41 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
   IconData? _selectedIcon;
   int duration=0;
   double averageRatingStars=0.0;
-  late double _rating;
-  // late VideoPlayerController _controller;
+  double _rating=0.0;
   double containerWidth = 800;
   double containerHeight = 800;
   bool isSmallScreen = false;
   bool isLargeScreen = true;
   TextStyle textStyle=const TextStyle(
-    color: Colors.white
+      color: Colors.white,
+    fontSize: 23,
   );
   TextStyle titleStyle=const TextStyle(
-      color: Colors.white,
-    fontSize: 20,
+    color: Colors.white,
+    fontSize: 23,
     fontWeight: FontWeight.bold,
   );
-  String trailerLink="";
   String responseRatingSubmit='';
+
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
+
+
+  late VideoPlayerController _controller1;
+  late Future<void> _initializeVideoPlayerFuture1;
+
   @override
   void initState() {
-  //   _controller = VideoPlayerController.network(
-  //       trailerLink,
-  //       httpHeaders: {
-  //         "Authorization" : token,
-  //       })
-  //     ..addListener(() => setState(() {}))
-  //     ..setLooping(true)
-  //     ..initialize().then((_) => _controller.pause());
+    _controller = VideoPlayerController.network(
+      trailerLink,
+    );
+    _initializeVideoPlayerFuture = _controller.initialize();
+
+    _controller1 = VideoPlayerController.network(
+      movieLink,
+    );
+    _initializeVideoPlayerFuture1 = _controller1.initialize();
+
     super.initState();
   }
   void setValue() {
@@ -63,13 +73,13 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
         isLargeScreen = true;
       });
     } else {
-        setState(() {
-          containerWidth = MediaQuery.of(context).size.width;
-          containerHeight = 850;
-          isSmallScreen = true;
-          isLargeScreen = false;
-        });
-      }
+      setState(() {
+        containerWidth = MediaQuery.of(context).size.width;
+        containerHeight = 850;
+        isSmallScreen = true;
+        isLargeScreen = false;
+      });
+    }
   }
 
   Future getDetailsForMovie() async {
@@ -93,21 +103,15 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
           imageLink = data[i]["thumbnailLink"];
           duration=data[i]["duration"];
           averageRatingStars=data[i]["averageRatingStars"];
-          trailerLink=data[i]["trailerLink"];
+          _rating=averageRatingStars.ceilToDouble();
           currentId=data[i]["id"];
-          // _controller = VideoPlayerController.network(
-          //     "http://157.230.114.95:8090/api/v1/files/file_295749543.mp4",
-          // httpHeaders: {
-          //       "Authorization" : authToken,
-          // })
-          //   ..addListener(() => setState(() {}))
-          //   ..setLooping(true)
-          //   ..initialize().then((_) => _controller.pause());
           return data[i];
         }
       }
     }
   }
+
+
 
   showPopUp(){
     showDialog(
@@ -125,9 +129,6 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
         ));
   }
   void postRating() async{
-    if (kDebugMode) {
-      print("current id : $currentId $_rating");
-    }
     final Uri apiUrl = Uri.parse(
         "http://157.230.114.95:8090/api/v1/reviews");
     final response = await http.post(
@@ -139,17 +140,22 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
           "reviewValue": _rating
         }),
         headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE, HEAD",
-      "Content-Type": "application/json",
-      "Authorization": token
-    });
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+          "Content-Type": "application/json",
+          "Authorization": token
+        });
     if(response.statusCode==201){
       responseRatingSubmit="Thank you for your review!";
       showPopUp();
     }else{
       responseRatingSubmit="There was an error submitting the review! Please try again later!";
     }
+  }
+  @override
+  void dispose() {
+    // _controller.dispose();
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -187,14 +193,14 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                       decoration: BoxDecoration(
                         color: Colors.teal,
                         borderRadius:
-                            isLargeScreen ? BorderRadius.circular(50) : null,
+                        isLargeScreen ? BorderRadius.circular(50) : null,
                         boxShadow: isLargeScreen
                             ? [
-                                const BoxShadow(
-                                  spreadRadius: 2,
-                                  blurRadius: 7,
-                                ),
-                              ]
+                          const BoxShadow(
+                            spreadRadius: 2,
+                            blurRadius: 7,
+                          ),
+                        ]
                             : null,
                       ),
                       child: Column(
@@ -204,18 +210,18 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                             spacing: 20,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(right: 30, top: 30),
-                                child: MediaQuery.of(context).size.width>=950 ? Image.network(
-                                  imageLink,
-                                  width: 200,
-                                  headers: {"Authorization": token},
-                                ) : Center(
-                                  child: Image.network(
+                                  padding: const EdgeInsets.only(right: 30, top: 30),
+                                  child: MediaQuery.of(context).size.width>=950 ? Image.network(
                                     imageLink,
                                     width: 200,
                                     headers: {"Authorization": token},
-                                  ),
-                                )
+                                  ) : Center(
+                                    child: Image.network(
+                                      imageLink,
+                                      width: 200,
+                                      headers: {"Authorization": token},
+                                    ),
+                                  )
                               ),
 
                               Container(
@@ -229,8 +235,8 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                                     ),
                                     Container(
                                       padding: const EdgeInsets.only(right: 20, left: 20),
-                                        child: Center(child: Text(titleText, style: titleStyle,),
-                                        ),
+                                      child: Center(child: Text(titleText, style: titleStyle,),
+                                      ),
                                     ),
                                     const SizedBox(
                                       height: 20,
@@ -257,9 +263,6 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                                       onRatingUpdate: (rating) {
                                         setState(() {
                                           _rating = rating;
-                                          if (kDebugMode) {
-                                            print(_rating);
-                                          }
                                         });
                                       },
                                       updateOnDrag: true,
@@ -283,8 +286,8 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                                       ),
                                     ),
                                     Container(
-                                        padding: const EdgeInsets.only(top: 30, right: 30, left: 50),
-                                        child: Text(description, style: textStyle,),
+                                      padding: const EdgeInsets.only(top: 30, right: 30, left: 50),
+                                      child: Text(description, style: textStyle,),
                                     ),
                                   ],
                                 ),
@@ -305,43 +308,7 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
               },
             ),
             SizedBox(
-              height: 100,
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 100, right: 100),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      MyButton(
-                        text: 'Back',
-                        textStyle: const TextStyle(
-                          color: Color(0xFF1A759F),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                        width: 120,
-                        height: 40,
-                        buttonMethod: (){
-                          Navigator.pop(context);
-                        },
-                      ),
-                      MyButton(
-                        text: 'Comment',
-                        textStyle: const TextStyle(
-                          color: Color(0xFF1A759F),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                        width: 120,
-                        height: 40,
-                        buttonMethod: (){
-                          Navigator.pushNamed(context, '/commentBox');
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              height: 50,
             ),
             Center(
               child: Container(
@@ -376,12 +343,56 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                         ),
                       ],
                     ),
-                    //Todo Video HERE
+                    SizedBox(
+                      height: 100,
+                    ),
+                    FutureBuilder(
+                      future: _initializeVideoPlayerFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          // If the VideoPlayerController has finished initialization, use
+                          // the data it provides to limit the aspect ratio of the video.
+                          return Container(
+                            width: containerWidth,
+                              height: containerHeight-300,
+                              child: VideoPlayer(_controller),
+                          );
+                        } else {
+                          // If the VideoPlayerController is still initializing, show a
+                          // loading spinner.
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    ),
+                    FloatingActionButton(
+                      heroTag: "button1",
+                      backgroundColor: Colors.greenAccent,
+                      onPressed: () {
+                        // Wrap the play or pause in a call to `setState`. This ensures the
+                        // correct icon is shown.
+                        setState(() {
+                          // If the video is playing, pause it.
+                          if (_controller.value.isPlaying) {
+                            _controller.pause();
+                          } else {
+                            // If the video is paused, play it.
+                            _controller.play();
+                          }
+                        });
+                      },
+                      // Display the correct icon depending on the state of the player.
+                      child: Icon(
+                        _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(
+
+            SizedBox(
               height: 50,
             ),
             Center(
@@ -408,50 +419,103 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                     ),
                     Row(
                       children: const [
-                        Text("    Watch the movie here ", style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 30
+                        Text(" Watch the movie here ", style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30
                         ),),
                         Icon(
                             Icons.arrow_downward
                         ),
                       ],
                     ),
-                    //Todo Video HERE
+                    SizedBox(
+                      height: 100,
+                    ),
+                    FutureBuilder(
+                      future: _initializeVideoPlayerFuture1,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          // If the VideoPlayerController has finished initialization, use
+                          // the data it provides to limit the aspect ratio of the video.
+                          return Container(
+                            width: containerWidth,
+                            height: containerHeight-300,
+                            child: VideoPlayer(_controller1),
+                          );
+                        } else {
+                          // If the VideoPlayerController is still initializing, show a
+                          // loading spinner.
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    ),
+                    FloatingActionButton(
+                      heroTag: "button2",
+                      backgroundColor: Colors.greenAccent,
+                      onPressed: () {
+                        // Wrap the play or pause in a call to `setState`. This ensures the
+                        // correct icon is shown.
+                        setState(() {
+                          // If the video is playing, pause it.
+                          if (_controller1.value.isPlaying) {
+                            _controller1.pause();
+                          } else {
+                            // If the video is paused, play it.
+                            _controller1.play();
+                          }
+                        });
+                      },
+                      // Display the correct icon depending on the state of the player.
+                      child: Icon(
+                        _controller1.value.isPlaying ? Icons.pause : Icons.play_arrow,
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
-            // Column(
-            //   children: [
-            //     Padding(
-            //       padding: const EdgeInsets.only(left: 50, right: 50, bottom: 20),
-            //       child: Center(
-            //         child: _controller.value.isInitialized
-            //             ? AspectRatio(
-            //           aspectRatio: _controller.value.aspectRatio,
-            //           child: VideoPlayer(_controller),
-            //         )
-            //             : Container(),
-            //       ),
-            //     ),
-            //     MaterialButton(
-            //       onPressed: () {
-            //         setState(() {
-            //           _controller.value.isPlaying
-            //               ? _controller.pause()
-            //               : _controller.play();
-            //         });
-            //       },
-            //       child: Icon(
-            //         _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-            //         size: 40,
-            //       ),
-            //     ),
-            //   ],
-            // )
-            const SizedBox(
-              height: 50,
+            SizedBox(
+              height: 100,
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 100, right: 100),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      MyButton(
+                        text: 'Back',
+                        textStyle: const TextStyle(
+                          color: Color(0xFF1A759F),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                        width: 120,
+                        height: 40,
+                        buttonMethod: (){
+
+                          Navigator.pop(context);
+                        },
+                      ),
+                      MyButton(
+                        text: 'Comment',
+                        textStyle: const TextStyle(
+                          color: Color(0xFF1A759F),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                        width: 120,
+                        height: 40,
+                        buttonMethod: (){
+
+                          Navigator.pushNamed(context, '/commentBox');
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ],
         ),

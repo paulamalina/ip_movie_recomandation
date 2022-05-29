@@ -2,3 +2,6 @@ String token="Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYUBnbWFpbC5jb20iLCJhdXRob3
 String titleText="";
 
 int currentId=0;
+
+String trailerLink="";
+String movieLink="";

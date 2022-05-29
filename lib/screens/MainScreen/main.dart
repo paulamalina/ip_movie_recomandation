@@ -6,7 +6,6 @@ import 'package:ip_movie_recomandation/widgets/big_logout_button.dart';
 import 'package:ip_movie_recomandation/widgets/big_search_field.dart';
 import 'package:ip_movie_recomandation/widgets/image_button.dart';
 import 'package:ip_movie_recomandation/widgets/small_logout_button.dart';
-import 'package:ip_movie_recomandation/widgets/small_search_field.dart';
 import 'package:ip_movie_recomandation/widgets/main_genre_button.dart';
 import 'package:ip_movie_recomandation/models/searched_movie.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -37,6 +36,10 @@ class _MainScreenState extends State<MainScreen> {
   double imgWidth = 300;
   double imgHeight = 250;
 
+  void populateLinks(){
+    trailerLink="link";
+    movieLink="link";
+  }
   void setDimentions() {
     if (MediaQuery.of(context).size.width <= 700) {
       setState(() {
@@ -557,8 +560,10 @@ class _MainScreenState extends State<MainScreen> {
                   height: 100,
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, "/main");
-                },
+                  new Future.delayed(const Duration(seconds: 3), () {
+                    populateLinks();
+                    Navigator.pushNamed(context, "/main");
+                  });},
               )
               /*
             child: SvgPicture.asset(
