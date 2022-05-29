@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
@@ -22,12 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _formKey = GlobalKey<FormState>();
   void logUser() async {
-    if (kDebugMode) {
-      print(email);
-    }
-    if (kDebugMode) {
-      print(password);
-    }
     final Uri apiUrl = Uri.parse("http://157.230.114.95:8090/api/v1/login");
     final response = await http.post(apiUrl,
         body: jsonEncode({
@@ -43,21 +36,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
     token = response.headers["authorization"] as String;
 
-    if (kDebugMode) {
-      print("Response: ${response.statusCode}");
-    }
     if (response.statusCode == 200) {
-      if (kDebugMode) {
-        print("ok, am fost logat cu succes");
-      }
       setState(() {
         isLoggedIn = true;
       });
-    } else {
-      if (kDebugMode) {
-        print("not ok, nu am fost logat cu succes");
-      }
-    }
+    } 
   }
 
   showLoaderDialog(BuildContext context) {

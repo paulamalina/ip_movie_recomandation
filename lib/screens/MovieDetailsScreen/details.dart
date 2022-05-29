@@ -1,10 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ip_movie_recomandation/widgets/my_button.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import '../../data/data.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   const MovieDetailsScreen({Key? key}) : super(key: key);
@@ -19,7 +17,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    _rating = _initialRating;
     _controller = VideoPlayerController.network(
         'http://157.230.114.95:8090/api/v1/files/file_295749543.mp4')
       ..addListener(() => setState(() {}))
@@ -66,7 +63,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     _controller.dispose();
   }
 
-  late double _rating;
 
   final double _initialRating = 2.0;
   IconData? _selectedIcon;
@@ -97,9 +93,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     setValue();
-    if (kDebugMode) {
-      print("text : $titleText");
-    }
+
     return Container(
       decoration: BoxDecoration(
         gradient: !isSmallScreen
@@ -190,10 +184,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                     ),
                                     onRatingUpdate: (rating) {
                                       setState(() {
-                                        _rating = rating;
-                                        if (kDebugMode) {
-                                          print(_rating);
-                                        }
                                       });
                                     },
                                     updateOnDrag: true,

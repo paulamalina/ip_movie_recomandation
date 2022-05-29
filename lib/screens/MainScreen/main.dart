@@ -530,9 +530,7 @@ class _MainScreenState extends State<MainScreen> {
       initImages();
       initCarousel();
     }
-    //authToken = ModalRoute.of(context)!.settings.arguments as String;
 
-    //print("Main: $authToken");
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
