@@ -141,7 +141,9 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                                         },
                                         hintText: 'Popescu Maria',
                                         text: 'Name',
-                                        controller: TextEditingController()),
+                                        controller: TextEditingController(),
+                                      begin: 0.0, end: 0.5,
+                                    ),
                                     const SizedBox(
                                       height: 10,
                                     ),
@@ -158,7 +160,9 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                                         },
                                         hintText: 'popescu.maria@gmail.com',
                                         text: 'Email',
-                                        controller: TextEditingController()),
+                                        controller: TextEditingController(),
+                                      begin: 0.5, end: 1.0,
+                                    ),
                                     const SizedBox(
                                       height: 10,
                                     ),
