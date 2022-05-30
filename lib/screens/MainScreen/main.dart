@@ -11,6 +11,8 @@ import 'package:ip_movie_recomandation/models/searched_movie.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ip_movie_recomandation/data/data.dart';
 
+import '../../widgets/small_search_field.dart';
+
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
 
@@ -36,10 +38,11 @@ class _MainScreenState extends State<MainScreen> {
   double imgWidth = 300;
   double imgHeight = 250;
 
-  void populateLinks(){
-    trailerLink="link";
-    movieLink="link";
+  void populateLinks() {
+    trailerLink = "link";
+    movieLink = "link";
   }
+
   void setDimentions() {
     if (MediaQuery.of(context).size.width <= 700) {
       setState(() {
@@ -561,7 +564,8 @@ class _MainScreenState extends State<MainScreen> {
                   new Future.delayed(const Duration(seconds: 3), () {
                     populateLinks();
                     Navigator.pushNamed(context, "/main");
-                  });},
+                  });
+                },
               )
               /*
             child: SvgPicture.asset(
@@ -571,9 +575,9 @@ class _MainScreenState extends State<MainScreen> {
               ),
           actions: [
             BigSearchField(
-                    returnSearch: callMovieGetter,
+              returnSearch: callMovieGetter,
             ),
-            // isLargeScreen
+            // MediaQuery.of(context).size.width > 500
             //     ? BigSearchField(
             //         returnSearch: callMovieGetter,
             //       )
