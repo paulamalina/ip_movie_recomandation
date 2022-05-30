@@ -1,8 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'dart:convert';
 import 'package:ip_movie_recomandation/widgets/my_button.dart';
 import '../../widgets/my_text_field.dart';
+import 'package:ip_movie_recomandation/data/data.dart';
+import 'package:http/http.dart' as http;
+
+class User {
+  final int id;
+  final String email;
+  final String name;
+  final String role;
+
+  User(
+    this.id,
+    this.email,
+    this.name,
+    this.role,
+  );
+  factory User.fromMap(Map<String, dynamic> json) {
+    return User(json['email'], json['id'], json['name'], json['role']);
+  }
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(json['email'], json['id'], json['name'], json['role']);
+  }
+}
 
 class ChangeProfieScreen extends StatefulWidget {
   const ChangeProfieScreen({Key? key}) : super(key: key);
@@ -18,6 +40,15 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
   bool isSmallScreen = false;
   bool isLargeScreen = true;
   bool backWasPressed = false;
+
+  String authToken = token;
+
+  String name = "";
+  String email = "";
+  int id = -1;
+
+  final myNameController = TextEditingController();
+  final myEmailController = TextEditingController();
 
   void setValue() {
     if (MediaQuery.of(context).size.width >= 700) {
@@ -50,7 +81,62 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
     }
   }
 
-  final myPasswordController = TextEditingController();
+  Future<int> getID() async {
+    String idFromGet = "";
+    print("Se va face get la id");
+
+    final response = await http.get(
+        Uri.parse('http://157.230.114.95:8090/api/v1/identity'),
+        headers: {"Authorization": authToken});
+
+    if (response.statusCode == 200) {
+      print("LoggedInUser: " +
+          User.fromJson(json.decode(response.body)).id.toString());
+      print(User.fromJson(json.decode(response.body)).email);
+      print(User.fromJson(json.decode(response.body)).name);
+
+      return User.fromJson(json.decode(response.body)).id.toInt();
+    } else {
+      throw Exception("Error getting logged user id!");
+    }
+  }
+
+  void updateUserProfile() async {
+    id = await getID();
+    print("id-ul dupa get este: " + id.toString());
+
+    final Uri apiUrl =
+        Uri.parse("http://157.230.114.95:8090/api/v1/users/" + id.toString());
+    final response = await http.put(apiUrl,
+        body: jsonEncode({
+          "email": email,
+          "name": name,
+        }),
+        headers: {"Authorization": authToken});
+
+    print(response.statusCode);
+
+    if (response.statusCode == 201) {
+      print("PUT successfully done");
+      navigateToMain();
+      return null;
+    } else if (response.statusCode == 204) {
+      return null;
+    } else if (response.statusCode == 401) {
+      throw Exception("Unauthorized to update data!");
+    } else if (response.statusCode == 403) {
+      throw Exception("Forbidden to update data!");
+    } else {
+      throw Exception("User not found!");
+    }
+  }
+
+  void applyAndNavigateToMain() {
+    if (_formKey.currentState!.validate()) {
+      updateUserProfile();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     setValue();
@@ -129,39 +215,41 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                                 Column(
                                   children: [
                                     MyTextField(
-                                        formFieldValidator: (text) {
-                                          if (!backWasPressed &&
-                                              (text == null ||
-                                                  text.isEmpty ||
-                                                  !RegExp(r"^[A-Z][a-z]*((-|\s)[A-Z][a-z]*)+$")
-                                                      .hasMatch(text))) {
-                                            return "Invalid name";
-                                          }
-                                          return null;
-                                        },
-                                        hintText: 'Popescu Maria',
-                                        text: 'Name',
-                                        controller: TextEditingController(),
-                                      begin: 0.0, end: 0.5,
+                                      formFieldValidator: (text) {
+                                        if (!backWasPressed &&
+                                            (text == null ||
+                                                text.isEmpty ||
+                                                !RegExp(r"^[A-Z][a-z]*((-|\s)[A-Z][a-z]*)+$")
+                                                    .hasMatch(text))) {
+                                          return "Invalid name";
+                                        }
+                                        return null;
+                                      },
+                                      hintText: 'Popescu Maria',
+                                      text: 'Name',
+                                      controller: myNameController,
+                                      begin: 0.0,
+                                      end: 0.5,
                                     ),
                                     const SizedBox(
                                       height: 10,
                                     ),
                                     MyTextField(
-                                        formFieldValidator: (text) {
-                                          if (!backWasPressed &&
-                                              (text == null ||
-                                                  text.isEmpty ||
-                                                  !RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
-                                                      .hasMatch(text))) {
-                                            return "Invalid email address";
-                                          }
-                                          return null;
-                                        },
-                                        hintText: 'popescu.maria@gmail.com',
-                                        text: 'Email',
-                                        controller: TextEditingController(),
-                                      begin: 0.5, end: 1.0,
+                                      formFieldValidator: (text) {
+                                        if (!backWasPressed &&
+                                            (text == null ||
+                                                text.isEmpty ||
+                                                !RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
+                                                    .hasMatch(text))) {
+                                          return "Invalid email address";
+                                        }
+                                        return null;
+                                      },
+                                      hintText: 'popescu.maria@gmail.com',
+                                      text: 'Email',
+                                      controller: myEmailController,
+                                      begin: 0.5,
+                                      end: 1.0,
                                     ),
                                     const SizedBox(
                                       height: 10,
@@ -184,7 +272,7 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                               ),
                               MyButton(
                                 text: "Apply",
-                                buttonMethod: navigateToMain,
+                                buttonMethod: applyAndNavigateToMain,
                               ),
                             ]))
                   ],
