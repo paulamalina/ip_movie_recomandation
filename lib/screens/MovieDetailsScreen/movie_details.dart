@@ -6,6 +6,14 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../widgets/my_button.dart';
 
+class FieldValidator{
+  static String? validateComment(String value){
+    if (value.isEmpty) return 'Enter Comment!';
+
+    return null;
+  }
+}
+
 class MovieDetailsScreen1 extends StatefulWidget {
   const MovieDetailsScreen1({Key? key}) : super(key: key);
 

@@ -8,6 +8,28 @@ import 'package:ip_movie_recomandation/widgets/my_button.dart';
 import '../../data/data.dart';
 import '../../widgets/my_text_field.dart';
 
+class FieldValidator{
+  static String? validateEmail(String value){
+    if (value.isEmpty) return 'Enter Email!';
+
+
+
+    if(!RegExp(r"^(?=.{5,30})[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$")
+                                  .hasMatch(value)){
+      return 'Enter Valid Email!';
+    }
+    return null;
+  }
+  static String? validatePassword(String value){
+    if (value.isEmpty) return 'Enter Password';
+    if(value.length < 7){
+        return 'Password must be longer than 6 char';
+  }
+  return null;
+}
+}
+
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -94,6 +116,11 @@ class _LoginScreenState extends State<LoginScreen> {
   double containerHeight = 600;
   bool isSmallScreen = false;
   bool isLargeScreen = true;
+
+  void setPass(String pass){
+    this.password=pass;
+  }
+
   void setValue() {
     if (MediaQuery.of(context).size.width >= 700) {
       setState(() {

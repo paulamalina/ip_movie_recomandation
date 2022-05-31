@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ip_movie_recomandation/widgets/my_button.dart';
 import '../../data/data.dart';
@@ -92,22 +91,6 @@ class _RatingScreenState extends State<RatingScreen> {
   }
 
   void postReview() async{
-    final Uri apiUrl = Uri.parse(
-        "http://157.230.114.95:8090/api/v1/reviews");
-    final response = await http.post(
-        apiUrl,
-        body: jsonEncode({
-          "movie": {
-            "id": currentId,
-          },
-          "reviewValue": currentReview
-        }),
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE, HEAD",
-          "Content-Type": "application/json",
-          "Authorization": token
-        });
   }
   void navigateToRating() {
     Navigator.pushNamed(context, globals.redirect);

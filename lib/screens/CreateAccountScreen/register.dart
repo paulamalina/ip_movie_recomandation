@@ -6,6 +6,103 @@ import 'package:ip_movie_recomandation/widgets/my_text_field.dart';
 import 'package:ip_movie_recomandation/widgets/my_button.dart';
 import 'package:http/http.dart' as http;
 
+
+class FieldValidator{
+  static String? validateEmail(String value){
+    if (value.isEmpty) return 'Enter Email!';
+
+
+
+    if(!RegExp(r"^(?=.{5,30})[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$")
+                                  .hasMatch(value)){
+      return 'Enter Valid Email!';
+    }
+    return null;
+  }
+  static String? validatePassword(String value){
+    if (value.isEmpty) return 'Enter Password';
+    if(value.length < 7){
+        return 'Password must be longer than 6 char';
+  }
+  return null;
+  }
+static String? validateName(String value){
+    if (value.isEmpty) return 'Enter Email!';
+
+
+
+    if(!RegExp(r"^(?=.{2,25}$)(\w{2,}(\s?\w{2,})?)$")
+                                  .hasMatch(value)){
+      return 'Enter Valid Name!';
+    }
+    return null;
+  }
+  static bool isLeapYear(int year) =>
+      ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0);
+
+  static int daysInMonth(int month, int year) {
+    int days = 28 +
+        (month + (month / 8).floor()) % 2 +
+        2 % month +
+        2 * (1 / month).floor();
+    return (isLeapYear(year) && month == 2) ? 29 : days;
+  }
+
+  static String? validateData(String value){
+    
+    if (value.isEmpty) return "Enter Date!";
+    
+    
+    value = value.replaceAll(RegExp(r'\.|\/'), '-');
+    var dtSplit = value.split("-");
+    var year = int.parse(dtSplit[0]);
+    var month = int.parse(dtSplit[1]);
+    var day = int.parse(dtSplit[2]);
+    var now = DateTime.now();
+    
+    if (month > 12 ||
+        month < 1 ||
+        day < 1 ||
+        day > daysInMonth(month, year) ||
+        year < 1900 ||
+        (year > now.year - 10 && day > now.day && month > now.month)) return "Enter a valid date";
+    
+    return null;
+  }
+  static String? validateGenre(String value){
+
+    if(value.isEmpty) return "Enter a genre";
+    
+    String male = 'M';
+    String female = 'F';
+
+    if(!identical(value, male) && !identical(value, female)) return "Enter a valid genre";
+
+    return null;
+  }
+  static String? validateCountry(String value){
+                    
+      if(value.isEmpty) return "Enter a country";
+
+      if(!RegExp(r"^(?=.{2,25}$)(\w{2,}(\s?\w{2,})?)$").hasMatch(value)){
+        return "Invalid Country";
+        }
+      return null;
+  }
+  static String? validatePhone(String value){
+    if(value.isEmpty) return "Enter a phone number";
+
+    // text.isEmpty ||
+    //                           !RegExp(r"^07[0-9]{8}$").hasMatch(text)) {
+    //                         return "Invalid phone number.";
+    //                       }
+    if(!RegExp(r"^07[0-9]{8}$").hasMatch(value)){
+        return "Invalid phone number";
+        }
+        return null;
+  }
+}
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
 
