@@ -110,7 +110,8 @@ class RegisterScreen extends StatefulWidget {
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _RegisterScreenState extends State<RegisterScreen>
+    with TickerProviderStateMixin {
   final myNameController = TextEditingController();
   final myPasswordController = TextEditingController();
   final myEmailController = TextEditingController();
@@ -139,6 +140,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   String errorText = "Error registering user!";
 
+  // late AnimationController _controller;
+  // late final Animation<double> _animation = CurvedAnimation(
+  //   parent: _controller,
+  //   curve: const Interval( 0.0,1.0, curve: Curves.fastOutSlowIn),
+  // );
+  //
+  // late Animation<double> fadeInAnimation2 = Tween<double>(
+  //   begin: 0.0,
+  //   end: 1.0,
+  // ).animate(CurvedAnimation(
+  //     parent: _controller,
+  //     curve: const Interval(0.0, 0.75, curve: Curves.easeIn)));
+
+  @override
+  void initState() {
+    super.initState();
+    // _controller= AnimationController(
+    //   duration: const Duration(seconds: 2),
+    //   vsync: this,
+    // );
+    // _controller.forward();
+  }
+
   showLoaderDialog(BuildContext context) {
     createUser();
     AlertDialog alert = AlertDialog(
@@ -146,7 +170,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         children: [
           const CircularProgressIndicator(),
           Container(
-              margin: const EdgeInsets.only(left: 7), child: const Text("Loading...")),
+              margin: const EdgeInsets.only(left: 7),
+              child: const Text("Loading...")),
         ],
       ),
     );
@@ -193,15 +218,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "Content-Type": "application/json",
         });
     if (response.statusCode == 200) {
-      
       token = response.headers["authorization"] as String;
-      
-    } 
+    }
   }
 
   bool isCreatedUser = false;
-  void createUser() async {
 
+  void createUser() async {
     final Uri apiUrl =
         Uri.parse("http://157.230.114.95:8090/api/v1/users/register");
     final response = await http.post(apiUrl,
@@ -230,7 +253,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         break;
       case 401:
         {
-          errorText = "Unauthorized!\nYou don't have permission to access this page.";
+          errorText =
+              "Unauthorized!\nYou don't have permission to access this page.";
           isCreatedUser = false;
         }
         break;
@@ -247,7 +271,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         }
         break;
       default:
-
     }
   }
 
@@ -274,6 +297,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void dispose() {
     super.dispose();
+    // _controller.dispose();
     myNameController.dispose();
     myPasswordController.dispose();
     myPhoneNumberController.dispose();
@@ -288,7 +312,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void register() {
-  
     showLoaderDialog(context);
   }
 
@@ -326,13 +349,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     setValue();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   if (isFinish) {
-    //     Navigator.pushNamed(
-    //       context, "/genre"
-    //     );
-    //   }
-    // });
     return Container(
       decoration: const BoxDecoration(
         color: Color(0xFF99D98C),
@@ -392,6 +408,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: 'Popescu Maria',
                         text: 'Name',
                         controller: myNameController,
+                        begin: 0.0,
+                        end: 0.15,
                       )),
                       const SizedBox(
                         height: 10,
@@ -411,6 +429,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: 'name@gmail.com',
                         text: 'Email',
                         controller: myEmailController,
+                        begin: 0.15,
+                        end: 0.30,
                       )),
                       const SizedBox(
                         height: 10,
@@ -432,6 +452,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         text: 'Password',
                         obscureText: true,
                         controller: myPasswordController,
+                        begin: 0.30, end: 0.45,
                       )),
                       const SizedBox(
                         height: 10,
@@ -450,6 +471,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: 'M/F',
                         text: 'Gender',
                         controller: myGenderController,
+                        begin: 0.45,
+                        end: 0.60,
                       )),
                       const SizedBox(
                         height: 10,
@@ -469,6 +492,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: 'Year-Month-Day',
                         text: 'Birthdate',
                         controller: myBirthdateController,
+                        begin: 0.60,
+                        end: 0.75,
                       )),
                       const SizedBox(
                         height: 10,
@@ -488,6 +513,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: 'Romania',
                         text: 'Country',
                         controller: myCountryController,
+                        begin: 0.75,
+                        end: 0.90,
                       )),
                       const SizedBox(
                         height: 10,
@@ -506,6 +533,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: '07xxxxxxxx',
                         text: 'Phone Number',
                         controller: myPhoneNumberController,
+                        begin: 0.9,
+                        end: 1.0,
                       )),
                       const SizedBox(
                         height: 20,
@@ -537,53 +566,3 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 }
-
-
-
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-//
-//   static const String _title = 'Flutter Code Sample';
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: _title,
-//       home: Scaffold(
-//         appBar: AppBar(title: const Text(_title)),
-//         body: const Center(
-//           child: MyStatelessWidget(),
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// class MyStatelessWidget extends StatelessWidget {
-//   const MyStatelessWidget({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return TextButton(
-//       onPressed: () => showDialog<String>(
-//         context: context,
-//         builder: (BuildContext context) => AlertDialog(
-//           title: const Text('AlertDialog Title'),
-//           content: const Text('AlertDialog description'),
-//           actions: <Widget>[
-//             TextButton(
-//               onPressed: () => Navigator.pop(context, 'Cancel'),
-//               child: const Text('Cancel'),
-//             ),
-//             TextButton(
-//               onPressed: () => Navigator.pop(context, 'OK'),
-//               child: const Text('OK'),
-//             ),
-//           ],
-//         ),
-//       ),
-//       child: const Text('Show Dialog'),
-//     );
-//   }
-// }

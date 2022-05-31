@@ -18,7 +18,7 @@ class _BigSearchFieldState extends State<BigSearchField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 170,
+      width: MediaQuery.of(context).size.width > 600 ? 200 : 160,
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50.0),
@@ -33,8 +33,8 @@ class _BigSearchFieldState extends State<BigSearchField> {
         ),
         decoration: InputDecoration(
           enabledBorder: UnderlineInputBorder(
-            borderSide:
-                BorderSide(color: const Color(0xFF1A759F).withOpacity(0.5), width: 2),
+            borderSide: BorderSide(
+                color: const Color(0xFF1A759F).withOpacity(0.5), width: 2),
           ),
           hintStyle: TextStyle(
             fontSize: 22,

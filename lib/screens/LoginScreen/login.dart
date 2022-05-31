@@ -212,7 +212,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         hintText: 'email@gmail.com',
                         text: 'Email',
-                        controller: myEmailController),
+                        controller: myEmailController,
+                      begin: 0.0, end: 0.50,
+                    ),
                   ),
                   const SizedBox(
                     height: 50,
@@ -227,7 +229,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         hintText: 'password',
                         text: 'Password',
                         controller: myPasswordController,
-                        obscureText: true),
+                        obscureText: true,
+                      begin: 0.50, end: 1.0,),
                   ),
                   const SizedBox(
                     height: 50,

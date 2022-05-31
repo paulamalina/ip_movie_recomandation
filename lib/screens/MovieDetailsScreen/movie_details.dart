@@ -41,11 +41,20 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
   bool isLargeScreen = true;
   TextStyle textStyle=const TextStyle(
       color: Colors.white,
-    fontSize: 23,
+    fontSize: 15,
   );
   TextStyle titleStyle=const TextStyle(
     color: Colors.white,
-    fontSize: 23,
+    fontSize: 15,
+    fontWeight: FontWeight.bold,
+  );
+  TextStyle textStyle1=const TextStyle(
+    color: Colors.white,
+    fontSize: 20,
+  );
+  TextStyle titleStyle1=const TextStyle(
+    color: Colors.white,
+    fontSize: 20,
     fontWeight: FontWeight.bold,
   );
   String responseRatingSubmit='';
@@ -196,7 +205,7 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                   return Center(
                     child: Container(
                       width: containerWidth,
-                      height: containerHeight,
+                      // height: containerHeight,
                       decoration: BoxDecoration(
                         color: Colors.teal,
                         borderRadius:
@@ -213,6 +222,7 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          SizedBox(height: !isLargeScreen ? 0 : 100,),
                           Wrap(
                             spacing: 20,
                             children: [
@@ -242,13 +252,13 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                                     ),
                                     Container(
                                       padding: const EdgeInsets.only(right: 20, left: 20),
-                                      child: Center(child: Text(titleText, style: titleStyle,),
+                                      child: Center(child: Text(titleText, style: isSmallScreen ? titleStyle : titleStyle1,),
                                       ),
                                     ),
                                     const SizedBox(
                                       height: 20,
                                     ),
-                                    Center(child: Text("$releaseDate  |  $ageRestriction +  | $duration min |  $genre ",style: textStyle,)),
+                                    Center(child: Text("$releaseDate  |  $ageRestriction +  | $duration min |  $genre ",style: isSmallScreen ? textStyle : textStyle1,)),
                                     const SizedBox(
                                       height: 20,
                                     ),
@@ -292,21 +302,22 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                                         ),),),
                                       ),
                                     ),
+
                                     Container(
-                                      padding: const EdgeInsets.only(top: 30, right: 30, left: 50),
-                                      child: Text(description, style: textStyle,),
-                                    ),
+                                        padding: const EdgeInsets.only(top: 30, right: 50, left: 50),
+                                        child: Text(summary, style: isSmallScreen ? textStyle : textStyle1)),
                                   ],
                                 ),
                               )
                             ],
                           ),
                           Container(
-                              padding: const EdgeInsets.only(top: 30, right: 50, left: 50),
-                              child: Text(summary, style: textStyle)),
-                          // SizedBox(
-                          //   height: double.infinity,
-                          // ),
+                            padding: const EdgeInsets.only(top: 30, right: 30, left: 30),
+                             child: Text(description, style: isSmallScreen ? textStyle : textStyle1,),
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
                         ],
                       ),
                     ),
@@ -357,16 +368,12 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                       future: _initializeVideoPlayerFuture,
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
-                          // If the VideoPlayerController has finished initialization, use
-                          // the data it provides to limit the aspect ratio of the video.
                           return Container(
                             width: containerWidth,
                               height: containerHeight-300,
                               child: VideoPlayer(_controller),
                           );
                         } else {
-                          // If the VideoPlayerController is still initializing, show a
-                          // loading spinner.
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
@@ -377,19 +384,14 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                       heroTag: "button1",
                       backgroundColor: Colors.greenAccent,
                       onPressed: () {
-                        // Wrap the play or pause in a call to `setState`. This ensures the
-                        // correct icon is shown.
                         setState(() {
-                          // If the video is playing, pause it.
                           if (_controller.value.isPlaying) {
                             _controller.pause();
                           } else {
-                            // If the video is paused, play it.
                             _controller.play();
                           }
                         });
                       },
-                      // Display the correct icon depending on the state of the player.
                       child: Icon(
                         _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
                       ),
@@ -442,16 +444,12 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                       future: _initializeVideoPlayerFuture1,
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
-                          // If the VideoPlayerController has finished initialization, use
-                          // the data it provides to limit the aspect ratio of the video.
                           return Container(
                             width: containerWidth,
                             height: containerHeight-300,
                             child: VideoPlayer(_controller1),
                           );
                         } else {
-                          // If the VideoPlayerController is still initializing, show a
-                          // loading spinner.
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
@@ -462,19 +460,14 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                       heroTag: "button2",
                       backgroundColor: Colors.greenAccent,
                       onPressed: () {
-                        // Wrap the play or pause in a call to `setState`. This ensures the
-                        // correct icon is shown.
                         setState(() {
-                          // If the video is playing, pause it.
                           if (_controller1.value.isPlaying) {
                             _controller1.pause();
                           } else {
-                            // If the video is paused, play it.
                             _controller1.play();
                           }
                         });
                       },
-                      // Display the correct icon depending on the state of the player.
                       child: Icon(
                         _controller1.value.isPlaying ? Icons.pause : Icons.play_arrow,
                       ),
@@ -487,7 +480,7 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
               height: 100,
               child: Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 100, right: 100),
+                  padding: isLargeScreen? const EdgeInsets.only(left: 100, right: 100) : const EdgeInsets.only(left: 50, right: 50),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -515,7 +508,6 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen1> {
                         width: 120,
                         height: 40,
                         buttonMethod: (){
-
                           Navigator.pushNamed(context, '/commentBox');
                         },
                       ),

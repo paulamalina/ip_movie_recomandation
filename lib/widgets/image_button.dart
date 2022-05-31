@@ -19,6 +19,7 @@ class ImageButton extends StatefulWidget {
 }
 
 class _ImageButtonState extends State<ImageButton> {
+
   void getDetailsForMovie() async {
     final Uri apiUrl = Uri.parse(
         "http://157.230.114.95:8090/api/v1/movies/search/name/" + titleText);
@@ -39,8 +40,6 @@ class _ImageButtonState extends State<ImageButton> {
       }
     }
   }
-
-  bool x = false;
 
   showLoaderDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
