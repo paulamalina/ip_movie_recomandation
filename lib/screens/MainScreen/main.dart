@@ -11,8 +11,6 @@ import 'package:ip_movie_recomandation/models/searched_movie.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ip_movie_recomandation/data/data.dart';
 
-import '../../widgets/small_search_field.dart';
-
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
 
