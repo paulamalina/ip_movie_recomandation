@@ -13,7 +13,8 @@ class RegisterScreen extends StatefulWidget {
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStateMixin{
+class _RegisterScreenState extends State<RegisterScreen>
+    with TickerProviderStateMixin {
   final myNameController = TextEditingController();
   final myPasswordController = TextEditingController();
   final myEmailController = TextEditingController();
@@ -56,7 +57,7 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
   //     curve: const Interval(0.0, 0.75, curve: Curves.easeIn)));
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     // _controller= AnimationController(
     //   duration: const Duration(seconds: 2),
@@ -64,6 +65,7 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
     // );
     // _controller.forward();
   }
+
   showLoaderDialog(BuildContext context) {
     createUser();
     AlertDialog alert = AlertDialog(
@@ -95,8 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
   void showAlert(BuildContext context) {
     showDialog(
         context: context,
-        builder: (context) =>
-            AlertDialog(
+        builder: (context) => AlertDialog(
               content: Text(errorText),
               actions: [
                 TextButton(
@@ -116,7 +117,7 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods":
-          "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+              "POST, GET, OPTIONS, PUT, DELETE, HEAD",
           "Content-Type": "application/json",
         });
     if (response.statusCode == 200) {
@@ -128,7 +129,7 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
 
   void createUser() async {
     final Uri apiUrl =
-    Uri.parse("http://157.230.114.95:8090/api/v1/users/register");
+        Uri.parse("http://157.230.114.95:8090/api/v1/users/register");
     final response = await http.post(apiUrl,
         body: jsonEncode({
           "email": email,
@@ -142,7 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods":
-          "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+              "POST, GET, OPTIONS, PUT, DELETE, HEAD",
           "Content-Type": "application/json",
         });
 
@@ -156,7 +157,7 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
       case 401:
         {
           errorText =
-          "Unauthorized!\nYou don't have permission to access this page.";
+              "Unauthorized!\nYou don't have permission to access this page.";
           isCreatedUser = false;
         }
         break;
@@ -177,10 +178,7 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
   }
 
   void setValue() {
-    if (MediaQuery
-        .of(context)
-        .size
-        .width >= 700) {
+    if (MediaQuery.of(context).size.width >= 700) {
       setState(() {
         padding = 10.0;
         containerWidth = 700;
@@ -275,14 +273,14 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
                 decoration: BoxDecoration(
                   color: Colors.teal,
                   borderRadius:
-                  isLargeScreen ? BorderRadius.circular(50) : null,
+                      isLargeScreen ? BorderRadius.circular(50) : null,
                   boxShadow: isLargeScreen
                       ? [
-                    const BoxShadow(
-                      spreadRadius: 2,
-                      blurRadius: 7,
-                    ),
-                  ]
+                          const BoxShadow(
+                            spreadRadius: 2,
+                            blurRadius: 7,
+                          ),
+                        ]
                       : null,
                 ),
                 child: Form(
@@ -300,143 +298,147 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
                       ),
                       Center(
                           child: MyTextField(
-                            formFieldValidator: (text) {
-                              if (text == null ||
-                                  text.isEmpty ||
-                                  !RegExp(r"^(?=.{2,25}$)(\w{2,}(\s?\w{2,})?)$")
-                                      .hasMatch(text)) {
-                                return "Invalid name.";
-                              }
-                              name = myNameController.text;
-                              return null;
-                            },
-                            hintText: 'Popescu Maria',
-                            text: 'Name',
-                            controller: myNameController,
-                            begin: 0.0, end: 0.15,
-                          )),
+                        formFieldValidator: (text) {
+                          if (text == null ||
+                              text.isEmpty ||
+                              !RegExp(r"^(?=.{2,25}$)(\w{2,}(\s?\w{2,})?)$")
+                                  .hasMatch(text)) {
+                            return "Invalid name.";
+                          }
+                          name = myNameController.text;
+                          return null;
+                        },
+                        hintText: 'Popescu Maria',
+                        text: 'Name',
+                        controller: myNameController,
+                        begin: 0.0,
+                        end: 0.15,
+                      )),
                       const SizedBox(
                         height: 10,
                       ),
                       Center(
                           child: MyTextField(
-                            formFieldValidator: (text) {
-                              if (text == null ||
-                                  text.isEmpty ||
-                                  !RegExp(
-                                      r"^(?=.{5,30})[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$")
-                                      .hasMatch(text)) {
-                                return "Invalid email address.";
-                              }
-                              email = myEmailController.text;
-                              return null;
-                            },
-                            hintText: 'name@gmail.com',
-                            text: 'Email',
-                            controller: myEmailController,
-                            begin: 0.15, end: 0.30,
-                          )),
+                        formFieldValidator: (text) {
+                          if (text == null ||
+                              text.isEmpty ||
+                              !RegExp(r"^(?=.{5,30})[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$")
+                                  .hasMatch(text)) {
+                            return "Invalid email address.";
+                          }
+                          email = myEmailController.text;
+                          return null;
+                        },
+                        hintText: 'name@gmail.com',
+                        text: 'Email',
+                        controller: myEmailController,
+                        begin: 0.15,
+                        end: 0.30,
+                      )),
                       const SizedBox(
                         height: 10,
                       ),
                       Center(
                           child: MyTextField(
-                            //12+ caractere, cel putin o cifra, o litera mare, o litera mica, un caracter special
-                            formFieldValidator: (text) {
-                              if (text == null ||
-                                  text.isEmpty ||
-                                  !RegExp(
-                                      r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&_]{10,50}$")
-                                      .hasMatch(text)) {
-                                return "Invalid password, must contain at least 10 to 50 \ncharacters, a mix of upper and lower case letters, \nnumbers and special characters.";
-                              }
-                              password = myPasswordController.text;
-                              return null;
-                            },
-                            hintText: 'password',
-                            text: 'Password',
-                            obscureText: true,
-                            controller: myPasswordController,
-                            begin: 0.30, end: 0.45,
-                          )),
+                        //12+ caractere, cel putin o cifra, o litera mare, o litera mica, un caracter special
+                        formFieldValidator: (text) {
+                          if (text == null ||
+                              text.isEmpty ||
+                              !RegExp(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&_]{10,50}$")
+                                  .hasMatch(text)) {
+                            return "Invalid password, must contain at least 10 to 50 \ncharacters, a mix of upper and lower case letters, \nnumbers and special characters.";
+                          }
+                          password = myPasswordController.text;
+                          return null;
+                        },
+                        hintText: 'password',
+                        text: 'Password',
+                        obscureText: true,
+                        controller: myPasswordController,
+                        begin: 0.30, end: 0.45,
+                      )),
                       const SizedBox(
                         height: 10,
                       ),
                       Center(
                           child: MyTextField(
-                            formFieldValidator: (text) {
-                              if (text == null ||
-                                  text.isEmpty ||
-                                  !RegExp(r"^(M|F)$").hasMatch(text)) {
-                                return "Invalid gender.";
-                              }
-                              gender = myGenderController.text;
-                              return null;
-                            },
-                            hintText: 'M/F',
-                            text: 'Gender',
-                            controller: myGenderController,
-                            begin: 0.45, end: 0.60,
-                          )),
+                        formFieldValidator: (text) {
+                          if (text == null ||
+                              text.isEmpty ||
+                              !RegExp(r"^(M|F)$").hasMatch(text)) {
+                            return "Invalid gender.";
+                          }
+                          gender = myGenderController.text;
+                          return null;
+                        },
+                        hintText: 'M/F',
+                        text: 'Gender',
+                        controller: myGenderController,
+                        begin: 0.45,
+                        end: 0.60,
+                      )),
                       const SizedBox(
                         height: 10,
                       ),
                       Center(
                           child: MyTextField(
-                            formFieldValidator: (text) {
-                              if (text == null ||
-                                  text.isEmpty ||
-                                  !isValidDate(text)) {
-                                return "Invalid date.";
-                              }
-                              birthday = myBirthdateController.text
-                                  .replaceAll(RegExp(r'\.|\/'), '-');
-                              return null;
-                            },
-                            hintText: 'Year-Month-Day',
-                            text: 'Birthdate',
-                            controller: myBirthdateController,
-                            begin: 0.60, end: 0.75,
-                          )),
+                        formFieldValidator: (text) {
+                          if (text == null ||
+                              text.isEmpty ||
+                              !isValidDate(text)) {
+                            return "Invalid date.";
+                          }
+                          birthday = myBirthdateController.text
+                              .replaceAll(RegExp(r'\.|\/'), '-');
+                          return null;
+                        },
+                        hintText: 'Year-Month-Day',
+                        text: 'Birthdate',
+                        controller: myBirthdateController,
+                        begin: 0.60,
+                        end: 0.75,
+                      )),
                       const SizedBox(
                         height: 10,
                       ),
                       Center(
                           child: MyTextField(
-                            formFieldValidator: (text) {
-                              if (text == null ||
-                                  text.isEmpty ||
-                                  !RegExp(r"^(?=.{2,25}$)(\w{2,}(\s?\w{2,})?)$")
-                                      .hasMatch(text)) {
-                                return "Invalid country.";
-                              }
-                              country = myCountryController.text;
-                              return null;
-                            },
-                            hintText: 'Romania',
-                            text: 'Country',
-                            controller: myCountryController,
-                            begin: 0.75, end: 0.90,
-                          )),
+                        formFieldValidator: (text) {
+                          if (text == null ||
+                              text.isEmpty ||
+                              !RegExp(r"^(?=.{2,25}$)(\w{2,}(\s?\w{2,})?)$")
+                                  .hasMatch(text)) {
+                            return "Invalid country.";
+                          }
+                          country = myCountryController.text;
+                          return null;
+                        },
+                        hintText: 'Romania',
+                        text: 'Country',
+                        controller: myCountryController,
+                        begin: 0.75,
+                        end: 0.90,
+                      )),
                       const SizedBox(
                         height: 10,
                       ),
                       Center(
                           child: MyTextField(
-                            formFieldValidator: (text) {
-                              if (text == null ||
-                                  text.isEmpty ||
-                                  !RegExp(r"^07[0-9]{8}$").hasMatch(text)) {
-                                return "Invalid phone number.";
-                              }
-                              phoneNumber = myPhoneNumberController.text;
-                              return null;
-                            },
-                            hintText: '07xxxxxxxx',
-                            text: 'Phone Number',
-                            controller: myPhoneNumberController,
-                            begin: 0.9, end: 1.0,
-                          )),
+                        formFieldValidator: (text) {
+                          if (text == null ||
+                              text.isEmpty ||
+                              !RegExp(r"^07[0-9]{8}$").hasMatch(text)) {
+                            return "Invalid phone number.";
+                          }
+                          phoneNumber = myPhoneNumberController.text;
+                          return null;
+                        },
+                        hintText: '07xxxxxxxx',
+                        text: 'Phone Number',
+                        controller: myPhoneNumberController,
+                        begin: 0.9,
+                        end: 1.0,
+                      )),
                       const SizedBox(
                         height: 20,
                       ),

@@ -6,26 +6,6 @@ import '../../widgets/my_text_field.dart';
 import 'package:ip_movie_recomandation/data/data.dart';
 import 'package:http/http.dart' as http;
 
-class User {
-  final int id;
-  final String email;
-  final String name;
-  final String role;
-
-  User(
-    this.id,
-    this.email,
-    this.name,
-    this.role,
-  );
-  factory User.fromMap(Map<String, dynamic> json) {
-    return User(json['email'], json['id'], json['name'], json['role']);
-  }
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(json['email'], json['id'], json['name'], json['role']);
-  }
-}
-
 class ChangeProfieScreen extends StatefulWidget {
   const ChangeProfieScreen({Key? key}) : super(key: key);
 
@@ -92,73 +72,59 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
     var data = jsonDecode(response.body);
     id = data["id"];
 
-    print("LoggedInUser: " + id.toString());
-
-    print(response.body);
-
     return id;
   }
 
-/*
-  Future<int> getID() async {
-    String idFromGet = "";
-    print("Se va face get la id");
-
-    final response = await http.get(
-        Uri.parse('http://157.230.114.95:8090/api/v1/identity'),
-        headers: {"Authorization": authToken});
-
-    if (response.statusCode == 200) {
-      print("LoggedInUser: " +
-          User.fromJson(json.decode(response.body)).id.toString());
-      print(User.fromJson(json.decode(response.body)).email);
-      print(User.fromJson(json.decode(response.body)).name);
-
-      return User.fromJson(json.decode(response.body)).id.toInt();
-    } else {
-      throw Exception("Error getting logged user id!");
-    }
-  }*/
-
   void updateUserProfile() async {
-    //id = getID();
     var id2 = await Future.value(getID());
-
-    print("id-ul dupa get este: " + id2.toString());
 
     final Uri apiUrl =
         Uri.parse("http://157.230.114.95:8090/api/v1/users/" + id2.toString());
     final response = await http.put(apiUrl,
-        body: jsonEncode({
-          "email": email,
-          "name": name,
-        }),
-        headers: {"Authorization": authToken});
+        body: jsonEncode(
+            {"email": email, "name": name, "profileImageLink": "link"}),
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods":
+              "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+          "Content-Type": "application/json",
+          "Authorization": authToken
+        });
 
-    print(response.statusCode);
-    print(apiUrl);
-    print("http://157.230.114.95:8090/api/v1/users/" + id2.toString());
-    print(response.body);
-
-    if (response.statusCode == 201) {
-      print("PUT successfully done");
+    if (response.statusCode == 204) {
+      showPopUp("Your account was updated!");
+      token = response.headers["authorization"] as String;
       navigateToMain();
       return null;
-    } else if (response.statusCode == 204) {
-      return null;
-    } else if (response.statusCode == 401) {
-      throw Exception("Unauthorized to update data!");
-    } else if (response.statusCode == 403) {
-      throw Exception("Forbidden to update data!");
     } else {
-      throw Exception("User not found!");
+      showPopUp("There was a problem!");
     }
   }
 
+  showPopUp(String popUpText) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              content: Text(
+                popUpText,
+                style: const TextStyle(color: Colors.teal),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            ));
+  }
+
   void applyAndNavigateToMain() {
-    if (_formKey.currentState!.validate()) {
+    updateUserProfile();
+    /*if (_formKey.currentState!.validate()) {
       updateUserProfile();
-    }
+    }*/
   }
 
   @override
@@ -243,10 +209,12 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                                         if (!backWasPressed &&
                                             (text == null ||
                                                 text.isEmpty ||
-                                                !RegExp(r"^[A-Z][a-z]*((-|\s)[A-Z][a-z]*)+$")
+                                                !RegExp(r"^(?=.{2,25}$)(\w{2,}(\s?\w{2,})?)$")
                                                     .hasMatch(text))) {
+                                          name = myNameController.text;
                                           return "Invalid name";
                                         }
+                                        name = myNameController.text;
                                         return null;
                                       },
                                       hintText: 'Popescu Maria',
@@ -263,10 +231,12 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
                                         if (!backWasPressed &&
                                             (text == null ||
                                                 text.isEmpty ||
-                                                !RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
+                                                !RegExp(r"^(?=.{5,30})[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$")
                                                     .hasMatch(text))) {
+                                          email = myEmailController.text;
                                           return "Invalid email address";
                                         }
+                                        email = myEmailController.text;
                                         return null;
                                       },
                                       hintText: 'popescu.maria@gmail.com',
