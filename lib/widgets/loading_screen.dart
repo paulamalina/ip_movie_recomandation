@@ -1,5 +1,3 @@
-
-
 // class LoadingScreen extends StatelessWidget {
 //   final Widget where;
 //   const LoadingScreen({
@@ -9,10 +7,8 @@
 // @override
 //   Widget build(BuildContext context) {
 
-
 // class LoadingScreen{
 //   final Widget where=WelcomeScreen();
-  
 
 //   LoadingScreen(Widget where){
 //     Function(where);
@@ -27,11 +23,12 @@
 //   }
 // }
 library animated_splash_screen;
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 enum _splashType { simpleSplash, backgroundScreenReturn }
+
 enum SplashTransition {
   slideTransition,
   scaleTransition,
@@ -242,13 +239,7 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
       try {
         Navigator.of(_context).pushReplacement(
             PageTransition(type: w.transitionType, child: screen));
-      } catch (msg) {
-        if (kDebugMode) {
-          print('AnimatedSplashScreen -> '
-            'error in jump to next screen, probably '
-            'this run is in hot reload: $msg');
-        }
-      }
+      } catch (msg) {}
     });
   }
 

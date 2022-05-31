@@ -66,13 +66,6 @@ class _CommentState extends State<Comment> {
               "POST, GET, OPTIONS, PUT, DELETE, HEAD",
           "Content-Type": "application/json",
         });
-
-    print("Response: ${response.statusCode}");
-    if (response.statusCode == 201) {
-      print("post comment ok");
-    } else {
-      print("post comment not ok");
-    }
   }
 
   String name = "";
