@@ -82,6 +82,25 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
   }
 
   Future<int> getID() async {
+    final Uri apiUrl = Uri.parse("http://157.230.114.95:8090/api/v1/identity");
+    final response = await http.get(apiUrl, headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+      "Content-Type": "application/json",
+      "Authorization": token
+    });
+    var data = jsonDecode(response.body);
+    id = data["id"];
+
+    print("LoggedInUser: " + id.toString());
+
+    print(response.body);
+
+    return id;
+  }
+
+/*
+  Future<int> getID() async {
     String idFromGet = "";
     print("Se va face get la id");
 
@@ -99,14 +118,16 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
     } else {
       throw Exception("Error getting logged user id!");
     }
-  }
+  }*/
 
   void updateUserProfile() async {
-    id = await getID();
-    print("id-ul dupa get este: " + id.toString());
+    //id = getID();
+    var id2 = await Future.value(getID());
+
+    print("id-ul dupa get este: " + id2.toString());
 
     final Uri apiUrl =
-        Uri.parse("http://157.230.114.95:8090/api/v1/users/" + id.toString());
+        Uri.parse("http://157.230.114.95:8090/api/v1/users/" + id2.toString());
     final response = await http.put(apiUrl,
         body: jsonEncode({
           "email": email,
@@ -115,6 +136,9 @@ class _ChangeProfieScreen extends State<ChangeProfieScreen> {
         headers: {"Authorization": authToken});
 
     print(response.statusCode);
+    print(apiUrl);
+    print("http://157.230.114.95:8090/api/v1/users/" + id2.toString());
+    print(response.body);
 
     if (response.statusCode == 201) {
       print("PUT successfully done");
