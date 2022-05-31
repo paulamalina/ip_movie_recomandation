@@ -37,6 +37,7 @@ class _MainScreenState extends State<MainScreen> {
   bool isLargeScreen = true;
   double imgWidth = 300;
   double imgHeight = 250;
+  int recommendedNumber = 10;
 
   void populateLinks() {
     trailerLink = "link";
@@ -299,7 +300,7 @@ class _MainScreenState extends State<MainScreen> {
     return Container(
         child: Wrap(alignment: WrapAlignment.center, spacing: 40, children: [
       FutureBuilder(
-        future: fetchRecommendedMovie(carouselMaxNumber),
+        future: fetchRecommendedMovie(recommendedNumber),
         builder: (context, snapshot) {
           if (snapshot.data == null) {
             return Container(
