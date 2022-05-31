@@ -6,10 +6,10 @@ import 'package:ip_movie_recomandation/widgets/big_logout_button.dart';
 import 'package:ip_movie_recomandation/widgets/big_search_field.dart';
 import 'package:ip_movie_recomandation/widgets/image_button.dart';
 import 'package:ip_movie_recomandation/widgets/small_logout_button.dart';
-import 'package:ip_movie_recomandation/widgets/small_search_field.dart';
 import 'package:ip_movie_recomandation/widgets/main_genre_button.dart';
 import 'package:ip_movie_recomandation/models/searched_movie.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ip_movie_recomandation/data/data.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -36,6 +36,10 @@ class _MainScreenState extends State<MainScreen> {
   double imgWidth = 300;
   double imgHeight = 250;
 
+  void populateLinks(){
+    trailerLink="link";
+    movieLink="link";
+  }
   void setDimentions() {
     if (MediaQuery.of(context).size.width <= 700) {
       setState(() {
@@ -48,42 +52,9 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-  String authToken =
-      "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJybWloYWxhY2hlQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJtb3ZpZXM6cmVhZCJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2NTMxNDg0NTEsImV4cCI6MTY1NDMwMDgwMH0.07c60BOq7QjTZHVzuITSMSAZuoIlvOKyjVqrA-LB9PENNQnWe7ftbOc4rCMh71Hy601slCiwL4_XpOaYXOnU_w";
-
-  showLoaderDialog(BuildContext context) {
-    AlertDialog alert = AlertDialog(
-      content: Row(
-        children: [
-          const CircularProgressIndicator(),
-          Container(
-              margin: const EdgeInsets.only(left: 7), child: const Text("Loading...")),
-        ],
-      ),
-    );
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (context) {
-          Future.delayed(const Duration(seconds: 2), () {
-            setState(() {
-              isFinish = true;
-            });
-            Navigator.of(context).pop(true);
-          });
-          return alert;
-        });
-  }
-
-  void callRecommendGetter() {
-    fetchRecommendedMovie(10);
-    showLoaderDialog(context);
-    setState(() {});
-  }
+  String authToken = token;
 
   void callGenreGetter(String genre) {
-    //fetchAllGenreMovie(genre);
-    //showLoaderDialog(context);
     test = 3;
     toSearch = genre;
     headerText = genre;
@@ -91,8 +62,6 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void callMovieGetter(String name) {
-    //fetchMovie(name);
-    //showLoaderDialog(context);
     test = 1;
     toSearch = name;
     headerText = "Search results";
@@ -113,7 +82,7 @@ class _MainScreenState extends State<MainScreen> {
       if (foundMovies.isNotEmpty) {
         for (int i = 0; i < foundMovies.length; i++) {
           genreListLeft.add(ImageButton(
-              image: Image.asset("assets/images/image1.png"),
+              image: Image.network(foundMovies[i].thumbnailLink),
               text: foundMovies[i].name));
         }
         return genreListLeft;
@@ -192,7 +161,7 @@ class _MainScreenState extends State<MainScreen> {
   void populateList(List<ImageButton> buttonList) {
     for (int i = 0; i < foundMovies.length; i++) {
       buttonList.add(ImageButton(
-          image: Image.asset("assets/images/image1.png"),
+          image: Image.network(foundMovies[i].thumbnailLink),
           text: foundMovies[i].name));
     }
   }
@@ -276,7 +245,7 @@ class _MainScreenState extends State<MainScreen> {
     //Populate list
     for (int i = 0; i < genreMovies.length && i < carouselMaxNumber; i++) {
       images.add(ImageButton(
-          image: Image.asset("assets/images/image1.png"),
+          image: Image.network(genreMovies[i].thumbnailLink),
           text: genreMovies[i].name));
     }
     //Init Carousel
@@ -589,8 +558,10 @@ class _MainScreenState extends State<MainScreen> {
                   height: 100,
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, "/main");
-                },
+                  new Future.delayed(const Duration(seconds: 3), () {
+                    populateLinks();
+                    Navigator.pushNamed(context, "/main");
+                  });},
               )
               /*
             child: SvgPicture.asset(
@@ -599,13 +570,16 @@ class _MainScreenState extends State<MainScreen> {
             */
               ),
           actions: [
-            isLargeScreen
-                ? BigSearchField(
+            BigSearchField(
                     returnSearch: callMovieGetter,
-                  )
-                : SmallSearchField(
-                    returnSearch: callMovieGetter,
-                  ),
+            ),
+            // isLargeScreen
+            //     ? BigSearchField(
+            //         returnSearch: callMovieGetter,
+            //       )
+            //     : SmallSearchField(
+            //         returnSearch: callMovieGetter,
+            //       ),
             const SizedBox(width: 20),
             IconButton(
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
